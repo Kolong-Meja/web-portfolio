@@ -1,0 +1,21 @@
+{
+	"navbar": {
+		"links": {
+			"first": "Tentang Saya",
+			"second": "Kemampuan",
+			"third": "Pengalaman Saya"
+		}
+	},
+	"about": {
+		"popover": {
+			"underlined": "Full Stack Developer",
+			"content": "Full Stack Developer adalah pengembang atau teknisi yang dapat membangun bagian depan dan belakang situs web. Bagian depan (bagian situs web yang dilihat dan digunakan pengguna) dan bagian belakang (penyimpanan dan pemrosesan data di balik layar) memerlukan keahlian yang berbeda. Karena pengembang tumpukan penuh terlibat dalam semua aspek proses pengembangan, mereka harus memiliki keahlian di keduanya."
+		},
+		"body": "yang memiliki fokus kuat dalam mencapai hasil, memiliki keahlian terkemuka dalam menganalisis, merancang, dan mengembangkan aplikasi dan situs web, serta menguasai sistem RESTful API. Saya telah menunjukkan keterampilan pemrograman yang sangat baik dengan pengalaman lebih dari satu setengah tahun dan memiliki tiga sertifikat magang resmi. Selain keterampilan pemrograman yang sangat baik, saya juga menguasai beberapa bahasa pemrograman, kerangka kerja, dan alat bantu lainnya.",
+		"links": {
+			"first": "Curriculum Vitae (CV)",
+			"second": "Sertifikat",
+			"third": "Portfolio Lainnya"
+		}
+	}
+}

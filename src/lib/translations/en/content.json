@@ -1,0 +1,14 @@
+{
+	"about": {
+		"popover": {
+			"underlined": "Full Stack Developer",
+			"content": "A full stack developer is a developer or technician who can build both the front and back end of a website. The front end (the part of the website that users see and use) and the back end (the behind-the-scenes storage and processing of data) require different skill sets. Because full stack developers are involved in all aspects of the development process, they must have expertise in both."
+		},
+		"body": "who has a strong focus on achieving results, has leading expertise in analyzing, designing, and developing applications and websites, and mastering the RESTful API system. I have demonstrated excellent programming skills with more than one and a half years of experience and have three official internship certificates. In addition to excellent programming skills, I also master several programming languages, frameworks, and tools.",
+		"links": {
+			"first": "Curriculum Vitae (CV)",
+			"second": "Certificates",
+			"third": "Other Portfolio"
+		}
+	}
+}
