@@ -27,7 +27,9 @@
 ];
 
 function expertise(skills: Array<string>): Array<string> {
-  skills.sort((initial, next) => initial.localeCompare(next));
+  skills.sort(
+    (initial, next) => initial.localeCompare(next)
+  );
   return skills;
 }
 
@@ -116,11 +118,11 @@ func expertise(skills []string) []string {
 >
 	<div class="container mx-auto">
 		<div
-			class="flex flex-col w-full items-center space-y-4 px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:flex-row lg:space-y-0 lg:space-x-4 lg:px-7 lg:py-20 xl:px-8 xl:py-24"
+			class="flex w-full flex-col items-center space-y-4 px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:flex-row lg:space-y-0 lg:space-x-4 lg:px-7 lg:py-20 xl:px-8 xl:py-24"
 		>
 			<!-- Left Panel Code -->
 			<pre
-				class="bg-soft-black dark:bg-soft-dark relative flex w-full flex-col rounded-xl transition-colors duration-300 ease-in-out lg:w-[40rem]">
+				class="bg-soft-black dark:bg-soft-dark relative flex w-full flex-col rounded-xl transition-colors duration-300 ease-in-out lg:w-[35rem] xl:w-[40rem]">
       <img
 					id="logo"
 					src={AstronautFigure}
@@ -152,14 +154,14 @@ func expertise(skills []string) []string {
         </div>
         <code
 					id="code"
-					class="language-typescript h-[25rem] overflow-x-auto rounded-b-xl text-sm md:text-base"
+					class="language-typescript h-[25rem] overflow-x-auto rounded-b-xl text-sm text-wrap md:text-base"
 					>{value}</code
 				>
     </pre>
 
 			<!-- Right Panel Code -->
 			<pre
-				class="bg-soft-black dark:bg-soft-dark relative flex w-full flex-col rounded-xl transition-colors duration-300 ease-in-out lg:w-[40rem]">
+				class="bg-soft-black dark:bg-soft-dark relative flex w-full flex-col rounded-xl transition-colors duration-300 ease-in-out lg:w-[35rem] xl:w-[40rem]">
       <div class="flex flex-row items-center justify-between p-2">
         <p class="text-base text-white">skills.go</p>
         <div class="flex flex-row items-center space-x-2">
@@ -170,7 +172,7 @@ func expertise(skills []string) []string {
       </div>
       <code
 					id="other-code"
-					class="language-go h-[25rem] overflow-x-auto rounded-b-xl text-sm md:text-base"
+					class="language-go h-[25rem] overflow-x-auto rounded-b-xl text-sm text-wrap md:text-base"
 					>{otherValue}</code
 				>
   </pre>

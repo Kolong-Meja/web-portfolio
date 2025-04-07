@@ -11,13 +11,15 @@
 			<!-- Left Side -->
 			<div class="font-hanken-grotesk flex w-full flex-col space-y-4 pt-16 pb-8">
 				<div class="flex w-full flex-col space-y-2 px-8">
-					<h1 class="text-4xl font-bold text-balance text-white lg:text-7xl">Faisal Ramadhan</h1>
+					<h1 class="text-4xl font-bold text-balance text-white md:text-5xl lg:text-7xl">
+						Faisal Ramadhan
+					</h1>
 					<h6 class="text-2xl font-semibold text-balance text-white lg:text-3xl">
 						Jr. Full Stack Developer
 					</h6>
 				</div>
 				<div class="flex w-full flex-col space-y-8 px-8">
-					<p class="text-base font-normal text-wrap whitespace-normal text-white lg:text-lg">
+					<p class="text-base font-normal text-wrap whitespace-normal text-white md:text-lg">
 						Junior Full Stack Developer with strong Linux skills and a passion for building modern
 						web applications.
 					</p>
