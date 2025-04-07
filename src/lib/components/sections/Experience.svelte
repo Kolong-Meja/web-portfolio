@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { CitiasiaLogo, MTGLogo, PeruriLogo } from '$lib';
+	import { t } from '$lib/translations';
 	import { onMount } from 'svelte';
 	import Swiper from 'swiper/bundle';
 
@@ -39,7 +40,7 @@
 				<p
 					class="group font-space-grotesk relative mb-4 w-full border-b border-gray-400 text-xl text-gray-400 transition-all duration-600 ease-in-out hover:font-bold hover:text-emerald-300 md:text-2xl lg:text-3xl xl:mb-8 dark:border-gray-500 dark:text-gray-500"
 				>
-					Experiences
+					{$t('content.experience.header')}
 					<span
 						class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-600 group-hover:w-full"
 					></span>
@@ -70,17 +71,15 @@
 										<h1
 											class="text-xl font-bold text-emerald-400 sm:text-2xl lg:text-3xl dark:text-emerald-300"
 										>
-											Full Stack Developer Internship
+											{$t('content.experience.swipe.content.first.title')}
 										</h1>
 										<h6 class="text-lg font-normal text-gray-50 lg:text-xl dark:text-white">
-											February - June 2023
+											{$t('content.experience.swipe.content.first.duration')}
 										</h6>
 										<p
 											class="text-base font-normal text-wrap text-gray-50 lg:text-lg dark:text-white"
 										>
-											Developing a Restful API system for SurveyAsia services using Laravel and
-											NestJS frameworks. I also took part in developing and updating the frontend
-											appearance of this service using Vue.js and Laravel Blade frameworks.
+											{$t('content.experience.swipe.content.first.desc')}
 										</p>
 									</div>
 									<div
@@ -180,19 +179,15 @@
 										<h1
 											class="text-xl font-bold text-emerald-400 sm:text-2xl lg:text-3xl dark:text-emerald-300"
 										>
-											IT Developer Internship
+											{$t('content.experience.swipe.content.second.title')}
 										</h1>
 										<h6 class="text-lg font-normal text-gray-50 lg:text-xl dark:text-white">
-											February - June 2024
+											{$t('content.experience.swipe.content.second.duration')}
 										</h6>
 										<p
 											class="text-base font-normal text-wrap text-gray-50 lg:text-lg dark:text-white"
 										>
-											Create and develop applications for a subsidiary of PT. Sinergi Global Servis,
-											namely the Sales Distributor application (SIDIA) using the Vue.js and Ionic
-											frameworks. I also took part in creating and developing the Restful API system
-											for this application using the Laravel framework. For the development stage, I
-											used Docker and Vite to accelerate application development to completion.
+											{$t('content.experience.swipe.content.second.desc')}
 										</p>
 									</div>
 									<div
@@ -292,20 +287,15 @@
 										<h1
 											class="text-xl font-bold text-emerald-400 sm:text-2xl lg:text-3xl dark:text-emerald-300"
 										>
-											IT Staff Internship
+											{$t('content.experience.swipe.content.third.title')}
 										</h1>
 										<h6 class="text-lg font-normal text-gray-50 lg:text-xl dark:text-white">
-											August - December 2024
+											{$t('content.experience.swipe.content.third.duration')}
 										</h6>
 										<p
 											class="text-base font-normal text-wrap text-gray-50 lg:text-lg dark:text-white"
 										>
-											Develop and design the enterprise information technology architecture, support
-											the maintenance of existing systems, coordinate meeting agendas for
-											stakeholders, design security awareness posters, develop proposals for the
-											2024 Innovation & Kaizen Awards, create mockups for Document Management Tools,
-											develop COBIT 5 web assessment software, and create department work program
-											videos for the needs of the 2024 coordination meeting.
+											{$t('content.experience.swipe.content.third.desc')}
 										</p>
 									</div>
 									<div

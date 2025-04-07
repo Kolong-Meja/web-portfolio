@@ -1,4 +1,6 @@
-<script lang="ts"></script>
+<script lang="ts">
+	import { t } from '$lib/translations';
+</script>
 
 <section
 	class="dark:bg-soft-black h-full max-h-full w-full max-w-full bg-black transition-colors duration-300 ease-in-out"
@@ -20,8 +22,7 @@
 				</div>
 				<div class="flex w-full flex-col space-y-8 px-8">
 					<p class="text-base font-normal text-wrap whitespace-normal text-white md:text-lg">
-						Junior Full Stack Developer with strong Linux skills and a passion for building modern
-						web applications.
+						{$t('about.short_desc')}
 					</p>
 					<div
 						class="flex w-full flex-row flex-wrap items-center justify-normal gap-5 lg:gap-0 lg:space-x-6"
@@ -36,7 +37,8 @@
 								<span
 									class="bg-soft-black dark:group-hover:bg-soft-black absolute inset-0 h-full w-full border border-emerald-400 group-hover:bg-black dark:border-emerald-500 dark:bg-black"
 								></span>
-								<span class="relative text-emerald-300 dark:text-emerald-400">Curriculum Vitae</span
+								<span class="relative text-emerald-300 dark:text-emerald-400"
+									>{$t('about.links.first')}</span
 								>
 							</button>
 						</a>
@@ -51,7 +53,9 @@
 								<span
 									class="bg-soft-black dark:group-hover:bg-soft-black absolute inset-0 h-full w-full border border-emerald-400 group-hover:bg-black dark:border-emerald-500 dark:bg-black"
 								></span>
-								<span class="relative text-emerald-300 dark:text-emerald-400">Certificates</span>
+								<span class="relative text-emerald-300 dark:text-emerald-400"
+									>{$t('about.links.second')}</span
+								>
 							</button>
 						</a>
 
@@ -65,7 +69,9 @@
 								<span
 									class="bg-soft-black dark:group-hover:bg-soft-black absolute inset-0 h-full w-full border border-emerald-400 group-hover:bg-black dark:border-emerald-500 dark:bg-black"
 								></span>
-								<span class="relative text-emerald-300 dark:text-emerald-400">Other Portfolio</span>
+								<span class="relative text-emerald-300 dark:text-emerald-400"
+									>{$t('about.links.third')}</span
+								>
 							</button>
 						</a>
 					</div>
@@ -76,25 +82,16 @@
 				class="font-space-grotesk flex w-full flex-col space-y-4 border-t border-gray-900 pt-8 pb-16 lg:border-none lg:pt-0 lg:pb-0 dark:border-gray-800"
 			>
 				<h6 class="px-8 text-lg font-bold text-wrap whitespace-normal text-white lg:text-xl">
-					Hi, I'm a developer with a strong passion for Linux and web development.
+					{$t('about.long_desc.opening')}
 				</h6>
 				<p class="px-8 text-base font-normal text-wrap whitespace-normal text-white lg:text-lg">
-					I enjoy keeping things simple and focused. When working on something, I like to tackle the
-					core functionality first, then refine the details carefully. That’s one of the reasons I
-					enjoy working with Linux and programming languages like TypeScript and Go—they align well
-					with my mindset.
+					{$t('about.long_desc.first')}
 				</p>
 				<p class="px-8 text-base font-normal text-wrap whitespace-normal text-white lg:text-lg">
-					Over the past few years, I’ve had the opportunity to work on various web and mobile
-					development projects across different companies. Some of the highlights include
-					integrating Google Cloud services into backend systems for analytics, building RESTful
-					APIs with user authentication and management, designing clean and readable dashboards for
-					data visualization, and developing JavaScript-based mobile apps that work seamlessly with
-					multiple microservices.
+					{$t('about.long_desc.second')}
 				</p>
 				<p class="px-8 text-base font-normal text-wrap whitespace-normal text-white lg:text-lg">
-					Outside of work, I spend time playing games, reading tech articles, watching Netflix with
-					a cup of green tea, and—of course—writing code.
+					{$t('about.long_desc.third')}
 				</p>
 			</div>
 		</div>

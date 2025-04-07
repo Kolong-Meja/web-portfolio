@@ -1,4 +1,14 @@
 {
 	"short_desc": "Pengembang Full Stack Junior dengan keterampilan Linux yang kuat dan hasrat untuk membangun aplikasi web modern.",
-  "long_desc": ""
+	"long_desc": {
+		"opening": "Hai, saya seorang pengembang dengan hasrat yang kuat untuk Linux dan pengembangan web.",
+		"first": "Saya senang menjaga hal-hal tetap sederhana dan fokus. Saat mengerjakan sesuatu, saya suka menangani fungsionalitas inti terlebih dahulu, lalu menyempurnakan detailnya dengan saksama. Itulah salah satu alasan saya senang bekerja dengan Linux dan bahasa pemrograman seperti TypeScript dan Go—bahasa-bahasa tersebut selaras dengan pola pikir saya.",
+		"second": "Selama beberapa tahun terakhir, saya berkesempatan mengerjakan berbagai proyek pengembangan web dan seluler di berbagai perusahaan. Beberapa hal yang menonjol termasuk mengintegrasikan layanan Google Cloud ke dalam sistem backend untuk analitik, membangun API RESTful dengan autentikasi dan manajemen pengguna, merancang dasbor yang bersih dan mudah dibaca untuk visualisasi data, dan mengembangkan aplikasi seluler berbasis JavaScript yang bekerja dengan lancar dengan berbagai layanan mikro.",
+		"third": "Di luar pekerjaan, saya menghabiskan waktu bermain game, membaca artikel teknologi, menonton Netflix dengan secangkir teh hijau, dan—tentu saja—menulis kode."
+	},
+	"links": {
+		"first": "Curriculum Vitae",
+		"second": "Sertifikat",
+		"third": "Portfolio Lainnya"
+	}
 }

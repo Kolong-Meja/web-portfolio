@@ -1,4 +1,14 @@
 {
 	"short_desc": "Junior Full Stack Developer with strong Linux skills and a passion for building modern web applications.",
-  "long_desc": ""
+	"long_desc": {
+		"opening": "Hi, I'm a developer with a strong passion for Linux and web development.",
+		"first": "I enjoy keeping things simple and focused. When working on something, I like to tackle the core functionality first, then refine the details carefully. That’s one of the reasons I enjoy working with Linux and programming languages like TypeScript and Go—they align well with my mindset.",
+		"second": "Over the past few years, I’ve had the opportunity to work on various web and mobile development projects across different companies. Some of the highlights include integrating Google Cloud services into backend systems for analytics, building RESTful APIs with user authentication and management, designing clean and readable dashboards for data visualization, and developing JavaScript-based mobile apps that work seamlessly with multiple microservices.",
+		"third": "Outside of work, I spend time playing games, reading tech articles, watching Netflix with a cup of green tea, and—of course—writing code."
+	},
+	"links": {
+		"first": "Curriculum Vitae",
+		"second": "Certificates",
+		"third": "Other Portfolio"
+	}
 }

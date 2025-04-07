@@ -22,6 +22,11 @@ export const config: Config = {
 			loader: async () => (await import('./en/about.json')).default
 		},
 		{
+			locale: 'en',
+			key: 'content',
+			loader: async () => (await import('./en/content.json')).default
+		},
+		{
 			locale: 'id',
 			key: 'navbar',
 			loader: async () => (await import('./id/navbar.json')).default
@@ -30,6 +35,11 @@ export const config: Config = {
 			locale: 'id',
 			key: 'about',
 			loader: async () => (await import('./id/about.json')).default
+		},
+		{
+			locale: 'id',
+			key: 'content',
+			loader: async () => (await import('./id/content.json')).default
 		}
 	]
 };
