@@ -1,6 +1,6 @@
 <script lang="ts"></script>
 
-<footer class="dark:bg-soft-black font-hanken-grotesk h-full max-h-full w-full max-w-full bg-black">
+<footer class="dark:bg-soft-black font-hanken-grotesk h-full max-h-full w-full max-w-full bg-black transition-colors duration-300 ease-in-out">
 	<div class="container mx-auto">
 		<div class="px-6 py-12">
 			<div class="flex flex-col items-center gap-4 md:flex-row md:justify-between md:gap-0">

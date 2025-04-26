@@ -28,7 +28,7 @@
 						class="flex w-full flex-row flex-wrap items-center justify-normal gap-5 lg:gap-0 lg:space-x-6"
 					>
 						<a
-							href="https://drive.google.com/file/d/16wMhNA8WEA15ku846XYKmXd-5i91h_eO/view?usp=sharing"
+							href="https://drive.google.com/file/d/18uIFBDeQEW-pmryKt5k1gFhCCdlkJfgS/view?usp=drive_link"
 						>
 							<button class="group relative inline-block px-2.5 py-1.5 font-medium">
 								<span
@@ -44,7 +44,7 @@
 						</a>
 
 						<a
-							href="https://drive.google.com/file/d/1CWNnv7h82f26WPMn-1P-MyjQc07ZHTQf/view?usp=sharing"
+							href="https://drive.google.com/file/d/1CWNnv7h82f26WPMn-1P-MyjQc07ZHTQf/view?usp=drive_link"
 						>
 							<button class="group relative inline-block px-2.5 py-1.5 font-medium">
 								<span
@@ -60,7 +60,7 @@
 						</a>
 
 						<a
-							href="https://drive.google.com/file/d/1mHeO9252FSNfpSyVGZcg7AtZ55O1fhxq/view?usp=sharing"
+							href="https://drive.google.com/file/d/10Y64DAU9lT8Afh-CQDfe04Mv-vqSiefv/view?usp=drive_link"
 						>
 							<button class="group relative inline-block px-2.5 py-1.5 font-medium">
 								<span

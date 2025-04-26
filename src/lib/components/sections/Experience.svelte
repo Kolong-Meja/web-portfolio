@@ -46,7 +46,7 @@
 					></span>
 				</p>
 				<div
-					class="swiper bg-soft-black dark:bg-soft-dark flex h-[30rem] w-full rounded-lg sm:h-[25rem] md:h-[30rem] lg:h-[25rem] lg:w-[60rem]"
+					class="swiper bg-soft-black dark:bg-soft-dark flex h-[30rem] w-full rounded-lg transition-colors duration-300 ease-in-out sm:h-[25rem] md:h-[30rem] lg:h-[25rem] lg:w-[60rem]"
 				>
 					<!-- Additional required wrapper -->
 					<div class="swiper-wrapper">
