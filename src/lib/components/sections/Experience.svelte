@@ -35,15 +35,15 @@
 	<div
 		class="max-h-full min-h-screen w-screen max-w-full transition-colors duration-300 ease-in-out"
 	>
+		<!-- Animation -->
+		
+		<!-- End of Animation -->
 		<div class="container mx-auto">
 			<div class="px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:px-7 lg:py-20 xl:px-8 xl:py-24">
 				<p
-					class="group font-space-grotesk relative mb-4 w-full border-b border-gray-400 text-xl text-gray-400 transition-all duration-600 ease-in-out hover:font-bold hover:text-emerald-300 md:text-2xl lg:text-3xl xl:mb-8 dark:border-gray-500 dark:text-gray-500"
+					class="group font-space-grotesk relative mb-4 w-full text-center text-xl font-bold text-emerald-300 md:text-2xl lg:text-4xl xl:mb-8 dark:text-emerald-400"
 				>
 					{$t('content.experience.header')}
-					<span
-						class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-600 group-hover:w-full"
-					></span>
 				</p>
 				<div
 					class="swiper bg-soft-black dark:bg-soft-dark flex h-[30rem] w-full rounded-lg transition-colors duration-300 ease-in-out sm:h-[25rem] md:h-[30rem] lg:h-[25rem] lg:w-[60rem]"

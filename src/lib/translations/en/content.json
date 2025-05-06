@@ -1,6 +1,9 @@
 {
+  "projects": {
+    "header": "MY PROJECTS"
+  },
 	"experience": {
-		"header": "Experience",
+		"header": "WORK EXPERIENCE",
 		"swipe": {
 			"content": {
 				"first": {

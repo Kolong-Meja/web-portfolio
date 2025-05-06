@@ -4,6 +4,7 @@
 	import Skill from '$lib/components/sections/Skill.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Experience from '$lib/components/sections/Experience.svelte';
+	import Projects from '$lib/components/sections/Projects.svelte';
 </script>
 
 <Header />
@@ -11,6 +12,8 @@
 <About />
 
 <Skill />
+
+<Projects />
 
 <Experience />
 

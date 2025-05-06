@@ -17,7 +17,7 @@
 						Faisal Ramadhan
 					</h1>
 					<h6 class="text-2xl font-semibold text-balance text-white lg:text-3xl">
-						Jr. Full Stack Developer
+						Full Stack Developer
 					</h6>
 				</div>
 				<div class="flex w-full flex-col space-y-8 px-8">
