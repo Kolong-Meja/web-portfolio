@@ -16,10 +16,10 @@
 				>
 					{$t('content.projects.header')}
 				</p>
-				<div class="grid grid-cols-2 gap-4">
+				<div class="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
 					<!-- First -->
 					<div
-						class="bg-soft-black dark:bg-soft-dark my-8 w-[25rem] rounded-lg p-6 shadow-sm transition-colors duration-300 ease-in-out"
+						class="bg-soft-black dark:bg-soft-dark my-0 w-full rounded-lg p-6 shadow-sm transition-colors duration-300 ease-in-out lg:my-6"
 					>
 						<div class="flex flex-col space-y-4">
 							<div class="flex flex-row items-center">
@@ -48,7 +48,7 @@
 							<div class="flex flex-row space-x-3">
 								<a
 									href={'https://github.com/Kolong-Meja/Cake-Dungeon-Frontend-Template'}
-									class="flex items-center space-x-2 text-sm font-bold text-gray-50 dark:text-white"
+									class="flex flex-row items-center space-x-2 text-sm font-bold text-gray-50 transition-colors duration-300 ease-in-out hover:text-emerald-300 dark:text-white dark:hover:text-emerald-400"
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@
 
 								<a
 									href={'https://cakedungeon.netlify.app/'}
-									class="flex items-center space-x-2 text-sm font-bold text-gray-50 dark:text-white"
+									class="flex items-center space-x-2 text-sm font-bold text-gray-50 transition-colors duration-300 ease-in-out hover:text-emerald-300 dark:text-white dark:hover:text-emerald-400"
 								>
 									Live Demo
 									<svg
@@ -104,7 +104,7 @@
 
 					<!-- Second -->
 					<div
-						class="bg-soft-black dark:bg-soft-dark relative my-6 w-96 rounded-lg p-6 shadow-sm transition-colors duration-300 ease-in-out"
+						class="bg-soft-black dark:bg-soft-dark relative my-0 w-full rounded-lg p-6 shadow-sm transition-colors duration-300 ease-in-out lg:my-6"
 					>
 						<div class="mb-4 flex items-center">
 							<svg
@@ -121,18 +121,16 @@
 									d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"
 								/>
 							</svg>
-							<h5 class="ml-3 text-xl font-bold text-gray-50 dark:text-white">
-								MobilizeMate Projects
-							</h5>
+							<h5 class="ml-3 text-xl font-bold text-gray-50 dark:text-white">PokeWiki Website</h5>
 						</div>
 						<p class="mb-4 block leading-normal font-light text-gray-50 dark:text-white">
-							A mobile-based sales and distribution application that I developed in mid to late 2024
-							which aims to help sales and distribution activities become easier and more effective.
+							PokeWiki is a wiki website for finding information about Pokemon. This project is
+							private and does not represent the Pokemon trademark.
 						</p>
-						<div>
+						<div class="flex flex-row space-x-3">
 							<a
-								href={'https://github.com/MobilizeMate'}
-								class="flex flex-row items-center space-x-2 text-sm font-bold text-gray-50 hover:underline dark:text-white"
+								href={'https://github.com/Kolong-Meja/pokewiki-website'}
+								class="flex flex-row items-center space-x-2 text-sm font-bold text-gray-50 transition-colors duration-300 ease-in-out hover:text-emerald-300 dark:text-white dark:hover:text-emerald-400"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -148,6 +146,26 @@
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									class="ml-1 h-4 w-4 -rotate-40"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M14 5l7 7m0 0l-7 7m7-7H3"
+									/>
+								</svg>
+							</a>
+							<a
+								href={'https://pokewiki-website.vercel.app'}
+								class="flex items-center space-x-2 text-sm font-bold text-gray-50 transition-colors duration-300 ease-in-out hover:text-emerald-300 dark:text-white dark:hover:text-emerald-400"
+							>
+								Live Demo
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									class="ml-1 h-3 w-3 -rotate-40"
 									fill="none"
 									viewBox="0 0 24 24"
 									stroke="currentColor"
