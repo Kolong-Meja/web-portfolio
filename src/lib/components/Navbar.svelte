@@ -208,6 +208,17 @@
 						></span>
 					</a>
 				</li>
+        <li class="list-none">
+					<a
+						href={'#projects'}
+						class="group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
+					>
+						<span> {$t('navbar.projects')} </span>
+						<span
+							class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-400 group-hover:w-full"
+						></span>
+					</a>
+				</li>
 				<li class="list-none">
 					<a
 						href={'#experience'}
@@ -255,6 +266,13 @@
 						<a href={'#skill'}>
 							<span class="text-base text-white underline underline-offset-4"
 								>{$t('navbar.skill')}</span
+							>
+						</a>
+					</li>
+					<li class="list-none">
+						<a href={'#projects'}>
+							<span class="text-base text-white underline underline-offset-4"
+								>{$t('navbar.projects')}</span
 							>
 						</a>
 					</li>
