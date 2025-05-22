@@ -256,28 +256,28 @@
 			>
 				<ul class="flex flex-col items-center justify-center space-y-6 p-4">
 					<li class="list-none">
-						<a href={'#about'}>
+						<a href={'#'}>
 							<span class="text-base text-white underline underline-offset-4"
 								>{$t('navbar.about')}</span
 							>
 						</a>
 					</li>
 					<li class="list-none">
-						<a href={'#skill'}>
+						<a href={'#'}>
 							<span class="text-base text-white underline underline-offset-4"
 								>{$t('navbar.skill')}</span
 							>
 						</a>
 					</li>
 					<li class="list-none">
-						<a href={'#projects'}>
+						<a href={'#'}>
 							<span class="text-base text-white underline underline-offset-4"
 								>{$t('navbar.projects')}</span
 							>
 						</a>
 					</li>
 					<li class="list-none">
-						<a href={'#experience'}>
+						<a href={'#'}>
 							<span class="text-base text-white underline underline-offset-4"
 								>{$t('navbar.experience')}</span
 							>
