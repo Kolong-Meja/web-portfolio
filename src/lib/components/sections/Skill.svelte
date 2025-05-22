@@ -7,41 +7,104 @@
 	import SkillsBadge from '../SkillsBadge.svelte';
 	import { t } from '$lib/translations';
 
-	const value = `const skills = [
-  "Laravel",
-  "Spring Boot",
-  "NestJS",
-  "Next.js",
-  "Vue.js",
-  "Sveltekit",
-  "Git",
-  "Docker",
-  "PostgreSQL",
-  "Typescript",
-  "Java",
-  "PHP",
-  "Go",
-  "Node.js",
-  "Restful API",
-  "Microservices",
-  "Linux",
-];
+	const value = `const skills = Array.from(
+  new Set([
+    "HTML",
+    "CSS",
+    "Javascript",
+    "Typescript",
+    "PHP",
+    "Java",
+    "Go",
+    "Laravel",
+    "Spring Boot",
+    "NestJS",
+    "Next.js",
+    "Vue.js",
+    "Sveltekit",
+    "Git",
+    "Github",
+    "Docker",
+    "MySQL",
+    "PostgreSQL",
+    "MongoDB",
+    "Node.js",
+    "Restful API",
+    "Linux",
+    "Agile/Scrum Development",
+    "Rapid Application Development",
+    "Problem Solving",
+    "Attention to Detail",
+    "Collaboration",
+    "Time Management",
+    "Version Control",
+    "Microservices Architecture",
+    "Monolithic Architecture",
+  ])
+);
 
-function expertise(skills: Array<string>): Array<string> {
-  skills.sort(
-    (initial, next) => initial.localeCompare(next)
-  );
-  return skills;
+const hoarePartition = <T extends string | number>(
+  v: T[],
+  front: number,
+  back: number
+) => {
+  const p = v[Math.floor((front + back) / 2)];
+  let lp = front - 1;
+  let rp = back + 1;
+
+  while (true) {
+    do {
+      lp++;
+    } while (v[lp] < p);
+
+    do {
+      rp--;
+    } while (v[rp] > p);
+
+    if (lp < rp) {
+      const temp = v[lp];
+      v[lp] = v[rp];
+      v[rp] = temp;
+    } else {
+      return rp;
+    }
+  }
+};
+
+const quickSort = <T extends string | number>(
+  v: T[],
+  front: number,
+  back: number
+) => {
+  if (v.length <= 1) return v;
+
+  if (front < back) {
+    const partition = hoarePartition(v, front, back);
+    quickSort(v, front, partition);
+    quickSort(v, partition + 1, back);
+  }
+};
+
+function executable(): void {
+  quickSort(skills, 0, skills.length - 1);
+  console.log(skills);
 }
 
 function main() {
-  console.log(expertise(skills));
+  executable();
 }
 
 main();
 `;
 
 	const skills = [
+		'HTML',
+		'CSS',
+		'Javascript',
+		'Typescript',
+		'PHP',
+		'Java',
+		'Go',
 		'Laravel',
 		'Spring Boot',
 		'NestJS',
@@ -49,16 +112,23 @@ main();
 		'Vue.js',
 		'Sveltekit',
 		'Git',
+		'Github',
 		'Docker',
+		'MySQL',
 		'PostgreSQL',
-		'Typescript',
-		'Java',
-		'PHP',
-		'Go',
+		'MongoDB',
 		'Node.js',
 		'Restful API',
-		'Microservices',
-		'Linux'
+		'Linux',
+		'Agile/Scrum Development',
+		'Rapid Application Development',
+		'Problem Solving',
+		'Attention to Detail',
+		'Collaboration',
+		'Time Management',
+		'Version Control',
+		'Microservices Architecture',
+		'Monolithic Architecture'
 	];
 
 	onMount(() => {
@@ -78,8 +148,7 @@ main();
 </script>
 
 <section
-	id="skill"
-	class="dark:bg-soft-black font-hanken-grotesk max-h-full min-h-screen w-screen max-w-full bg-black transition-colors duration-300 ease-in-out"
+	class="skill-section dark:bg-soft-black font-hanken-grotesk max-h-full min-h-screen w-screen max-w-full bg-black transition-colors duration-300 ease-in-out"
 >
 	<div class="container mx-auto">
 		<div class="px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:px-7 lg:py-20 xl:px-8 xl:py-24">
@@ -123,11 +192,11 @@ main();
           </div>
           <code
 						id="code"
-						class="language-typescript h-[25rem] overflow-x-auto rounded-b-xl text-sm text-wrap md:text-base"
+						class="language-typescript h-[35rem] overflow-x-auto rounded-b-xl text-sm text-nowrap md:text-base"
 						>{value}</code
 					>
       </pre>
-				<div class="flex flex-wrap items-center gap-3 sm:gap-4 p-2 lg:w-[35rem] xl:w-[40rem]">
+				<div class="flex flex-wrap items-center gap-3 p-2 sm:gap-4 lg:w-[35rem] xl:w-[40rem]">
 					{#each skills as skill}
 						<SkillsBadge value={skill} />
 					{/each}

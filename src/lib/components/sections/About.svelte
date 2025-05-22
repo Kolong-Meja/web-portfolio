@@ -3,7 +3,7 @@
 </script>
 
 <section
-	class="dark:bg-soft-black h-full max-h-full w-full max-w-full bg-black transition-colors duration-300 ease-in-out"
+	class="about-section dark:bg-soft-black h-full max-h-full w-full max-w-full bg-black transition-colors duration-300 ease-in-out"
 >
 	<div class="container mx-auto">
 		<div
@@ -28,7 +28,7 @@
 						class="flex w-full flex-row flex-wrap items-center justify-normal gap-5 lg:gap-0 lg:space-x-6"
 					>
 						<a
-							href="https://drive.google.com/file/d/1t8Km-voyllONmwaw8fxi74EcEDjRFq4t/view?usp=sharing"
+							href="https://drive.google.com/file/d/1Krl0gr29D7ZJWRIc8spswGlYOmdT5TaQ/view?usp=sharing"
 						>
 							<button class="group relative inline-block px-2.5 py-1.5 font-medium">
 								<span

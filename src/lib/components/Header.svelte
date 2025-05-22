@@ -3,7 +3,7 @@
 </script>
 
 <div
-	class="overflow-hidden relative flex max-h-full min-h-screen w-screen max-w-full items-center justify-center"
+	class="dark:bg-soft-black relative flex max-h-full min-h-screen w-screen max-w-full items-center justify-center overflow-hidden bg-black transition-colors duration-300 ease-in-out"
 >
 	<div class="container mx-auto">
 		<div class="flex items-center justify-center px-10 py-14 md:px-20 md:py-24">

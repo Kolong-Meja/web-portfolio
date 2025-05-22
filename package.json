@@ -43,6 +43,7 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
+		"gsap": "^3.13.0",
 		"highlight.js": "^11.11.1",
 		"sveltekit-i18n": "^2.4.2",
 		"swiper": "^11.2.6",

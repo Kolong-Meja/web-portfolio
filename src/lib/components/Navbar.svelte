@@ -114,7 +114,7 @@
 </svelte:head>
 
 <nav
-	class="navbar font-hanken-grotesk dark:bg-soft-black fixed start-0 top-0 z-20 w-full border-b border-gray-900 bg-black transition-all duration-300 ease-in-out dark:border-gray-800"
+	class="navbar font-hanken-grotesk dark:bg-soft-black/75 fixed start-0 top-0 z-20 w-full border-b border-gray-900 bg-black/75 backdrop-blur-md transition-all duration-300 ease-in-out dark:border-gray-800 dark:backdrop-blur-md"
 >
 	<div class="container mx-auto">
 		<!-- svelte-ignore a11y_consider_explicit_label -->
@@ -188,8 +188,8 @@
 			<ul class="hidden flex-row items-center justify-normal space-x-8 lg:flex">
 				<li class="list-none">
 					<a
-						href={'#about'}
-						class="group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
+						href={'#'}
+						class="about-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
 					>
 						<span> {$t('navbar.about')} </span>
 						<span
@@ -199,8 +199,8 @@
 				</li>
 				<li class="list-none">
 					<a
-						href={'#skill'}
-						class="group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
+						href={'#'}
+						class="skill-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
 					>
 						<span> {$t('navbar.skill')} </span>
 						<span
@@ -208,10 +208,10 @@
 						></span>
 					</a>
 				</li>
-        <li class="list-none">
+				<li class="list-none">
 					<a
-						href={'#projects'}
-						class="group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
+						href={'#'}
+						class="project-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
 					>
 						<span> {$t('navbar.projects')} </span>
 						<span
@@ -221,8 +221,8 @@
 				</li>
 				<li class="list-none">
 					<a
-						href={'#experience'}
-						class="group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
+						href={'#'}
+						class="experience-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
 					>
 						<span> {$t('navbar.experience')} </span>
 						<span
@@ -252,7 +252,7 @@
 
 			<!-- Menu -->
 			<div
-				class="menu dark:bg-soft-black absolute top-17 right-0 hidden w-full border-b border-gray-900 bg-black transition-all duration-300 ease-in-out dark:border-gray-800"
+				class="menu dark:bg-soft-black absolute top-17 right-0 hidden w-full border-b border-gray-900 bg-black bg-black transition-all duration-300 ease-in-out dark:border-gray-800"
 			>
 				<ul class="flex flex-col items-center justify-center space-y-6 p-4">
 					<li class="list-none">
