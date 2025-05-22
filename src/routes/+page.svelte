@@ -26,7 +26,7 @@
 		const links = ['about', 'skill', 'project', 'experience'];
 
 		links.forEach((l) => {
-			let link = document.querySelector(`.${l}-link`) as HTMLAnchorElement;
+			let link = document.querySelector(`.${l}-link`) as HTMLButtonElement;
 
 			link.addEventListener('click', (e) => {
 				smoother.scrollTo(`.${l}-section`, true, 'center center');

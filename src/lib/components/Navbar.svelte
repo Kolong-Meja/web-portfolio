@@ -185,55 +185,51 @@
 			</div>
 
 			<!-- Links -->
-			<ul class="hidden flex-row items-center justify-normal space-x-8 lg:flex">
+			<ul class="hidden flex-row items-center justify-normal space-x-8 md:flex">
 				<li class="list-none">
-					<a
-						href={'#'}
+					<button
 						class="about-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
 					>
 						<span> {$t('navbar.about')} </span>
 						<span
 							class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-400 group-hover:w-full"
 						></span>
-					</a>
+					</button>
 				</li>
 				<li class="list-none">
-					<a
-						href={'#'}
+					<button
 						class="skill-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
 					>
 						<span> {$t('navbar.skill')} </span>
 						<span
 							class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-400 group-hover:w-full"
 						></span>
-					</a>
+					</button>
 				</li>
 				<li class="list-none">
-					<a
-						href={'#'}
+					<button
 						class="project-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
 					>
 						<span> {$t('navbar.projects')} </span>
 						<span
 							class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-400 group-hover:w-full"
 						></span>
-					</a>
+					</button>
 				</li>
 				<li class="list-none">
-					<a
-						href={'#'}
+					<button
 						class="experience-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
 					>
 						<span> {$t('navbar.experience')} </span>
 						<span
 							class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-400 group-hover:w-full"
 						></span>
-					</a>
+					</button>
 				</li>
 			</ul>
 
 			<!-- Mobile Menu Button -->
-			<button class="text-white lg:hidden" on:click={toggleMenu}>
+			<!-- <button class="text-white lg:hidden" on:click={toggleMenu}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-6 w-6"
@@ -248,43 +244,43 @@
 						d="M4 6h16M4 12h16m-7 6h7"
 					/>
 				</svg>
-			</button>
+			</button> -->
 
 			<!-- Menu -->
-			<div
+			<!-- <div
 				class="menu dark:bg-soft-black absolute top-17 right-0 hidden w-full border-b border-gray-900 bg-black bg-black transition-all duration-300 ease-in-out dark:border-gray-800"
 			>
 				<ul class="flex flex-col items-center justify-center space-y-6 p-4">
 					<li class="list-none">
-						<a href={'#'}>
+						<button class="about-link">
 							<span class="text-base text-white underline underline-offset-4"
 								>{$t('navbar.about')}</span
 							>
-						</a>
+						</button>
 					</li>
 					<li class="list-none">
-						<a href={'#'}>
+						<button class="navbar-link">
 							<span class="text-base text-white underline underline-offset-4"
 								>{$t('navbar.skill')}</span
 							>
-						</a>
+						</button>
 					</li>
 					<li class="list-none">
-						<a href={'#'}>
+						<button class="project-link">
 							<span class="text-base text-white underline underline-offset-4"
 								>{$t('navbar.projects')}</span
 							>
-						</a>
+						</button>
 					</li>
 					<li class="list-none">
-						<a href={'#'}>
+						<button class="experience-link">
 							<span class="text-base text-white underline underline-offset-4"
 								>{$t('navbar.experience')}</span
 							>
-						</a>
+						</button>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </nav>
