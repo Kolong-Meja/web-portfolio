@@ -17,8 +17,8 @@
 		let smoother = ScrollSmoother.create({
 			wrapper: '#smooth-wrapper',
 			content: '#smooth-content',
-			smooth: 3,
-			speed: 0.5,
+			smooth: 4,
+			speed: 0.4,
 			effects: true,
 			normalizeScroll: false
 		});
