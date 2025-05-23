@@ -1,7 +1,8 @@
 {
 	"name": "web-portfolio",
 	"private": true,
-	"version": "0.0.1",
+	"version": "1.0.0",
+	"description": "This is the latest version of my personal portfolio. Enjoy your visit.",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
