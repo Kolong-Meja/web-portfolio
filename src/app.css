@@ -28,7 +28,7 @@ body {
 	--animate-slide-out-up: slide-out-up 0.4s ease-in-out forwards;
 	--animate-fadeIn: fadeIn 0.8s ease-in-out forwards;
 	--animate-fadeOut: fadeIn 0.8s ease-out forwards;
-	--animate-background: background-move ease infinite;
+	--animate-marquee: someMarquee 10s linear infinite;
 
 	@keyframes slide-in-down {
 		0% {
@@ -72,14 +72,12 @@ body {
 		}
 	}
 
-	@keyframes background-move {
-		0%,
-		100% {
-			background-position: 0% 50%;
+	@keyframes someMarquee {
+		0% {
+			transform: translate3d(var(--move-initial), 0, 0);
 		}
-
-		50% {
-			background-position: 100% 50%;
+		100% {
+			transform: translate3d(var(--move-final), 0, 0);
 		}
 	}
 }

@@ -20,11 +20,6 @@
 	use:inview={options}
 	on:inview_change={handleChange}
 >
-	<!-- <div class="relative h-full w-full bg-slate-950">
-		<div
-			class="absolute top-0 right-0 bottom-0 left-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] bg-[size:14px_24px]"
-		></div>
-	</div> -->
 	<div
 		class="absolute top-0 right-0 bottom-0 left-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] [mask-image:linear-gradient(to_bottom,#000_20%,transparent_100%)] bg-[size:14px_24px] bg-[size:14px_24px]"
 	></div>
@@ -73,9 +68,7 @@
 					</div>
 				</div>
 				<!-- Right Side -->
-				<div
-					class="font-space-grotesk flex w-full flex-col space-y-4 border-t border-gray-900 pt-8 pb-16 lg:border-none lg:pt-0 lg:pb-0 dark:border-gray-800"
-				>
+				<div class="font-space-grotesk flex w-full flex-col space-y-4 pt-8 pb-16 lg:pt-0 lg:pb-0">
 					<h6 class="px-8 text-lg font-bold text-wrap whitespace-normal text-white lg:text-xl">
 						{$t('about.long_desc.opening')}
 					</h6>

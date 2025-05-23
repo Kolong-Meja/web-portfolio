@@ -34,7 +34,8 @@ export const _defaultSkills: string[] = Array.from(
 	])
 );
 
-export const _codePanelValue = `const skills = Array.from(
+export const _codePanelValue = `
+const skills = Array.from(
   new Set([
     "HTML",
     "CSS",

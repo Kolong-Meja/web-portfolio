@@ -14,10 +14,10 @@
 		hljs.initHighlightingOnLoad();
 
 		const codeTypeIt = new TypeIt('#code', {
-			speed: 40,
-			waitUntilVisible: true,
+			speed: 30,
+			waitUntilVisible: false,
 			loop: false,
-			lifeLike: false
+			lifeLike: true
 		});
 		codeTypeIt.go();
 	});
