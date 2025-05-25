@@ -114,7 +114,7 @@
 </svelte:head>
 
 <nav
-	class="navbar font-hanken-grotesk dark:bg-soft-black/75 fixed start-0 top-0 z-20 w-full border-b border-gray-900 bg-black/75 backdrop-blur-md transition-all duration-300 ease-in-out dark:border-gray-800 dark:backdrop-blur-md"
+	class="navbar font-hanken-grotesk dark:bg-soft-black/60 fixed start-0 top-0 z-20 w-full border-b border-gray-900 bg-black/75 backdrop-blur-md transition-all duration-300 ease-in-out dark:border-gray-800 dark:backdrop-blur-md"
 >
 	<div class="container mx-auto">
 		<!-- svelte-ignore a11y_consider_explicit_label -->

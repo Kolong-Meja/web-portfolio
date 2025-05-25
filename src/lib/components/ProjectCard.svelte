@@ -1,9 +1,13 @@
 <script lang="ts">
-	export let title: string;
-	export let description: string;
-	export let githubLink: string;
-	export let isDemoLinkExist: boolean = false;
-	export let demoLink: string | undefined = undefined;
+	type ProjectCardProps = {
+		title: string;
+		desc: string;
+		githubLink: string;
+		isDemoLinkExist: boolean;
+		demoLink?: string | undefined;
+	};
+
+	export let props: ProjectCardProps;
 </script>
 
 <div
@@ -16,7 +20,7 @@
 			viewBox="0 0 24 24"
 			stroke-width="1.5"
 			stroke="currentColor"
-			class="h-6 w-6 text-gray-50 dark:text-white"
+			class="h-6 w-6 text-white"
 		>
 			<path
 				stroke-linecap="round"
@@ -24,15 +28,15 @@
 				d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"
 			/>
 		</svg>
-		<h5 class="ml-3 text-xl font-bold text-gray-50 dark:text-white">{title}</h5>
+		<h5 class="ml-3 text-xl font-bold text-white">{props.title}</h5>
 	</div>
-	<p class="mb-4 block leading-normal font-light text-gray-50 dark:text-white">
-		{description}
+	<p class="mb-4 block leading-normal font-light text-white">
+		{props.desc}
 	</p>
 	<div class="flex flex-row space-x-3">
 		<a
-			href={githubLink}
-			class="flex flex-row items-center space-x-2 text-sm font-bold text-gray-50 transition-colors duration-300 ease-in-out hover:text-emerald-300 dark:text-white dark:hover:text-emerald-400"
+			href={props.githubLink}
+			class="flex flex-row items-center space-x-2 text-sm font-bold text-white transition-colors duration-300 ease-in-out hover:text-emerald-300 dark:hover:text-emerald-400"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -60,10 +64,10 @@
 				/>
 			</svg>
 		</a>
-		{#if isDemoLinkExist}
+		{#if props.isDemoLinkExist}
 			<a
-				href={demoLink}
-				class="flex items-center space-x-2 text-sm font-bold text-gray-50 transition-colors duration-300 ease-in-out hover:text-emerald-300 dark:text-white dark:hover:text-emerald-400"
+				href={props.demoLink}
+				class="flex items-center space-x-2 text-sm font-bold text-white transition-colors duration-300 ease-in-out hover:text-emerald-300 dark:hover:text-emerald-400"
 			>
 				Live Demo
 				<svg

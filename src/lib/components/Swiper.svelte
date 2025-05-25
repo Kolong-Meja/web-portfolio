@@ -58,7 +58,7 @@
 				}}
 			/>
 		</div>
-		<div class="swiper-slide">
+		<!-- <div class="swiper-slide">
 			<SwiperContent
 				props={{
 					logoSrc: PeruriLogo,
@@ -69,7 +69,7 @@
 					skills: _achievedSkills._t
 				}}
 			/>
-		</div>
+		</div> -->
 	</div>
 	<div class="swiper-scrollbar"></div>
 </div>

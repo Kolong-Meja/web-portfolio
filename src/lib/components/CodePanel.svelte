@@ -14,7 +14,7 @@
 		hljs.initHighlightingOnLoad();
 
 		const codeTypeIt = new TypeIt('#code', {
-			speed: 30,
+			speed: 18,
 			waitUntilVisible: false,
 			loop: false,
 			lifeLike: true

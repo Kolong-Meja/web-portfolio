@@ -8,10 +8,10 @@
 >
 	<div class="container mx-auto">
 		<div class="flex h-screen flex-col items-center justify-center space-y-4">
-			<h1 class="text-3xl font-bold text-gray-50 md:text-4xl lg:text-6xl dark:text-white">
+			<h1 class="text-3xl font-bold md:text-4xl lg:text-6xl text-white">
 				{status} | {message}
 			</h1>
-			<p class="text-base font-normal text-gray-50 sm:text-lg md:text-xl dark:text-white">
+			<p class="text-base font-normal sm:text-lg md:text-xl text-white">
 				Oops... something when wrong, BAD THINGS HAVE HAPPENED!!!
 			</p>
 			<a

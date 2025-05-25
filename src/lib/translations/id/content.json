@@ -18,11 +18,6 @@
 					"title": "IT Developer Internship",
 					"duration": "Februari ─ Juni 2024",
 					"desc": "Membuat dan mengembangkan aplikasi untuk anak perusahaan PT. Sinergi Global Servis, yaitu aplikasi Sales Distributor (SIDIA) menggunakan framework Vue.js dan Ionic. Saya juga turut serta dalam pembuatan dan pengembangan sistem Restful API untuk aplikasi ini menggunakan framework Laravel. Untuk tahap pengembangan, saya menggunakan Docker dan Vite untuk mempercepat pengembangan aplikasi hingga tuntas."
-				},
-				"third": {
-					"title": "IT Staff Internship",
-					"duration": "Agustus ─ Desember 2024",
-					"desc": "Mengembangkan dan merancang teknologi informasi perusahaan, mendukung pemeliharaan sistem yang ada, mengoordinasikan agenda rapat untuk para pemangku kepentingan, merancang poster kesadaran keamanan, mengembangkan proposal untuk Penghargaan Inovasi & Kaizen 2024, membuat contoh untuk Alat Manajemen Dokumen, mengembangkan perangkat lunak penilaian web COBIT 5, dan membuat video program kerja departemen untuk kebutuhan rapat koordinasi 2024."
 				}
 			}
 		}

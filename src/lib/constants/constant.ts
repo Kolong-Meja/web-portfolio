@@ -130,3 +130,35 @@ export const _achievedSkills = {
 	_s: ['Javascript', 'Laravel', 'Vue.js', 'Ionic', 'PostgreSQL', 'Docker', 'Git'],
 	_t: ['Laravel', 'Vue.js', 'Mongodb', 'Figma']
 };
+
+export const _welcomeTexts = [
+	'Selamat datang!',
+	'Witaj!',
+	'Добро пожаловать!',
+	'Välkommen!',
+	'Bem-vindo/a!',
+	'Benvenuto/a!',
+	'Bienvenue!',
+	'¡Bienvenido/a!',
+	'Willkommen!',
+	'Hoş geldin!',
+	'欢迎',
+	'ようこそ',
+	'어서 오십시오'
+];
+
+export const _goodbyeTexts = [
+	'Sampai jumpa',
+	'Dag',
+	'Adeus',
+	'Auf Wiedersehen',
+	'Arrivederci',
+	'Au revoir',
+	'Adiós',
+	'Hoşçakalın',
+	'Hej då',
+	'Do widzenia',
+	'再见',
+	'またね',
+	'안녕히 계세요'
+];

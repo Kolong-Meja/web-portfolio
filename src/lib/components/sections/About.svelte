@@ -4,10 +4,11 @@
 	import { t } from '$lib/translations';
 	import type { ObserverEventDetails, Options } from 'svelte-inview';
 	import DocumentLink from '../DocumentLink.svelte';
+	import { _welcomeTexts } from '$lib/constants/constant';
 
 	let isInViewed: boolean;
 	const options: Options = {
-		rootMargin: '-15%',
+		rootMargin: '-20%',
 		unobserveOnEnter: true
 	};
 
@@ -21,7 +22,7 @@
 	on:inview_change={handleChange}
 >
 	<div
-		class="absolute top-0 right-0 bottom-0 left-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] [mask-image:linear-gradient(to_bottom,#000_20%,transparent_100%)] bg-[size:14px_24px] bg-[size:14px_24px]"
+		class="absolute top-0 right-0 bottom-0 left-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] [mask-image:linear-gradient(to_bottom,#000_20%,transparent_80%)] bg-[size:14px_24px] bg-[size:14px_24px]"
 	></div>
 	{#if isInViewed}
 		<div class="container mx-auto" in:fade={{ duration: 1200 }}>
@@ -31,7 +32,7 @@
 			>
 				<!-- Left Side -->
 				<div class="font-hanken-grotesk flex w-full flex-col space-y-4 pt-16 pb-8">
-					<div class="flex w-full flex-col space-y-2 px-8">
+					<div class="font-inconsolata flex w-full flex-col space-y-2 px-8">
 						<h1 class="text-4xl font-bold text-balance text-white md:text-5xl lg:text-7xl">
 							Faisal Ramadhan
 						</h1>

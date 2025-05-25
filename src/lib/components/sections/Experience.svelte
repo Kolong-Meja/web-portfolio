@@ -7,7 +7,7 @@
 
 	let isInViewed: boolean;
 	const options: Options = {
-		rootMargin: '-30%',
+		rootMargin: '-35%',
 		unobserveOnEnter: true
 	};
 

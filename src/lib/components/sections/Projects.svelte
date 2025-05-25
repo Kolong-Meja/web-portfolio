@@ -7,7 +7,7 @@
 
 	let isInViewed: boolean;
 	const options: Options = {
-		rootMargin: '-25%',
+		rootMargin: '-30%',
 		unobserveOnEnter: true
 	};
 
@@ -30,26 +30,30 @@
 				</p>
 				<div class="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
 					<ProjectCard
-						title={'Cakes Online Store'}
-						description={`An online cake shop that I developed in 2024 as my personal project with a focus on
-							frontend development using Sveltekit and Tailwind CSS.`}
-						githubLink={'https://github.com/Kolong-Meja/Cake-Dungeon-Frontend-Template'}
-						isDemoLinkExist={true}
-						demoLink={'https://cakedungeon.netlify.app/'}
+						props={{
+							title: 'Cakes Online Store',
+							desc: `An online cake shop that I developed in 2024 as my personal project with a focus on frontend development using Sveltekit and Tailwind CSS.`,
+							githubLink: 'https://github.com/Kolong-Meja/Cake-Dungeon-Frontend-Template',
+							isDemoLinkExist: true,
+							demoLink: 'https://cakedungeon.netlify.app/'
+						}}
 					/>
 					<ProjectCard
-						title={'PokeWiki Website'}
-						description={`PokeWiki is a wiki website for finding information about Pokemon. This project is
-						private and does not represent the Pokemon trademark.`}
-						githubLink={'https://github.com/Kolong-Meja/pokewiki-website'}
-						isDemoLinkExist={true}
-						demoLink={'https://pokewiki-website.vercel.app'}
+						props={{
+							title: 'PokeWiki Website',
+							desc: `PokeWiki is a wiki website for finding information about Pokemon. This project is private and does not represent the Pokemon trademark.`,
+							githubLink: 'https://github.com/Kolong-Meja/pokewiki-website',
+							isDemoLinkExist: true,
+							demoLink: 'https://pokewiki-website.vercel.app'
+						}}
 					/>
 					<ProjectCard
-						title={'MobilizeMate'}
-						description={`A mobile-based sales and distribution application that aims to help make sales and distribution activities easier and more effective.`}
-						githubLink={'https://github.com/MobilizeMate'}
-						isDemoLinkExist={false}
+						props={{
+							title: 'MobilizeMate',
+							desc: `A mobile-based sales and distribution application that aims to help make sales and distribution activities easier and more effective.`,
+							githubLink: 'https://github.com/MobilizeMate',
+							isDemoLinkExist: false
+						}}
 					/>
 				</div>
 			</div>
