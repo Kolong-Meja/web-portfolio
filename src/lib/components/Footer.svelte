@@ -1,8 +1,3 @@
-<script lang="ts">
-	import { _goodbyeTexts } from '$lib/constants/constant';
-	import Marquee from './Marquee.svelte';
-</script>
-
 <footer
 	class="dark:bg-soft-black font-hanken-grotesk h-full max-h-full w-full max-w-full bg-black transition-colors duration-300 ease-in-out"
 >
@@ -83,10 +78,4 @@
 			</div>
 		</div>
 	</div>
-	<Marquee
-		props={{
-			texts: _goodbyeTexts,
-			fontSize: 'text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-7xl'
-		}}
-	/>
 </footer>

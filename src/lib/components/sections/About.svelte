@@ -8,7 +8,7 @@
 
 	let isInViewed: boolean;
 	const options: Options = {
-		rootMargin: '-20%',
+		rootMargin: '-15%',
 		unobserveOnEnter: true
 	};
 
@@ -22,10 +22,10 @@
 	on:inview_change={handleChange}
 >
 	<div
-		class="absolute top-0 right-0 bottom-0 left-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] [mask-image:linear-gradient(to_bottom,#000_20%,transparent_80%)] bg-[size:14px_24px] bg-[size:14px_24px]"
+		class="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] [mask-image:linear-gradient(to_bottom,#000_20%,transparent_80%)] bg-[size:14px_24px]"
 	></div>
 	{#if isInViewed}
-		<div class="container mx-auto" in:fade={{ duration: 1200 }}>
+		<div class="relative z-10 container mx-auto" in:fade={{ duration: 1000 }}>
 			<div
 				id="about"
 				class="flex min-h-screen flex-col justify-normal space-y-4 lg:flex-row lg:items-center lg:space-x-8 lg:py-24"

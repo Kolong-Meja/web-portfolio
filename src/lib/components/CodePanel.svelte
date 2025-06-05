@@ -14,12 +14,12 @@
 		hljs.initHighlightingOnLoad();
 
 		const codeTypeIt = new TypeIt('#code', {
-			speed: 18,
-			waitUntilVisible: false,
-			loop: false,
-			lifeLike: true
-		});
-		codeTypeIt.go();
+				speed: 40,
+				waitUntilVisible: false,
+				loop: false,
+				lifeLike: true
+			});
+			codeTypeIt.go();
 	});
 </script>
 

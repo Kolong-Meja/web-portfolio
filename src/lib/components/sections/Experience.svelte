@@ -7,7 +7,7 @@
 
 	let isInViewed: boolean;
 	const options: Options = {
-		rootMargin: '-35%',
+		rootMargin: '-30%',
 		unobserveOnEnter: true
 	};
 
@@ -23,7 +23,7 @@
 	{#if isInViewed}
 		<div
 			class="max-h-full min-h-screen w-screen max-w-full transition-colors duration-300 ease-in-out"
-			in:fade={{ duration: 1200 }}
+			in:fade={{ duration: 1000 }}
 		>
 			<div class="container mx-auto">
 				<div class="px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:px-7 lg:py-20 xl:px-8 xl:py-24">

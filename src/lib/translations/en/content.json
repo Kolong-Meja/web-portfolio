@@ -6,20 +6,6 @@
 		"header": "MY PROJECTS"
 	},
 	"experience": {
-		"header": "WORK EXPERIENCE",
-		"swipe": {
-			"content": {
-				"first": {
-					"title": "Full Stack Developer Internship",
-					"duration": "February ─ June 2023",
-					"desc": "Developing a Restful API system for SurveyAsia services using Laravel and NestJS frameworks. I also took part in developing and updating the frontend appearance of this service using Vue.js and Laravel Blade frameworks."
-				},
-				"second": {
-					"title": "IT Developer Internship",
-					"duration": "February ─ June 2024",
-					"desc": "Create and develop applications for a subsidiary of PT. Sinergi Global Servis, namely the Sales Distributor application (SIDIA) using the Vue.js and Ionic frameworks. I also took part in creating and developing the Restful API system for this application using the Laravel framework. For the development stage, I used Docker and Vite to accelerate application development to completion."
-				}
-			}
-		}
+		"header": "WORK EXPERIENCE"
 	}
 }
