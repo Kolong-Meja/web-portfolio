@@ -1,11 +1,26 @@
 {
 	"skills": {
-		"header": "KEAHLIAN SAYA"
+		"header": "keahlian saya"
 	},
 	"projects": {
-		"header": "PROJEK SAYA"
+		"header": "proyek saya",
+    "body": {
+      "cakeOnlineStore": {
+        
+      }
+    }
 	},
 	"experience": {
-		"header": "PENGALAMAN KERJA"
+		"header": "pengalaman kerja",
+		"body": {
+			"citiasia": {
+				"description": "Mengembangkan sistem backend RESTful API menggunakan Laravel (PHP) dan NestJS (Node.js).|Membuat dokumentasi API untuk tim pengembang mobile.|Mengembangkan dan melakukan refactor pada tampilan depan situs web menggunakan Vue.js dan Laravel Blade.|Bekerja di dalam tim dengan metode Agile/Scrum."
+			},
+			"sgs": {
+				"description": [
+					"Membuat dan mengembangkan aplikasi mobile SIDIA menggunakan framework Vue.js dan Ionic.|Membuat dan mengembangkan sistem Restful API untuk digunakan oleh aplikasi mobile SIDIA.|Menggunakan Docker dan Vite.js untuk mempercepat pengembangan aplikasi pada tahap development.|Bekerja dalam tim dengan metode RAD (Rapid Application Development)."
+				]
+			}
+		}
 	}
 }

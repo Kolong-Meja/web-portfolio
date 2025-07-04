@@ -1,11 +1,19 @@
 {
 	"skills": {
-		"header": "MY SKILLS SET"
+		"header": "skills set"
 	},
 	"projects": {
-		"header": "MY PROJECTS"
+		"header": "my projects"
 	},
 	"experience": {
-		"header": "WORK EXPERIENCE"
+		"header": "work experience",
+		"body": {
+			"citiasia": {
+				"description": "Developing backend RESTful API system using Laravel (PHP) and NestJS (Node.js).|Create API documentation for mobile developer team.|Developing and refactor the frontend interface of the website using Vue.js and Laravel Blade.|Working in a team with Agile/Scrum methods."
+			},
+			"sgs": {
+				"description": "Create and develop SIDIA mobile app using the Vue.js and Ionic frameworks.|Create and develop Restful API system to be consumed by the SIDIA mobile app.|Used Docker and Vite.js to accelerate application development in development stage.|Working in a team with RAD (Rapid Application Development) method."
+			}
+		}
 	}
 }

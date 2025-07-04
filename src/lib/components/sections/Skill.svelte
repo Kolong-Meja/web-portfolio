@@ -28,7 +28,7 @@
 				<p
 					class="group font-space-grotesk relative mb-6 w-full text-center text-xl font-bold text-emerald-300 md:text-2xl lg:text-4xl xl:mb-12 dark:text-emerald-400"
 				>
-					{$t('content.skills.header')}
+					{String($t('content.skills.header')).toUpperCase()}
 				</p>
 				<div
 					class="flex w-full flex-col items-start space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4"

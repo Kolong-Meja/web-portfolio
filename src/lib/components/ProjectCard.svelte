@@ -11,7 +11,7 @@
 </script>
 
 <div
-	class="bg-soft-black dark:bg-soft-dark relative my-0 w-full rounded-lg p-6 shadow-sm transition-colors duration-300 ease-in-out lg:my-6"
+	class="bg-soft-black dark:bg-soft-dark relative my-0 w-full rounded-lg p-6 shadow-sm transition-colors duration-300 ease-in-out"
 >
 	<div class="mb-4 flex items-center">
 		<svg

@@ -126,8 +126,35 @@ main();
 `;
 
 export const _achievedSkills = {
-	_f: ['Typescript', 'Laravel', 'NestJS', 'Vue.js', 'PostgreSQL', ' Rest API', 'Swagger', 'Git'],
-	_s: ['Javascript', 'Laravel', 'Vue.js', 'Ionic', 'PostgreSQL', 'Docker', 'Git'],
+	_f: [
+		'Typescript',
+		'Laravel',
+		'NestJS',
+		'Vue.js',
+		'PHP',
+		'Javascript',
+		'Typescript',
+		'PostgreSQL',
+		'MySQL',
+		'Restful API',
+		'Swagger',
+		'Git',
+		'Github'
+	],
+	_s: [
+		'PHP',
+		'Javascript',
+		'Typescript',
+		'Laravel',
+		'Vue.js',
+		'Ionic',
+		'PostgreSQL',
+		'MySQL',
+		'Docker',
+		'Restful API',
+		'Git',
+		'Github'
+	],
 	_t: ['Laravel', 'Vue.js', 'Mongodb', 'Figma']
 };
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { AlienFigure, AstronautFigure, UFOFigure } from '$lib';
 	import hljs from 'highlight.js';
-	import 'highlight.js/styles/github-dark-dimmed.css';
+	import 'highlight.js/styles/github-dark.min.css';
 	import { onMount } from 'svelte';
 	import TypeIt from 'typeit';
 
@@ -11,10 +11,10 @@
 		const panel = document.querySelector('pre #code') as HTMLElement;
 
 		hljs.highlightElement(panel);
-		hljs.initHighlightingOnLoad();
+		hljs.highlightAll();
 
 		const codeTypeIt = new TypeIt('#code', {
-				speed: 40,
+				speed: 0,
 				waitUntilVisible: false,
 				loop: false,
 				lifeLike: true

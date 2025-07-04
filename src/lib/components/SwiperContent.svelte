@@ -14,13 +14,13 @@
 </script>
 
 <div
-	class="flex h-full w-full flex-row items-center justify-between gap-4 p-3 sm:gap-5 sm:p-4 md:gap-6 md:p-5"
+	class="flex h-full w-full flex-row items-center justify-center px-8 py-6 lg:p-0 lg:px-12 lg:py-8"
 >
-	<div class="flex flex-col space-y-4">
+	<div class="flex h-full flex-col items-start space-y-4">
 		<div class="flex flex-col space-y-1 md:space-y-2">
-			<h4 class="block text-base font-semibold text-white md:hidden">
+			<h2 class="block text-xl font-semibold text-white lg:text-2xl">
 				{props.name}
-			</h4>
+			</h2>
 			<div class="flex flex-col space-y-2 md:space-y-4">
 				<div class="flex flex-col">
 					<h1
@@ -38,7 +38,7 @@
 					</h6>
 					<ul class="list-inside list-disc">
 						{#each props.contentDesc as desc}
-							<li class="text-base font-normal text-wrap text-white lg:text-lg">
+							<li class="text-base font-normal text-justify text-wrap text-white lg:text-lg">
 								{desc}
 							</li>
 						{/each}
@@ -46,8 +46,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="flex flex-row flex-wrap items-center justify-normal gap-2 lg:space-x-3">
-			{#each props.skills as skill}
+		<div class="flex flex-row flex-wrap items-center gap-2">
+			{#each props.skills.sort() as skill}
 				<SkillsBadgeAnimated value={skill} />
 			{/each}
 		</div>

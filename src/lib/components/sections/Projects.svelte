@@ -26,9 +26,9 @@
 				<p
 					class="group font-space-grotesk relative mb-4 w-full text-center text-xl font-bold text-emerald-300 md:text-2xl lg:text-4xl xl:mb-8 dark:text-emerald-400"
 				>
-					{$t('content.projects.header')}
+					{String($t('content.projects.header')).toUpperCase()}
 				</p>
-				<div class="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+				<div class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-3">
 					<ProjectCard
 						props={{
 							title: 'Cakes Online Store',
@@ -52,6 +52,23 @@
 							title: 'MobilizeMate',
 							desc: `A mobile-based sales and distribution application that aims to help make sales and distribution activities easier and more effective.`,
 							githubLink: 'https://github.com/MobilizeMate',
+							isDemoLinkExist: false
+						}}
+					/>
+					<ProjectCard
+						props={{
+							title: 'Allin CLI',
+							desc: `A modern full-stack CLI tool based on TypeScript designed to accelerate your app development process — setup your entire stack in one seamless command.`,
+							githubLink: 'https://github.com/Kolong-Meja/allin-cli',
+							isDemoLinkExist: true,
+							demoLink: 'https://www.npmjs.com/package/@faisalrmdhn08/allin-cli'
+						}}
+					/>
+					<ProjectCard
+						props={{
+							title: 'Web Data Kendaraan Advance',
+							desc: `Website Data Kendaraan menggunakan Vanilla Javascript + Spring Boot dengan tambahan Authentication System, API Caching, Pagination, API Rate Limiter, Logging File, etc. `,
+							githubLink: 'https://github.com/Kolong-Meja/web-data-kendaraan-advance',
 							isDemoLinkExist: false
 						}}
 					/>
