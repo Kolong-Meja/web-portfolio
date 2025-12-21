@@ -155,7 +155,17 @@ export const _achievedSkills = {
 		'Git',
 		'Github'
 	],
-	_t: ['Laravel', 'Vue.js', 'Mongodb', 'Figma']
+	_t: [
+		'Java (version 8)',
+		'Spring Framework (version 4)',
+		'HTML',
+		'CSS',
+		'Javascript',
+		'Oracle SQL Developer',
+		'Git',
+		'Postman',
+		'Netbeans (version 18.2)'
+	]
 };
 
 export const _welcomeTexts = [

@@ -13,6 +13,9 @@
 			},
 			"sgs": {
 				"description": "Create and develop SIDIA mobile app using the Vue.js and Ionic frameworks.|Create and develop Restful API system to be consumed by the SIDIA mobile app.|Used Docker and Vite.js to accelerate application development in development stage.|Working in a team with RAD (Rapid Application Development) method."
+			},
+			"ahm": {
+				"description": "Develop and maintain internal web applications within the AHMAS system using Java 8 and Spring Framework 4.|Develop and optimize RESTful APIs and Oracle Database queries to support business processes and improve application performance.|Implement frontend features using HTML, CSS, and JavaScript, and integrate them with backend services.|Work collaboratively in a Scrum-based development team, using Git for version control and Postman for API testing."
 			}
 		}
 	}

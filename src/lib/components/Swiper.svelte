@@ -6,6 +6,19 @@
 	import { _achievedSkills } from '$lib/constants/constant';
 	import { t } from '$lib/translations';
 
+  // VARIABLES
+  let date = new Date();
+  let month = date.toLocaleDateString('en-US', {month: 'short'});
+  let year = date.getFullYear();
+  let startDate = new Date(2025, 7);
+  let monthsDiff = diffInMonths(startDate, date);
+  let durationTxt = `Aug 2025 ─ ${month} ${year} • ${monthsDiff} ${monthsDiff === 1 ? 'Month' : 'Months'}`;
+
+  // FUNCTIONS
+  function diffInMonths(start: Date, end: Date): number {
+    return (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+  }
+
 	onMount(() => {
 		new Swiper('.swiper', {
 			speed: 4000,
@@ -57,6 +70,18 @@
 					contentDuration: 'Feb 2024 ─ Jun 2023 • 5 Months',
 					contentDesc: $t('content.experience.body.sgs.description').split('|'),
 					skills: _achievedSkills._s
+				}}
+			/>
+		</div>
+    <div class="swiper-slide">
+			<SwiperContent
+				props={{
+					name: 'PT. Astra Honda Motor',
+					contentTitle: 'Junior Developer',
+					contentProject: 'AHMAS (Astra Honda Management Assistant System)',
+					contentDuration: durationTxt,
+					contentDesc: $t('content.experience.body.ahm.description').split('|'),
+					skills: _achievedSkills._t
 				}}
 			/>
 		</div>

@@ -3,12 +3,7 @@
 		"header": "keahlian saya"
 	},
 	"projects": {
-		"header": "proyek saya",
-    "body": {
-      "cakeOnlineStore": {
-        
-      }
-    }
+		"header": "proyek saya"
 	},
 	"experience": {
 		"header": "pengalaman kerja",
@@ -17,9 +12,10 @@
 				"description": "Mengembangkan sistem backend RESTful API menggunakan Laravel (PHP) dan NestJS (Node.js).|Membuat dokumentasi API untuk tim pengembang mobile.|Mengembangkan dan melakukan refactor pada tampilan depan situs web menggunakan Vue.js dan Laravel Blade.|Bekerja di dalam tim dengan metode Agile/Scrum."
 			},
 			"sgs": {
-				"description": [
-					"Membuat dan mengembangkan aplikasi mobile SIDIA menggunakan framework Vue.js dan Ionic.|Membuat dan mengembangkan sistem Restful API untuk digunakan oleh aplikasi mobile SIDIA.|Menggunakan Docker dan Vite.js untuk mempercepat pengembangan aplikasi pada tahap development.|Bekerja dalam tim dengan metode RAD (Rapid Application Development)."
-				]
+				"description": "Membuat dan mengembangkan aplikasi mobile SIDIA menggunakan framework Vue.js dan Ionic.|Membuat dan mengembangkan sistem Restful API untuk digunakan oleh aplikasi mobile SIDIA.|Menggunakan Docker dan Vite.js untuk mempercepat pengembangan aplikasi pada tahap development.|Bekerja dalam tim dengan metode RAD (Rapid Application Development)."
+			},
+			"ahm": {
+				"description": "Mengembangkan dan memelihara aplikasi web internal dalam sistem AHMAS menggunakan Java 8 dan Spring Framework 4.|Mengembangkan dan mengoptimalkan API RESTful dan kueri Basis Data Oracle untuk mendukung proses bisnis dan meningkatkan kinerja aplikasi.|Mengimplementasikan fitur frontend menggunakan HTML, CSS, dan JavaScript, serta mengintegrasikannya dengan layanan backend.|Bekerja secara kolaboratif dalam tim pengembangan berbasis Scrum, menggunakan Git untuk kontrol versi dan Postman untuk pengujian API."
 			}
 		}
 	}
