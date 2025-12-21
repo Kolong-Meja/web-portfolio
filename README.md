@@ -1,38 +1,130 @@
-# sv
+# Faisal Ramadhan — Developer Portfolio
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Personal portfolio website showcasing my experience, projects, and technical skills as a Full Stack Developer.
 
-## Creating a project
+🌐 **Live Site**:
+👉 [https://faisalramadhanid.netlify.app/](https://faisalramadhanid.netlify.app/)
 
-If you're seeing this, you've probably already done this step. Congrats!
+---
+
+## 🚀 About This Project
+
+This portfolio is built to highlight:
+
+* Professional experience as a **Junior / Full Stack Developer**
+* Real-world projects (internal systems, enterprise apps, and portfolio showcases)
+* Tech stack, tools, and development practices
+* Clean UI with smooth interactions and responsive design
+
+The goal of this website is to serve as a **professional showcase** for recruiters, collaborators, and fellow developers.
+
+---
+
+## 🛠 Tech Stack
+
+* **Framework**: SvelteKit
+* **Language**: TypeScript
+* **Styling**: Tailwind CSS
+* **UI / Animation**: Swiper.js
+* **i18n**: sveltekit-i18n
+* **Build Tool**: Vite
+* **Deployment**: Netlify
+
+---
+
+## 📦 Getting Started
+
+### Prerequisites
+
+Make sure you have one of the following installed:
+
+* Node.js (LTS recommended)
+* npm / pnpm / yarn
+
+---
+
+### Installation
+
+Clone the repository and install dependencies:
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+npm install
 ```
 
-## Developing
+---
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## 🧑‍💻 Development
+
+Run the development server:
 
 ```bash
 npm run dev
+```
 
-# or start the server and open the app in a new browser tab
+Open the app in your browser:
+
+```bash
 npm run dev -- --open
 ```
 
-## Building
+The app will be available at:
 
-To create a production version of your app:
+```
+http://localhost:5173
+```
+
+---
+
+## 🏗 Build for Production
+
+Create an optimized production build:
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+Preview the production build locally:
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```bash
+npm run preview
+```
+
+---
+
+## 🌍 Deployment
+
+This project is deployed using **Netlify**.
+
+If you plan to deploy it elsewhere, make sure to configure the correct **SvelteKit adapter** for your target environment:
+
+👉 [https://svelte.dev/docs/kit/adapters](https://svelte.dev/docs/kit/adapters)
+
+---
+
+## 📌 Features
+
+* Responsive and mobile-friendly layout
+* Dynamic experience duration calculation
+* Multi-language support (i18n)
+* Modular and maintainable component structure
+* Optimized performance with modern frontend tooling
+
+---
+
+## 📫 Contact
+
+Feel free to reach out for collaboration or opportunities:
+
+* Portfolio: [https://faisalramadhanid.netlify.app/](https://faisalramadhanid.netlify.app/)
+* GitHub: [https://github.com/Kolong-Meja](https://github.com/Kolong-Meja)
+* LinkedIn: [https://www.linkedin.com/in/faisal-ramadhan-9ab18a269/](https://www.linkedin.com/in/faisal-ramadhan-9ab18a269/)
+
+---
+
+## 📄 License
+
+This project is open-source and available under the **MIT License**.
+
+---
