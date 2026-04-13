@@ -4,6 +4,9 @@
 	"version": "1.0.0",
 	"description": "This is the latest version of my personal portfolio. Enjoy your visit.",
 	"type": "module",
+  "engines": {
+    "node": ">=20"
+  },
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
