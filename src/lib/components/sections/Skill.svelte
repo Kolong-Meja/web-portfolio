@@ -34,9 +34,9 @@
 					class="flex w-full flex-col items-start space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4"
 				>
 					<CodePanel value={_codePanelValue} />
-					<div class="flex flex-wrap items-center gap-3 p-2 sm:gap-4 lg:w-[35rem] xl:w-[40rem]">
-						{#each _defaultSkills as skill}
-							<SkillsBadge value={skill} />
+					<div class="flex flex-wrap items-center gap-3 p-2 sm:gap-4 lg:w-140 xl:w-160">
+						{#each _defaultSkills as skill (skill.id)}
+							<SkillsBadge value={skill.name} />
 						{/each}
 					</div>
 				</div>

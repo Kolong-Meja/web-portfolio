@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { resolve } from '$app/paths';
 	export let status: number;
 	export let message: string;
 	export let pathname: string;
@@ -18,7 +19,7 @@
 				</span> page.
 			</p>
 			<a
-				href={'/'}
+				href={resolve('/')}
 				class="text-base font-medium text-blue-400 underline underline-offset-4 transition-colors duration-300 hover:text-blue-500"
 				>Go Back</a
 			>

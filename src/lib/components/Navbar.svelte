@@ -33,32 +33,32 @@
 		}
 	};
 
-	const toggleMenu = () => {
-		const menu = document.querySelector('.menu') as HTMLElement;
+	// const toggleMenu = () => {
+	// 	const menu = document.querySelector('.menu') as HTMLElement;
 
-		if (menu) {
-			const isMenuHidden = menu.classList.contains('hidden');
+	// 	if (menu) {
+	// 		const isMenuHidden = menu.classList.contains('hidden');
 
-			if (isMenuHidden) {
-				menu.classList.remove('hidden');
-				menu.classList.remove('animate-slide-out-up');
-				menu.classList.add('animate-slide-in-down');
-			} else {
-				menu.classList.remove('animate-slide-in-down');
-				menu.classList.add('animate-slide-out-up');
+	// 		if (isMenuHidden) {
+	// 			menu.classList.remove('hidden');
+	// 			menu.classList.remove('animate-slide-out-up');
+	// 			menu.classList.add('animate-slide-in-down');
+	// 		} else {
+	// 			menu.classList.remove('animate-slide-in-down');
+	// 			menu.classList.add('animate-slide-out-up');
 
-				if (menu.classList.contains('animate-slide-out-up')) {
-					menu.addEventListener(
-						'animationend',
-						() => {
-							menu.classList.add('hidden');
-						},
-						{ once: true }
-					);
-				}
-			}
-		}
-	};
+	// 			if (menu.classList.contains('animate-slide-out-up')) {
+	// 				menu.addEventListener(
+	// 					'animationend',
+	// 					() => {
+	// 						menu.classList.add('hidden');
+	// 					},
+	// 					{ once: true }
+	// 				);
+	// 			}
+	// 		}
+	// 	}
+	// };
 
 	const switchThemeModeHandler = ({ matches: dark }: MediaQueryListEvent) => {
 		if (!localStorage.theme) {
@@ -117,13 +117,12 @@
 	class="navbar font-hanken-grotesk dark:bg-soft-black/60 fixed start-0 top-0 z-20 w-full border-b border-gray-900 bg-black/75 backdrop-blur-md transition-all duration-300 ease-in-out dark:border-gray-800 dark:backdrop-blur-md"
 >
 	<div class="container mx-auto">
-		<!-- svelte-ignore a11y_consider_explicit_label -->
 		<div class="flex h-full flex-row items-center justify-between px-3 py-2">
 			<div class="flex flex-row items-center justify-normal">
 				<button
 					class="{dark
 						? 'bg-gray-600 ring-offset-gray-700 focus:ring-gray-400'
-						: 'bg-emerald-300 ring-offset-emerald-200 focus:ring-emerald-500'} relative m-4 inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-none"
+						: 'bg-emerald-300 ring-offset-emerald-200 focus:ring-emerald-500'} relative m-4 inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-none"
 					class:hidden
 					type="button"
 					on:click={toggleTheme}
@@ -177,8 +176,8 @@
 					class="bg-soft-black dark:bg-soft-dark rounded-lg border border-gray-800 p-2.5 text-sm text-white focus:border-2 focus:border-emerald-300 focus:ring-emerald-300 focus:outline-none dark:border-gray-700 dark:text-white dark:focus:border-emerald-300 dark:focus:ring-emerald-300"
 				>
 					<option disabled value="">Select Language</option>
-					{#each $locales as locale}
-						<option value={locale}>{$t(`lang.${locale}`)}</option>
+					{#each $locales as loc (loc)}
+						<option value={loc}>{$t(`lang.${loc}`)}</option>
 					{/each}
 				</select>
 				<!-- End of Translations -->

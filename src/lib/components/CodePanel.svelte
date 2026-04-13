@@ -24,26 +24,26 @@
 </script>
 
 <pre
-	class="bg-soft-black dark:bg-soft-dark relative flex w-full flex-col rounded-xl transition-colors duration-300 ease-in-out lg:w-[35rem] xl:w-[40rem]">
+	class="bg-soft-black dark:bg-soft-dark relative flex w-full flex-col rounded-xl transition-colors duration-300 ease-in-out lg:w-140 xl:w-160">
         <img
 		id="logo"
 		src={AstronautFigure}
 		alt="Astronaut Pixel Icon"
-		class="show-on-scroll absolute top-[-3rem] left-3 h-[3rem] w-[3rem] md:top-[-4rem] md:left-4 md:h-[4rem] md:w-[4rem]"
+		class="show-on-scroll absolute -top-12 left-3 h-12 w-12 md:-top-16 md:left-4 md:h-16 md:w-16"
 		loading="lazy"
 	/>
         <img
 		id="logo"
 		src={AlienFigure}
 		alt="Astronaut Pixel Icon"
-		class="show-on-scroll absolute top-[-3rem] right-20 h-[3rem] w-[3.5rem] md:top-[-4rem] md:right-32 md:h-[4rem] md:w-[4.5rem]"
+		class="show-on-scroll absolute -top-12 right-20 h-12 w-14 md:-top-16 md:right-32 md:h-16 md:w-18"
 		loading="lazy"
 	/>
         <img
 		id="logo"
 		src={UFOFigure}
 		alt="Astronaut Pixel Icon"
-		class="show-on-scroll absolute top-[-2rem] right-10 h-[2rem] w-[2.5rem] md:top-[-3rem] md:right-16 md:h-[3rem] md:w-[3.5rem]"
+		class="show-on-scroll absolute -top-8 right-10 h-8 w-10 md:-top-12 md:right-16 md:h-12 md:w-14"
 		loading="lazy"
 	/>
           <div class="flex flex-row items-center justify-between p-2">
@@ -56,7 +56,7 @@
           </div>
           <code
 		id="code"
-		class="language-typescript h-[35rem] overflow-x-auto rounded-b-xl text-sm text-nowrap md:text-base"
+		class="language-typescript h-140 overflow-x-auto rounded-b-xl text-sm text-nowrap md:text-base"
 		>{value}</code
 	>
       </pre>

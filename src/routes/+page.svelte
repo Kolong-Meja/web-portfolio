@@ -11,27 +11,42 @@
 	import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 	import ScrollSmoother from 'gsap/dist/ScrollSmoother';
 
+	const NAV_LINKS = ['about', 'skill', 'project', 'experience'] as const;
+ 
 	onMount(() => {
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-		let smoother = ScrollSmoother.create({
+		const smoother = ScrollSmoother.create({
 			wrapper: '#smooth-wrapper',
 			content: '#smooth-content',
-			smooth: 4,
-			speed: 0.4,
-			effects: true,
+			smooth: 1.5,
+			speed: 0.8,
+			effects: false,
 			normalizeScroll: false
 		});
 
-		const links = ['about', 'skill', 'project', 'experience'];
+		const controller = new AbortController();
+		for (const name of NAV_LINKS) {
+			const button = document.querySelector<HTMLButtonElement>(`.${name}-link`);
+			if (!button) {
+				console.warn(`[Navigation] Button ".${name}-link" not found in DOM`);
+				continue;
+			}
+ 
+			button.addEventListener(
+				'click',
+				() => {
+					smoother.scrollTo(`.${name}-section`, true, 'center center');
+				},
+				{ signal: controller.signal }
+			);
+		}
 
-		links.forEach((l) => {
-			let link = document.querySelector(`.${l}-link`) as HTMLButtonElement;
-
-			link.addEventListener('click', (e) => {
-				smoother.scrollTo(`.${l}-section`, true, 'center center');
-			});
-		});
+		return () => {
+			controller.abort();
+			smoother.kill();
+			ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+		};
 	});
 </script>
 

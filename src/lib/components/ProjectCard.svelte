@@ -35,7 +35,7 @@
 	</p>
 	<div class="flex flex-row space-x-3">
 		<a
-			href={props.githubLink}
+			href={props.githubLink} rel="external"
 			class="flex flex-row items-center space-x-2 text-sm font-bold text-white transition-colors duration-300 ease-in-out hover:text-emerald-300 dark:hover:text-emerald-400"
 		>
 			<svg
@@ -66,7 +66,7 @@
 		</a>
 		{#if props.isDemoLinkExist}
 			<a
-				href={props.demoLink}
+				href={props.demoLink} rel="external"
 				class="flex items-center space-x-2 text-sm font-bold text-white transition-colors duration-300 ease-in-out hover:text-emerald-300 dark:hover:text-emerald-400"
 			>
 				Live Demo

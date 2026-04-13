@@ -37,7 +37,7 @@
 						Project: <span class="font-bold">{props.contentProject}</span>
 					</h6>
 					<ul class="list-inside list-disc">
-						{#each props.contentDesc as desc}
+						{#each props.contentDesc as desc, i (`${i}-${desc}`)}
 							<li class="text-base font-normal text-justify text-wrap text-white lg:text-lg">
 								{desc}
 							</li>
@@ -47,7 +47,7 @@
 			</div>
 		</div>
 		<div class="flex flex-row flex-wrap items-center gap-2">
-			{#each props.skills.sort() as skill}
+			{#each props.skills.sort() as skill, i (`${i}-${skill}`) }
 				<SkillsBadgeAnimated value={skill} />
 			{/each}
 		</div>

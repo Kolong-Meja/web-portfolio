@@ -1,128 +1,123 @@
-export const _defaultSkills: string[] = Array.from(
-	new Set([
-		'HTML',
-		'CSS',
-		'Javascript',
-		'Typescript',
-		'PHP',
-		'Java',
-		'Go',
-		'Laravel',
-		'Spring Boot',
-		'NestJS',
-		'Next.js',
-		'Vue.js',
-		'Sveltekit',
-		'Git',
-		'Github',
-		'Docker',
-		'MySQL',
-		'PostgreSQL',
-		'MongoDB',
-		'Node.js',
-		'Restful API',
-		'Linux',
-		'Agile/Scrum Development',
-		'Rapid Application Development',
-		'Problem Solving',
-		'Attention to Detail',
-		'Collaboration',
-		'Time Management',
-		'Version Control',
-		'Microservices Architecture',
-		'Monolithic Architecture'
-	])
+export interface Skill {
+	readonly id: string;
+	readonly name: string;
+}
+
+function toSlug(name: string): string {
+	return name
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/-+/g, '-')
+		.replace(/^-|-$/g, '');
+}
+
+function createSkill(name: string): Skill {
+	return { id: toSlug(name), name } as const;
+}
+
+const _rawSkillNames: ReadonlySet<string> = new Set([
+	'HTML',
+	'CSS',
+	'Javascript',
+	'Typescript',
+	'PHP',
+	'Java',
+	'Go',
+	'Laravel',
+	'Spring Boot',
+	'NestJS',
+	'Next.js',
+	'Vue.js',
+	'Sveltekit',
+	'Git',
+	'Github',
+	'Docker',
+	'MySQL',
+	'PostgreSQL',
+	'MongoDB',
+	'Node.js',
+	'Restful API',
+	'Linux',
+	'Agile/Scrum Development',
+	'Rapid Application Development',
+	'Problem Solving',
+	'Attention to Detail',
+	'Collaboration',
+	'Time Management',
+	'Version Control',
+	'Microservices Architecture',
+	'Monolithic Architecture'
+]);
+
+export const _defaultSkills: ReadonlyArray<Skill> = Array.from(_rawSkillNames, (name) =>
+	createSkill(name)
 );
 
-export const _codePanelValue = `
-const skills = Array.from(
-  new Set([
-    "HTML",
-    "CSS",
-    "Javascript",
-    "Typescript",
-    "PHP",
-    "Java",
-    "Go",
-    "Laravel",
-    "Spring Boot",
-    "NestJS",
-    "Next.js",
-    "Vue.js",
-    "Sveltekit",
-    "Git",
-    "Github",
-    "Docker",
-    "MySQL",
-    "PostgreSQL",
-    "MongoDB",
-    "Node.js",
-    "Restful API",
-    "Linux",
-    "Agile/Scrum Development",
-    "Rapid Application Development",
-    "Problem Solving",
-    "Attention to Detail",
-    "Collaboration",
-    "Time Management",
-    "Version Control",
-    "Microservices Architecture",
-    "Monolithic Architecture",
-  ])
+export const _skillsById: ReadonlyMap<string, Skill> = new Map(
+	_defaultSkills.map((skill) => [skill.id, skill])
 );
 
-const hoarePartition = <T extends string | number>(
+export function isValidSkillId(id: string): boolean {
+	return _skillsById.has(id);
+}
+
+export const _codePanelValue = `\
+interface Skill {
+  readonly id: string;
+  readonly name: string;
+}
+ 
+const toSlug = (name: string): string =>
+  name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+    .replace(/-+/g, "-").replace(/^-|-$/g, "");
+ 
+const skills: Skill[] = [
+  "HTML", "CSS", "Javascript", "Typescript",
+  "PHP", "Java", "Go", "Laravel",
+  "Spring Boot", "NestJS", "Next.js", "Vue.js",
+  "Sveltekit", "Git", "Docker", "MySQL",
+  "PostgreSQL", "MongoDB", "Node.js",
+  "Restful API", "Linux",
+  "Microservices Architecture",
+  "Monolithic Architecture",
+].map((name) => ({ id: toSlug(name), name }));
+ 
+const hoarePartition = <T extends { name: string }>(
   v: T[],
   front: number,
   back: number
-) => {
-  const p = v[Math.floor((front + back) / 2)];
+): number => {
+  const pivot = v[Math.floor((front + back) / 2)];
   let lp = front - 1;
   let rp = back + 1;
-
+ 
   while (true) {
-    do {
-      lp++;
-    } while (v[lp] < p);
-
-    do {
-      rp--;
-    } while (v[rp] > p);
-
-    if (lp < rp) {
-      const temp = v[lp];
-      v[lp] = v[rp];
-      v[rp] = temp;
-    } else {
-      return rp;
-    }
+    do { lp++; }
+    while (v[lp].name.localeCompare(pivot.name) < 0);
+ 
+    do { rp--; }
+    while (v[rp].name.localeCompare(pivot.name) > 0);
+ 
+    if (lp >= rp) return rp;
+ 
+    [v[lp], v[rp]] = [v[rp], v[lp]];
   }
 };
-
-const quickSort = <T extends string | number>(
+ 
+const quickSort = <T extends { name: string }>(
   v: T[],
   front: number,
   back: number
-) => {
-  if (v.length <= 1) return v;
-
-  if (front < back) {
-    const partition = hoarePartition(v, front, back);
-    quickSort(v, front, partition);
-    quickSort(v, partition + 1, back);
-  }
+): void => {
+  if (front >= back) return;
+ 
+  const p = hoarePartition(v, front, back);
+  quickSort(v, front, p);
+  quickSort(v, p + 1, back);
 };
-
-function executable(): void {
-  quickSort(skills, 0, skills.length - 1);
-  console.log(skills);
-}
-
-function main() {
-  executable();
-}
-
-main();
+ 
+quickSort(skills, 0, skills.length - 1);
+console.log(skills);
 `;
 
 export const _achievedSkills = {
@@ -133,7 +128,6 @@ export const _achievedSkills = {
 		'Vue.js',
 		'PHP',
 		'Javascript',
-		'Typescript',
 		'PostgreSQL',
 		'MySQL',
 		'Restful API',
@@ -156,15 +150,15 @@ export const _achievedSkills = {
 		'Github'
 	],
 	_t: [
-		'Java (version 8)',
-		'Spring Framework (version 4)',
+		'Java',
+		'Spring Framework',
 		'HTML',
 		'CSS',
 		'Javascript',
 		'Oracle SQL Developer',
 		'Git',
 		'Postman',
-		'Netbeans (version 18.2)'
+		'Netbeans'
 	]
 };
 

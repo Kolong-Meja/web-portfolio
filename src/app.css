@@ -1,10 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Inconsolata:wght@400..700&family=Roboto:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400..700&display=swap');
 
 @import 'tailwindcss';
 
@@ -13,89 +7,72 @@
 	--secondary: #1c1d1c;
 }
 
-body {
-	overscroll-behavior: none;
-	margin: 0;
-	padding: 0;
-	overflow-x: hidden;
-}
-
-#smooth-wrapper {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-}
-#smooth-content {
-	overflow: visible;
-	width: 100%;
-}
-
 @theme {
-	/* Fonts */
+	/* ── Fonts ── */
 	--font-hanken-grotesk: 'Hanken Grotesk', sans-serif;
 	--font-space-grotesk: 'Space Grotesk', sans-serif;
 	--font-roboto: 'Roboto', sans-serif;
 	--font-inconsolata: 'Inconsolata', monospace;
 
-	/* Colors */
+	/* ── Colors ── */
+	--color-primary: #34d399;
+	--color-secondary: #1c1d1c;
 	--color-soft-black: #0a0a0a;
 	--color-soft-dark: #1c1d1c;
 
-	/* Animations */
+	/* ── Animations ── */
 	--animate-slide-in-down: slide-in-down 0.4s ease-in-out forwards;
 	--animate-slide-out-up: slide-out-up 0.4s ease-in-out forwards;
 	--animate-fadeIn: fadeIn 0.8s ease-in-out forwards;
-	--animate-fadeOut: fadeIn 0.8s ease-out forwards;
+	--animate-fadeOut: fadeOut 0.8s ease-out forwards;
 	--animate-marquee: someMarquee 60s linear infinite;
 
+	/* ── Keyframes ── */
 	@keyframes slide-in-down {
-		0% {
+		from {
 			opacity: 0;
 			transform: translateY(-30%);
 		}
-		100% {
+		to {
 			opacity: 1;
-			transform: translateY(0%);
+			transform: translateY(0);
 		}
 	}
 
 	@keyframes slide-out-up {
-		0% {
+		from {
 			opacity: 1;
-			transform: translateY(0%);
+			transform: translateY(0);
 		}
-		100% {
+		to {
 			opacity: 0;
 			transform: translateY(-30%);
 		}
 	}
 
 	@keyframes fadeIn {
-		0% {
+		from {
 			opacity: 0;
 		}
-		,
-		100% {
+		to {
 			opacity: 1;
 		}
 	}
 
 	@keyframes fadeOut {
-		0% {
+		from {
 			opacity: 1;
 		}
-		,
-		100% {
+		to {
 			opacity: 0;
 		}
 	}
 
 	@keyframes someMarquee {
-		0% {
-			transform: translateX(0%);
+		from {
+			transform: translateX(0);
 		}
-		100% {
+		to {
 			transform: translateX(-50%);
 		}
 	}
@@ -104,20 +81,46 @@ body {
 /* Dark Mode */
 @custom-variant dark (&:where(.dark, .dark *));
 
-* {
-	scrollbar-width: thin;
-	scrollbar-color: var(--primary) var(--secondary);
+/* ─────────────────────────────────────────────
+ * GLOBAL STYLES
+ * ─────────────────────────────────────────────
+ */
+body {
+	overscroll-behavior: none;
+	overflow-x: hidden;
+}
+ 
+#smooth-wrapper {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+ 
+#smooth-content {
+	overflow: visible;
+	width: 100%;
 }
 
+/* ─────────────────────────────────────────────
+ * SCROLLBAR STYLING
+ * ─────────────────────────────────────────────
+ */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-primary) var(--color-secondary);
+}
+ 
 *::-webkit-scrollbar {
 	width: 12px;
 }
-​ *::-webkit-scrollbar-track {
-	background: var(--primary);
+ 
+*::-webkit-scrollbar-track {
+	background: var(--color-primary);
 }
-
-​ *::-webkit-scrollbar-thumb {
-	background-color: var(--secondary);
+ 
+*::-webkit-scrollbar-thumb {
+	background-color: var(--color-secondary);
 	border-radius: 20px;
-	border: 3px solid var(--primary);
+	border: 3px solid var(--color-primary);
 }
