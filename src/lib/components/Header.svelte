@@ -29,43 +29,64 @@
 
 	onMount(() => {
 		const ctx = canvas.getContext('2d');
-		if (!ctx) return;
+    if (!ctx) return;
 
-		let animationId: number;
-		let particles: Particle[] = [];
-		const MAX_PARTICLES = 20;
+    let animationId: number;
+    let particles: Particle[] = [];
+    const MAX_PARTICLES = 20;
 
-		// Global glitch state
-		let globalGlitchTimer = 0;
-		let globalGlitchActive = false;
-		let globalGlitchDuration = 0;
-		const GLITCH_INTERVAL_MIN = 360;
-		const GLITCH_INTERVAL_MAX = 720;
-		let nextGlitchAt =
-			GLITCH_INTERVAL_MIN + Math.random() * (GLITCH_INTERVAL_MAX - GLITCH_INTERVAL_MIN);
+    let globalGlitchTimer = 0;
+    let globalGlitchActive = false;
+    let globalGlitchDuration = 0;
+    const GLITCH_INTERVAL_MIN = 360;
+    const GLITCH_INTERVAL_MAX = 720;
+    let nextGlitchAt =
+        GLITCH_INTERVAL_MIN + Math.random() * (GLITCH_INTERVAL_MAX - GLITCH_INTERVAL_MIN);
 
-		const resize = () => {
-			canvas.width = canvas.offsetWidth;
-			canvas.height = canvas.offsetHeight;
-		};
+    const resize = () => {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    };
 
-		const spawn = (): Particle => ({
-			x: Math.random() * canvas.width,
-			y: Math.random() * canvas.height,
-			vx: (Math.random() - 0.5) * 0.3,
-			vy: (Math.random() - 0.5) * 0.3,
-			text: FRAGMENTS[Math.floor(Math.random() * FRAGMENTS.length)],
-			opacity: 0.08 + Math.random() * 0.15,
-			size: 12 + Math.random() * 10,
-			decay: 0.0001 + Math.random() * 0.0004,
-			age: 0,
-			corrupted: false,
-			corruptFrames: 0
-		});
+    resize();
+    
+		const spawn = (fromCenter = false): Particle => {
+        let x: number, y: number, vx: number, vy: number;
+        if (fromCenter) {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const angle = Math.random() * Math.PI * 2;
+            const startRadius = Math.random() * 24;
+            x = centerX + Math.cos(angle) * startRadius;
+            y = centerY + Math.sin(angle) * startRadius;
+            const burstSpeed = 0.5 + Math.random() * 0.8;
+            vx = Math.cos(angle) * burstSpeed;
+            vy = Math.sin(angle) * burstSpeed;
+        } else {
+            x = Math.random() * canvas.width;
+            y = Math.random() * canvas.height;
+            vx = (Math.random() - 0.5) * 0.3;
+            vy = (Math.random() - 0.5) * 0.3;
+        }
+
+        return {
+            x,
+            y,
+            vx,
+            vy,
+            text: FRAGMENTS[Math.floor(Math.random() * FRAGMENTS.length)],
+            opacity: 0.08 + Math.random() * 0.15,
+            size: 12 + Math.random() * 10,
+            decay: 0.0001 + Math.random() * 0.0004,
+            age: 0,
+            corrupted: false,
+            corruptFrames: 0
+        };
+    };
 
 		for (let i = 0; i < MAX_PARTICLES; i++) {
-			particles.push(spawn());
-		}
+      particles.push(spawn(true));
+    }
 
 		const draw = () => {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -195,7 +216,6 @@
 			mouseY = e.clientY - rect.top;
 		};
 
-		resize();
 		draw();
 
 		window.addEventListener('resize', resize);

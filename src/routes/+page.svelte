@@ -17,13 +17,14 @@
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 		const smoother = ScrollSmoother.create({
-			wrapper: '#smooth-wrapper',
-			content: '#smooth-content',
-			smooth: 1.5,
-			speed: 0.8,
-			effects: false,
-			normalizeScroll: false
-		});
+      wrapper: '#smooth-wrapper',
+      content: '#smooth-content',
+      smooth: 2.5,
+      speed: 0.3,
+      effects: true,
+      normalizeScroll: true,
+      smoothTouch: 0.1
+    });
 
 		const controller = new AbortController();
 		for (const name of NAV_LINKS) {
@@ -36,7 +37,13 @@
 			button.addEventListener(
 				'click',
 				() => {
-					smoother.scrollTo(`.${name}-section`, true, 'center center');
+          const targetSelector = `.${name}-section`;
+          const targetY = smoother.offset(targetSelector, 'center center');
+          gsap.to(smoother, {
+            scrollTop: Math.min(targetY, ScrollTrigger.maxScroll(window)),
+            duration: 1.8,
+            ease: 'power3.inOut'
+          });
 				},
 				{ signal: controller.signal }
 			);
