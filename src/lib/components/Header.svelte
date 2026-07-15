@@ -1,8 +1,13 @@
 <script lang="ts">
 	import { DarkSignature } from '$lib';
 	import { onMount } from 'svelte';
+	// Type-only import: erased completely at compile time, so this line
+	// does NOT pull the (heavy) three.js module into the initial bundle.
+	// The actual runtime class is loaded lazily inside onMount below.
+	import type { GlitchOrb } from '$lib/three/glitch-orb';
 
 	let canvas: HTMLCanvasElement;
+	let orbCanvas: HTMLCanvasElement; // NEW — WebGL surface for the 3D orb
 	let mouseX = 0;
 	let mouseY = 0;
 
@@ -29,64 +34,105 @@
 
 	onMount(() => {
 		const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+		if (!ctx) return;
 
-    let animationId: number;
-    let particles: Particle[] = [];
-    const MAX_PARTICLES = 20;
+		let animationId: number;
+		let particles: Particle[] = [];
+		const MAX_PARTICLES = 20;
 
-    let globalGlitchTimer = 0;
-    let globalGlitchActive = false;
-    let globalGlitchDuration = 0;
-    const GLITCH_INTERVAL_MIN = 360;
-    const GLITCH_INTERVAL_MAX = 720;
-    let nextGlitchAt =
-        GLITCH_INTERVAL_MIN + Math.random() * (GLITCH_INTERVAL_MAX - GLITCH_INTERVAL_MIN);
+		let globalGlitchTimer = 0;
+		let globalGlitchActive = false;
+		let globalGlitchDuration = 0;
+		const GLITCH_INTERVAL_MIN = 360;
+		const GLITCH_INTERVAL_MAX = 720;
+		let nextGlitchAt =
+			GLITCH_INTERVAL_MIN + Math.random() * (GLITCH_INTERVAL_MAX - GLITCH_INTERVAL_MIN);
 
-    const resize = () => {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-    };
+		// ── NEW: 3D glitch orb (three.js) ──────────────────────────────
+		// `orb` is null until the dynamic import below resolves, so every
+		// call site uses `orb?.foo()`. This keeps three.js (a large
+		// dependency) out of the critical bundle: it's fetched as its own
+		// chunk only once the Header has actually mounted in the browser.
+		let orb: GlitchOrb | null = null;
 
-    resize();
-    
+		const prefersReducedMotion = window.matchMedia(
+			'(prefers-reduced-motion: reduce)'
+		).matches;
+
+		const initOrb = async () => {
+			// Respect the OS-level motion preference: skip WebGL entirely.
+			// The flat CSS radial-gradient circle already in the markup
+			// (see below) stays visible underneath as a static fallback —
+			// nothing extra to build for this case.
+			if (prefersReducedMotion) return;
+
+			const { GlitchOrb: GlitchOrbClass } = await import('$lib/three/glitch-orb');
+
+			if (!GlitchOrbClass.isSupported()) return;
+
+			// The component may have unmounted while this import was in
+			// flight (fast client-side navigation) — don't mount onto a
+			// detached canvas.
+			if (!orbCanvas) return;
+
+			orb = new GlitchOrbClass(orbCanvas, {
+				baseColor: '#0a0a0a',
+				rimColor: '#242424',
+				highlightColor: '#4a4a4a',
+				radius: 2.2,
+				segments: 96
+			});
+			orb.resize(orbCanvas.offsetWidth, orbCanvas.offsetHeight);
+		};
+
+		void initOrb();
+		// ─────────────────────────────────────────────────────────────
+
+		const resize = () => {
+			canvas.width = canvas.offsetWidth;
+			canvas.height = canvas.offsetHeight;
+			orb?.resize(orbCanvas.offsetWidth, orbCanvas.offsetHeight); // NEW
+		};
+
+		resize();
+
 		const spawn = (fromCenter = false): Particle => {
-        let x: number, y: number, vx: number, vy: number;
-        if (fromCenter) {
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const angle = Math.random() * Math.PI * 2;
-            const startRadius = Math.random() * 24;
-            x = centerX + Math.cos(angle) * startRadius;
-            y = centerY + Math.sin(angle) * startRadius;
-            const burstSpeed = 0.5 + Math.random() * 0.8;
-            vx = Math.cos(angle) * burstSpeed;
-            vy = Math.sin(angle) * burstSpeed;
-        } else {
-            x = Math.random() * canvas.width;
-            y = Math.random() * canvas.height;
-            vx = (Math.random() - 0.5) * 0.3;
-            vy = (Math.random() - 0.5) * 0.3;
-        }
+			let x: number, y: number, vx: number, vy: number;
+			if (fromCenter) {
+				const centerX = canvas.width / 2;
+				const centerY = canvas.height / 2;
+				const angle = Math.random() * Math.PI * 2;
+				const startRadius = Math.random() * 24;
+				x = centerX + Math.cos(angle) * startRadius;
+				y = centerY + Math.sin(angle) * startRadius;
+				const burstSpeed = 0.5 + Math.random() * 0.8;
+				vx = Math.cos(angle) * burstSpeed;
+				vy = Math.sin(angle) * burstSpeed;
+			} else {
+				x = Math.random() * canvas.width;
+				y = Math.random() * canvas.height;
+				vx = (Math.random() - 0.5) * 0.3;
+				vy = (Math.random() - 0.5) * 0.3;
+			}
 
-        return {
-            x,
-            y,
-            vx,
-            vy,
-            text: FRAGMENTS[Math.floor(Math.random() * FRAGMENTS.length)],
-            opacity: 0.08 + Math.random() * 0.15,
-            size: 12 + Math.random() * 10,
-            decay: 0.0001 + Math.random() * 0.0004,
-            age: 0,
-            corrupted: false,
-            corruptFrames: 0
-        };
-    };
+			return {
+				x,
+				y,
+				vx,
+				vy,
+				text: FRAGMENTS[Math.floor(Math.random() * FRAGMENTS.length)],
+				opacity: 0.08 + Math.random() * 0.15,
+				size: 12 + Math.random() * 10,
+				decay: 0.0001 + Math.random() * 0.0004,
+				age: 0,
+				corrupted: false,
+				corruptFrames: 0
+			};
+		};
 
 		for (let i = 0; i < MAX_PARTICLES; i++) {
-      particles.push(spawn(true));
-    }
+			particles.push(spawn(true));
+		}
 
 		const draw = () => {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -96,6 +142,7 @@
 			if (globalGlitchTimer >= nextGlitchAt && !globalGlitchActive) {
 				globalGlitchActive = true;
 				globalGlitchDuration = 15 + Math.floor(Math.random() * 25);
+				orb?.setGlitchActive(true); // NEW — orb corrupts in sync with the text particles
 			}
 
 			if (globalGlitchActive) {
@@ -106,6 +153,7 @@
 					nextGlitchAt =
 						GLITCH_INTERVAL_MIN +
 						Math.random() * (GLITCH_INTERVAL_MAX - GLITCH_INTERVAL_MIN);
+					orb?.setGlitchActive(false); // NEW
 				}
 			}
 
@@ -207,6 +255,8 @@
 				ctx.restore();
 			}
 
+			orb?.render(); // NEW — same rAF tick drives the 2D canvas AND the WebGL orb
+
 			animationId = requestAnimationFrame(draw);
 		};
 
@@ -214,6 +264,11 @@
 			const rect = canvas.getBoundingClientRect();
 			mouseX = e.clientX - rect.left;
 			mouseY = e.clientY - rect.top;
+
+			// NEW — same pointer position, normalized to [-1, 1] for the orb's parallax tilt.
+			const nx = (mouseX / rect.width) * 2 - 1;
+			const ny = -((mouseY / rect.height) * 2 - 1);
+			orb?.setPointer(nx, ny);
 		};
 
 		draw();
@@ -225,6 +280,7 @@
 			cancelAnimationFrame(animationId);
 			window.removeEventListener('resize', resize);
 			canvas.removeEventListener('mousemove', handleMouse);
+			orb?.dispose(); // NEW — free the WebGL context + GPU buffers
 		};
 	});
 </script>
@@ -236,9 +292,12 @@
 		class="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[14px_24px]"
 	></div>
 
-	<div
-		class="absolute top-[-10%] right-0 left-0 h-250 w-250 rounded-full bg-[radial-gradient(circle_400px_at_50%_400px,#242424,#080808)]"
-	></div>
+	<!-- NEW: WebGL canvas for the 3D glitch orb. Transparent clear color,
+	     so it simply layers on top of the fallback gradient above. -->
+	<canvas
+		bind:this={orbCanvas}
+		class="pointer-events-none absolute inset-0 z-0 h-full w-full"
+	></canvas>
 
 	<canvas
 		bind:this={canvas}

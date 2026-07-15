@@ -4,9 +4,9 @@
 	"version": "1.0.0",
 	"description": "This is the latest version of my personal portfolio. Enjoy your visit.",
 	"type": "module",
-  "engines": {
-    "node": ">=20"
-  },
+	"engines": {
+		"node": ">=20"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -30,6 +30,7 @@
 		"@tailwindcss/vite": "^4.0.0",
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/svelte": "^5.2.4",
+		"@types/three": "^0.185.1",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^3.0.0",
@@ -52,6 +53,7 @@
 		"svelte-inview": "^4.0.4",
 		"sveltekit-i18n": "^2.4.2",
 		"swiper": "^11.2.6",
+		"three": "^0.185.1",
 		"typeit": "^8.8.7"
 	}
 }
