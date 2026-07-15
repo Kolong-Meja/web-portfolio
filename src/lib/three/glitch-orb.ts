@@ -6,17 +6,16 @@ export interface GlitchOrbOptions {
 	baseColor?: THREE.ColorRepresentation;
 	/** Fresnel rim color, visible at grazing angles — keep this a neutral gray, not a hue, or the rim will read as "colored" at rest. */
 	rimColor?: THREE.ColorRepresentation;
-	/** Color of the small specular glint that sells the "wet/liquid" look. */
+	/** Color of the specular glint and the cursor's touch-glow. */
 	highlightColor?: THREE.ColorRepresentation;
 	/** Radius of the sphere, in three.js world units. */
 	radius?: number;
 	/**
 	 * Width/height segment count for the underlying SphereGeometry.
 	 * Higher = smoother, rounder silhouette, more vertices to transform.
-	 * 96 already looks essentially perfectly round; only go lower
-	 * (48–64) if you're chasing frame budget on low-power devices, and
-	 * only go higher (128+) if you inspect the silhouette up close and
-	 * still see faceting.
+	 * 96 already looks essentially perfectly round; drop to 48–64 on
+	 * low-power devices, or push past 128 only if you inspect the
+	 * silhouette up close and still see faceting.
 	 */
 	segments?: number;
 }
@@ -30,24 +29,31 @@ const DEFAULTS = {
 } satisfies Required<GlitchOrbOptions>;
 
 /**
- * Owns one three.js scene: a single dark, glossy, glitch-capable sphere
- * rendered into a <canvas> supplied by the caller.
+ * Owns one three.js scene: a single dark, glossy, glitch-capable,
+ * cursor-reactive sphere rendered into a <canvas> supplied by the
+ * caller.
  *
- * Geometry is a plain `SphereGeometry` and — on purpose — is NEVER
- * displaced per-vertex. Every bit of "liquid" surface detail happens in
- * the fragment shader as a normal perturbation (see shaders.ts), so the
- * silhouette always stays a perfectly smooth ball, exactly as round from
- * every angle. If you ever want actual geometric bulging again, that's a
- * vertex-shader change in shaders.ts — but note the tradeoff: vertex
- * displacement is what produced the "sharp dents at the edges" look this
- * version was written to get rid of.
+ * Geometry is a plain `SphereGeometry` and is NEVER displaced
+ * per-vertex — every bit of surface detail (ambient "water" ripple,
+ * cursor touch-ripple, glitch corruption) happens in the fragment
+ * shader as a normal perturbation, so the silhouette always stays a
+ * perfectly smooth ball. See shaders.ts for the shading math.
+ *
+ * Cursor interactivity works via a per-frame raycast: `render()` casts
+ * a ray from the camera through the last known pointer position and
+ * tests it against the mesh. On a hit, the world-space intersection
+ * point is converted into the mesh's *local* space (`mesh.worldToLocal`)
+ * and sent to the shader as `uTouchPoint` — local space because the
+ * shader's ripple math operates on the untransformed `vPosition`, and
+ * the mesh keeps rotating every frame.
  *
  * Usage:
  *   const orb = new GlitchOrb(canvas, { radius: 2.2 });
  *   orb.resize(w, h);
- *   orb.render();       // call once per rAF tick
- *   orb.setGlitchActive(true);
- *   orb.dispose();      // call on component teardown
+ *   orb.setPointer(ndcX, ndcY);   // call on every pointermove/mousemove
+ *   orb.render();                 // call once per rAF tick
+ *   orb.setGlitchIntensity(1);    // 0 = idle, 1 = normal burst, >1 = "mega" burst
+ *   orb.dispose();                // call on component teardown
  */
 export class GlitchOrb {
 	private readonly renderer: THREE.WebGLRenderer;
@@ -56,17 +62,24 @@ export class GlitchOrb {
 	private readonly mesh: THREE.Mesh;
 	private readonly material: THREE.ShaderMaterial;
 	private readonly clock: THREE.Clock;
+	private readonly raycaster = new THREE.Raycaster();
 
-	// Hover (parallax) and glitch intensity are both smoothed/lerped
-	// toward a target each frame instead of being applied instantly —
-	// this is what makes mouse movement and glitch on/off feel like they
-	// have a bit of physical weight, rather than snapping.
+	// Hover (whole-mesh parallax tilt) — smoothed toward a target each frame.
 	private hoverX = 0;
 	private hoverY = 0;
 	private targetHoverX = 0;
 	private targetHoverY = 0;
+
+	// Glitch intensity — smoothed; can exceed 1 for a "mega glitch" burst.
 	private glitchCurrent = 0;
 	private glitchTarget = 0;
+
+	// Last known pointer position in NDC space ([-1, 1]), used for the
+	// per-frame raycast that drives the cursor touch-ripple.
+	private readonly pointerNdc = new THREE.Vector2(0, 0);
+	private readonly localTouchPoint = new THREE.Vector3();
+	private touchInfluence = 0;
+	private touchInfluenceTarget = 0;
 
 	private disposed = false;
 
@@ -81,10 +94,6 @@ export class GlitchOrb {
 		});
 		this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-		// Guard against a fatal crash if the GPU/driver drops the context
-		// (happens on some mobile browsers under memory pressure). We
-		// don't try to restore it — the CSS fallback behind the canvas
-		// is enough — we just stop the tab from throwing.
 		canvas.addEventListener('webglcontextlost', (event) => {
 			event.preventDefault();
 		});
@@ -94,8 +103,6 @@ export class GlitchOrb {
 		this.camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
 		this.camera.position.set(0, 0, 8);
 
-		// A plain, undisplaced sphere — see the class doc comment above
-		// for why this is deliberate.
 		const geometry = new THREE.SphereGeometry(opts.radius, opts.segments, opts.segments);
 
 		this.material = new THREE.ShaderMaterial({
@@ -108,14 +115,13 @@ export class GlitchOrb {
 				uHoverY: { value: 0 },
 				uBaseColor: { value: new THREE.Color(opts.baseColor) },
 				uRimColor: { value: new THREE.Color(opts.rimColor) },
-				uHighlightColor: { value: new THREE.Color(opts.highlightColor) }
+				uHighlightColor: { value: new THREE.Color(opts.highlightColor) },
+				uTouchPoint: { value: new THREE.Vector3(0, 0, 0) },
+				uTouchInfluence: { value: 0 }
 			}
 		});
 
 		this.mesh = new THREE.Mesh(geometry, this.material);
-		// Nudged up slightly to roughly echo the old circle's
-		// `top-[-10%]` positioning. Tweak freely — see the note in
-		// Header.svelte about tuning this visually in the browser.
 		this.mesh.position.y = 0.6;
 		this.scene.add(this.mesh);
 
@@ -144,27 +150,36 @@ export class GlitchOrb {
 		if (this.disposed || width === 0 || height === 0) return;
 		this.camera.aspect = width / height;
 		this.camera.updateProjectionMatrix();
-		// `false` = don't let three.js touch the canvas' CSS width/height;
-		// Tailwind's `absolute inset-0 h-full w-full` already owns that.
 		this.renderer.setSize(width, height, false);
 	}
 
-	/** Feed a normalized pointer position in [-1, 1] to drive the parallax tilt. */
+	/**
+	 * Feed the pointer position in Normalized Device Coordinates
+	 * ([-1, 1] on both axes, +Y up) — the same convention three.js'
+	 * Raycaster expects. Drives BOTH the whole-mesh parallax tilt and
+	 * the per-frame touch-ripple raycast in render().
+	 */
 	setPointer(x: number, y: number): void {
 		this.targetHoverX = x;
 		this.targetHoverY = y;
+		this.pointerNdc.set(x, y);
 	}
 
-	/** Turn the glitch-corruption look on/off; the transition is smoothed automatically in render(). */
-	setGlitchActive(active: boolean): void {
-		this.glitchTarget = active ? 1 : 0;
+	/** Tell render() the pointer has left the canvas entirely, fading the touch-ripple out. */
+	clearPointer(): void {
+		this.touchInfluenceTarget = 0;
+	}
+
+	/** 0 = idle, 1 = a normal glitch burst, >1 (e.g. ~1.6) = an escalated "mega" burst. Transitions are smoothed automatically. */
+	setGlitchIntensity(intensity: number): void {
+		this.glitchTarget = intensity;
 	}
 
 	/**
 	 * Render exactly one frame. Deliberately does NOT run its own
-	 * requestAnimationFrame loop — Header.svelte already has one (for the
-	 * 2D particle canvas) and calls this from inside it, so the whole
-	 * header animates on a single rAF tick instead of two competing ones.
+	 * requestAnimationFrame loop — Header.svelte already has one and
+	 * calls this from inside it, so the whole header animates on a
+	 * single rAF tick instead of two competing ones.
 	 */
 	render(): void {
 		if (this.disposed) return;
@@ -178,11 +193,27 @@ export class GlitchOrb {
 
 		this.mesh.rotation.y = elapsed * 0.05 + this.hoverX * 0.3;
 		this.mesh.rotation.x = this.hoverY * 0.2;
+		// The raycast below needs this frame's rotation already applied,
+		// since it converts the hit point into the mesh's local space.
+		this.mesh.updateMatrixWorld(true);
+
+		this.raycaster.setFromCamera(this.pointerNdc, this.camera);
+		const hits = this.raycaster.intersectObject(this.mesh, false);
+		if (hits.length > 0) {
+			this.mesh.worldToLocal(this.localTouchPoint.copy(hits[0].point));
+			this.touchInfluenceTarget = 1;
+		} else {
+			this.touchInfluenceTarget = 0;
+		}
+		this.touchInfluence +=
+			(this.touchInfluenceTarget - this.touchInfluence) * Math.min(delta * 6, 1);
 
 		this.material.uniforms.uTime.value = elapsed;
 		this.material.uniforms.uGlitch.value = this.glitchCurrent;
 		this.material.uniforms.uHoverX.value = this.hoverX;
 		this.material.uniforms.uHoverY.value = this.hoverY;
+		this.material.uniforms.uTouchPoint.value.copy(this.localTouchPoint);
+		this.material.uniforms.uTouchInfluence.value = this.touchInfluence;
 
 		this.renderer.render(this.scene, this.camera);
 	}
@@ -190,9 +221,7 @@ export class GlitchOrb {
 	/**
 	 * Release GPU resources: geometry buffers, compiled shader program,
 	 * and the WebGL context itself. Must be called when the owning
-	 * component unmounts — WebGL contexts are a scarce, per-tab-limited
-	 * resource, and browsers do NOT garbage-collect them just because
-	 * the JS object references disappear.
+	 * component unmounts.
 	 */
 	dispose(): void {
 		if (this.disposed) return;

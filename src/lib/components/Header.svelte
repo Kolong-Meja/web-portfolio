@@ -1,13 +1,10 @@
 <script lang="ts">
 	import { DarkSignature } from '$lib';
 	import { onMount } from 'svelte';
-	// Type-only import: erased completely at compile time, so this line
-	// does NOT pull the (heavy) three.js module into the initial bundle.
-	// The actual runtime class is loaded lazily inside onMount below.
 	import type { GlitchOrb } from '$lib/three/glitch-orb';
 
 	let canvas: HTMLCanvasElement;
-	let orbCanvas: HTMLCanvasElement; // NEW — WebGL surface for the 3D orb
+	let orbCanvas: HTMLCanvasElement;
 	let mouseX = 0;
 	let mouseY = 0;
 
@@ -15,7 +12,21 @@
 		'0xDEAD', '0xBEEF', 'null', '&&', '=>',
 		'void', '/**/', '::', '!==', '?.', '|>',
 		'█░▒▓', '◉', '∞', '⌬', '⟁',
-		'ERR', 'NaN', '////', '0x00', '>>>'
+		'ERR', 'NaN', '////', '0x00', '>>>',
+		'0x1A2B3C', 'SYS_ERR', 'AUTH_FAIL', 'root', 'sudo',
+		'SEGV', '0b1010', '[ENCRYPTED]', 'TTL=64', '::1',
+		'panic!', 'EOF', '404', 'await', 'yield'
+	];
+
+	const TERMINAL_LINES: string[] = [
+		'> ACCESS_GRANTED',
+		'> decrypting_signature.sig',
+		'root@faisal:~$ whoami',
+		'[ WARN ] integrity_check_failed',
+		'0xC0FFEE :: sync_complete',
+		'> tracing_route...',
+		'> injecting_payload... done',
+		'[ OK ] handshake_established'
 	];
 
 	interface Particle {
@@ -38,21 +49,24 @@
 
 		let animationId: number;
 		let particles: Particle[] = [];
-		const MAX_PARTICLES = 20;
+		const MAX_PARTICLES = 28;
 
 		let globalGlitchTimer = 0;
 		let globalGlitchActive = false;
 		let globalGlitchDuration = 0;
-		const GLITCH_INTERVAL_MIN = 360;
-		const GLITCH_INTERVAL_MAX = 720;
+		let currentGlitchIsMega = false;
+		const GLITCH_INTERVAL_MIN = 220;
+		const GLITCH_INTERVAL_MAX = 480;
 		let nextGlitchAt =
 			GLITCH_INTERVAL_MIN + Math.random() * (GLITCH_INTERVAL_MAX - GLITCH_INTERVAL_MIN);
 
-		// ── NEW: 3D glitch orb (three.js) ──────────────────────────────
-		// `orb` is null until the dynamic import below resolves, so every
-		// call site uses `orb?.foo()`. This keeps three.js (a large
-		// dependency) out of the critical bundle: it's fetched as its own
-		// chunk only once the Header has actually mounted in the browser.
+		let flashPulseFrames = 0;
+		const FLASH_PULSE_TOTAL = 4;
+
+		let terminalLine = '';
+		let terminalFlashFrames = 0;
+		let terminalFlashTotal = 1;
+
 		let orb: GlitchOrb | null = null;
 
 		const prefersReducedMotion = window.matchMedia(
@@ -60,19 +74,10 @@
 		).matches;
 
 		const initOrb = async () => {
-			// Respect the OS-level motion preference: skip WebGL entirely.
-			// The flat CSS radial-gradient circle already in the markup
-			// (see below) stays visible underneath as a static fallback —
-			// nothing extra to build for this case.
 			if (prefersReducedMotion) return;
 
 			const { GlitchOrb: GlitchOrbClass } = await import('$lib/three/glitch-orb');
-
 			if (!GlitchOrbClass.isSupported()) return;
-
-			// The component may have unmounted while this import was in
-			// flight (fast client-side navigation) — don't mount onto a
-			// detached canvas.
 			if (!orbCanvas) return;
 
 			orb = new GlitchOrbClass(orbCanvas, {
@@ -86,12 +91,11 @@
 		};
 
 		void initOrb();
-		// ─────────────────────────────────────────────────────────────
 
 		const resize = () => {
 			canvas.width = canvas.offsetWidth;
 			canvas.height = canvas.offsetHeight;
-			orb?.resize(orbCanvas.offsetWidth, orbCanvas.offsetHeight); // NEW
+			orb?.resize(orbCanvas.offsetWidth, orbCanvas.offsetHeight);
 		};
 
 		resize();
@@ -141,8 +145,21 @@
 			globalGlitchTimer++;
 			if (globalGlitchTimer >= nextGlitchAt && !globalGlitchActive) {
 				globalGlitchActive = true;
-				globalGlitchDuration = 15 + Math.floor(Math.random() * 25);
-				orb?.setGlitchActive(true); // NEW — orb corrupts in sync with the text particles
+				
+				currentGlitchIsMega = Math.random() < 0.22;
+
+				globalGlitchDuration = currentGlitchIsMega
+					? 45 + Math.floor(Math.random() * 30)
+					: 15 + Math.floor(Math.random() * 25);
+
+				orb?.setGlitchIntensity(currentGlitchIsMega ? 1.6 : 1);
+
+				if (currentGlitchIsMega) {
+					flashPulseFrames = FLASH_PULSE_TOTAL;
+					terminalLine = TERMINAL_LINES[Math.floor(Math.random() * TERMINAL_LINES.length)];
+					terminalFlashTotal = globalGlitchDuration + 10;
+					terminalFlashFrames = terminalFlashTotal;
+				}
 			}
 
 			if (globalGlitchActive) {
@@ -153,16 +170,27 @@
 					nextGlitchAt =
 						GLITCH_INTERVAL_MIN +
 						Math.random() * (GLITCH_INTERVAL_MAX - GLITCH_INTERVAL_MIN);
-					orb?.setGlitchActive(false); // NEW
+					orb?.setGlitchIntensity(0);
 				}
 			}
 
-			// ── Horizontal tear lines during global glitch ──
+			// ── NEW: brief full-canvas flash pulse (mega burst only) ──
+			if (flashPulseFrames > 0) {
+				ctx.save();
+				ctx.globalAlpha = (flashPulseFrames / FLASH_PULSE_TOTAL) * 0.12;
+				ctx.fillStyle = '#34d399';
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+				ctx.restore();
+				flashPulseFrames--;
+			}
+
 			if (globalGlitchActive) {
-				const tearCount = 2 + Math.floor(Math.random() * 4);
+				const tearCount =
+					(currentGlitchIsMega ? 5 : 2) +
+					Math.floor(Math.random() * (currentGlitchIsMega ? 7 : 4));
 				for (let t = 0; t < tearCount; t++) {
 					const y = Math.random() * canvas.height;
-					const h = 1 + Math.random() * 2;
+					const h = currentGlitchIsMega ? 2 + Math.random() * 4 : 1 + Math.random() * 2;
 					ctx.save();
 					ctx.globalAlpha = 0.08 + Math.random() * 0.15;
 					ctx.fillStyle = '#34d399';
@@ -185,8 +213,12 @@
 				p.y += p.vy + dy * influence * 0.012;
 				p.opacity -= p.decay;
 
-				// Per-particle corruption
-				const corruptChance = globalGlitchActive ? 0.04 : 0.003;
+				// Per-particle corruption — denser during a mega burst.
+				const corruptChance = globalGlitchActive
+					? currentGlitchIsMega
+						? 0.09
+						: 0.04
+					: 0.003;
 				if (!p.corrupted && Math.random() < corruptChance) {
 					p.corrupted = true;
 					p.corruptFrames = 3 + Math.floor(Math.random() * 8);
@@ -243,8 +275,12 @@
 				}
 			}
 
-			// Random flicker bars
-			const flickerChance = globalGlitchActive ? 0.15 : 0.01;
+			// Random flicker bars — more frequent during a mega burst.
+			const flickerChance = globalGlitchActive
+				? currentGlitchIsMega
+					? 0.32
+					: 0.15
+				: 0.01;
 			if (Math.random() < flickerChance) {
 				const y = Math.random() * canvas.height;
 				const h = 1 + Math.random() * 4;
@@ -255,7 +291,27 @@
 				ctx.restore();
 			}
 
-			orb?.render(); // NEW — same rAF tick drives the 2D canvas AND the WebGL orb
+			// ── NEW: typewriter-style terminal line (mega burst only) ──
+			if (terminalFlashFrames > 0) {
+				terminalFlashFrames--;
+				const progress = 1 - terminalFlashFrames / terminalFlashTotal;
+				const revealCount = Math.min(
+					terminalLine.length,
+					Math.floor(progress * terminalLine.length * 1.8)
+				);
+				const opacity = Math.sin(Math.min(Math.max(progress, 0), 1) * Math.PI);
+				const cursor = revealCount < terminalLine.length ? '▌' : '';
+				const shownText = terminalLine.slice(0, revealCount) + cursor;
+
+				ctx.save();
+				ctx.globalAlpha = Math.max(opacity, 0) * 0.85;
+				ctx.font = '16px "Inconsolata", monospace';
+				ctx.fillStyle = '#34d399';
+				ctx.fillText(shownText, canvas.width * 0.05, canvas.height * 0.12);
+				ctx.restore();
+			}
+
+			orb?.render(); // same rAF tick drives the 2D canvas AND the WebGL orb
 
 			animationId = requestAnimationFrame(draw);
 		};
@@ -264,23 +320,27 @@
 			const rect = canvas.getBoundingClientRect();
 			mouseX = e.clientX - rect.left;
 			mouseY = e.clientY - rect.top;
-
-			// NEW — same pointer position, normalized to [-1, 1] for the orb's parallax tilt.
 			const nx = (mouseX / rect.width) * 2 - 1;
 			const ny = -((mouseY / rect.height) * 2 - 1);
 			orb?.setPointer(nx, ny);
+		};
+
+		const handleMouseLeave = () => {
+			orb?.clearPointer();
 		};
 
 		draw();
 
 		window.addEventListener('resize', resize);
 		canvas.addEventListener('mousemove', handleMouse);
+		canvas.addEventListener('mouseleave', handleMouseLeave);
 
 		return () => {
 			cancelAnimationFrame(animationId);
 			window.removeEventListener('resize', resize);
 			canvas.removeEventListener('mousemove', handleMouse);
-			orb?.dispose(); // NEW — free the WebGL context + GPU buffers
+			canvas.removeEventListener('mouseleave', handleMouseLeave);
+			orb?.dispose();
 		};
 	});
 </script>
@@ -291,9 +351,9 @@
 	<div
 		class="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[14px_24px]"
 	></div>
-
-	<!-- NEW: WebGL canvas for the 3D glitch orb. Transparent clear color,
-	     so it simply layers on top of the fallback gradient above. -->
+	<!-- <div
+		class="absolute top-[-10%] right-0 left-0 h-250 w-250 rounded-full bg-[radial-gradient(circle_400px_at_50%_400px,#242424,#080808)]"
+	></div> -->
 	<canvas
 		bind:this={orbCanvas}
 		class="pointer-events-none absolute inset-0 z-0 h-full w-full"
