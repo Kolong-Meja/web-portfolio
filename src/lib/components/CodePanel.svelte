@@ -4,15 +4,11 @@
 	import 'highlight.js/styles/github-dark.min.css';
 	import { onMount } from 'svelte';
 	import TypeIt from 'typeit';
-
 	export let value: string;
-
 	onMount(() => {
 		const panel = document.querySelector('pre #code') as HTMLElement;
-
 		hljs.highlightElement(panel);
 		hljs.highlightAll();
-
 		const codeTypeIt = new TypeIt('#code', {
 				speed: 0,
 				waitUntilVisible: false,
@@ -22,7 +18,6 @@
 			codeTypeIt.go();
 	});
 </script>
-
 <pre
 	class="bg-soft-black dark:bg-soft-dark relative flex w-full flex-col rounded-xl transition-colors duration-300 ease-in-out lg:w-140 xl:w-160">
         <img
@@ -55,8 +50,8 @@
             </div>
           </div>
           <code
-		id="code"
-		class="language-typescript h-140 overflow-x-auto rounded-b-xl text-sm text-nowrap md:text-base"
-		>{value}</code
-	>
+	id="code"
+	class="language-typescript h-140 overflow-x-auto overflow-y-auto overscroll-contain rounded-b-xl text-sm text-nowrap md:text-base"
+	>{value}</code
+>
       </pre>
