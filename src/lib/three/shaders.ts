@@ -19,8 +19,8 @@ export const orbVertexShader = `
     gl_Position = projectionMatrix * mvPosition;
   }
 `;
+
 export const orbFragmentShader = `
-  uniform float uGlitch;
   uniform float uTime;
   uniform vec3 uBaseColor;
   uniform vec3 uRimColor;
@@ -92,16 +92,15 @@ export const orbFragmentShader = `
   void main() {
     vec3 viewDir = normalize(vViewPosition);
 
-    float rippleStrength = 0.05 + uGlitch * 0.10 + uTouchInfluence * 0.05;
+    // uGlitch removed: surface disturbance now comes only from the idle
+    // ripple and the cursor touch, no more burst-driven boost.
+    float rippleStrength = 0.05 + uTouchInfluence * 0.05;
     vec3 n = rippleNormal(normalize(vNormal), vPosition, uTouchPoint, uTouchInfluence, rippleStrength, uTime);
 
-    float fresnelBase = 1.0 - max(dot(viewDir, n), 0.0);
-
-    float split = uGlitch * 0.1;
-    float fresnelR = pow(clamp(fresnelBase - split, 0.0, 1.0), 2.0);
-    float fresnelG = pow(fresnelBase, 2.0);
-    float fresnelB = pow(clamp(fresnelBase + split, 0.0, 1.0), 2.0);
-    vec3 rim = vec3(fresnelR, fresnelG, fresnelB) * uRimColor;
+    // Single fresnel term — the R/G/B channel split that produced the
+    // chromatic-aberration fringe on the rim has been removed.
+    float fresnel = pow(1.0 - max(dot(viewDir, n), 0.0), 2.0);
+    vec3 rim = fresnel * uRimColor;
 
     vec3 lightDir = normalize(vec3(0.4, 0.8, 0.6));
     vec3 halfVec = normalize(lightDir + viewDir);
@@ -115,24 +114,15 @@ export const orbFragmentShader = `
     float touchGlow = exp(-touchDist * 2.5) * uTouchInfluence;
     vec3 touchColor = uHighlightColor * touchGlow * 1.6;
 
-    // The traveling wave bands, as a direct glow — this is what actually
-    // makes the wave READ as a wave, rather than only nudging the bump
-    // map (which mostly changes how existing light reflects, and is too
-    // subtle to notice on its own). A little brighter during a glitch
-    // burst, so it stays cohesive with everything else that scales with uGlitch.
+    // Traveling wave bands as a direct glow, now at a fixed intensity
+    // since there is no glitch burst left to brighten it further.
     float wave = poleWave(vPosition, uTime);
-    vec3 waveColor = uRimColor * wave * (0.18 + uGlitch * 0.12);
-
-    float scan = sin(vViewPosition.y * 40.0 + uTime * 6.0) * 0.5 + 0.5;
-    float scanline = mix(1.0, 0.94, scan * uGlitch);
+    vec3 waveColor = uRimColor * wave * 0.18;
 
     vec3 color = uBaseColor + rim + highlight + touchColor + waveColor;
-    color *= scanline;
 
-    float hash = fract(sin(dot(floor(vViewPosition.xy * 8.0), vec2(12.9898, 78.233))) * 43758.5453);
-    float dropout = step(0.985, hash);
-    color = mix(color, vec3(0.0), dropout * uGlitch * 0.6);
-
+    // Scanline banding and hash-based dropout blocks (both purely
+    // glitch-burst effects, driven entirely by uGlitch) have been removed.
     gl_FragColor = vec4(color, 1.0);
   }
 `;
