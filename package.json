@@ -25,7 +25,7 @@
 		"@eslint/js": "^9.18.0",
 		"@playwright/test": "^1.49.1",
 		"@sveltejs/adapter-netlify": "^5.0.0",
-		"@sveltejs/kit": "^2.16.0",
+    "@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/vite": "^4.0.0",
 		"@testing-library/jest-dom": "^6.6.3",
@@ -52,7 +52,7 @@
 		"highlight.js": "^11.11.1",
 		"svelte-inview": "^4.0.4",
 		"sveltekit-i18n": "^2.4.2",
-		"swiper": "^11.2.6",
+		"swiper": "^14.0.5",
 		"three": "^0.185.1",
 		"typeit": "^8.8.7"
 	}
