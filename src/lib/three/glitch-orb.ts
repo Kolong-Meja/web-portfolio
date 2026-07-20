@@ -20,7 +20,7 @@ const DEFAULTS = {
 } satisfies Required<GlitchOrbOptions>;
 
 const VERTICAL_FOV_DEG = 35;
-const CAMERA_DISTANCE = 8;
+const CAMERA_DISTANCE = 10.5;
 
 export class GlitchOrb {
 	private readonly renderer: THREE.WebGLRenderer;
