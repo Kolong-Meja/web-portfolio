@@ -33,33 +33,6 @@
 		}
 	};
 
-	// const toggleMenu = () => {
-	// 	const menu = document.querySelector('.menu') as HTMLElement;
-
-	// 	if (menu) {
-	// 		const isMenuHidden = menu.classList.contains('hidden');
-
-	// 		if (isMenuHidden) {
-	// 			menu.classList.remove('hidden');
-	// 			menu.classList.remove('animate-slide-out-up');
-	// 			menu.classList.add('animate-slide-in-down');
-	// 		} else {
-	// 			menu.classList.remove('animate-slide-in-down');
-	// 			menu.classList.add('animate-slide-out-up');
-
-	// 			if (menu.classList.contains('animate-slide-out-up')) {
-	// 				menu.addEventListener(
-	// 					'animationend',
-	// 					() => {
-	// 						menu.classList.add('hidden');
-	// 					},
-	// 					{ once: true }
-	// 				);
-	// 			}
-	// 		}
-	// 	}
-	// };
-
 	const switchThemeModeHandler = ({ matches: dark }: MediaQueryListEvent) => {
 		if (!localStorage.theme) {
 			setThemeMode(dark);
@@ -114,7 +87,7 @@
 </svelte:head>
 
 <nav
-	class="navbar font-hanken-grotesk dark:bg-soft-black/60 fixed start-0 top-0 z-20 w-full border-b border-gray-900 bg-black/75 backdrop-blur-md transition-all duration-300 ease-in-out dark:border-gray-800 dark:backdrop-blur-md"
+	class="navbar font-hanken-grotesk dark:bg-soft-black/60 fixed inset-s-0 top-0 z-20 w-full border-b border-gray-900 bg-black/75 backdrop-blur-md transition-all duration-300 ease-in-out dark:border-gray-800 dark:backdrop-blur-md"
 >
 	<div class="container mx-auto">
 		<div class="flex h-full flex-row items-center justify-between px-3 py-2">

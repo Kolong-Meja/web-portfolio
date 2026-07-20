@@ -155,7 +155,7 @@
 <div class="flex w-full flex-col items-center gap-5 lg:w-[80vw]">
 	<div
 		bind:this={swiperContainer}
-		class="swiper h-[480px] w-full max-w-md sm:h-[520px] sm:max-w-lg lg:h-[560px] lg:max-w-xl"
+		class="swiper h-120 w-full max-w-md sm:h-130 sm:max-w-lg lg:h-140 lg:max-w-xl"
 	>
 		<div class="swiper-wrapper">
 			{#each experiences as exp (exp.name)}
