@@ -6,33 +6,25 @@
 	let dark: boolean;
 	let hidden: boolean = true;
 	let mobileMenuOpen = false;
+	const NAV_SECTIONS = {
+		about: 'about',
+		skill: 'skill',
+		projects: 'projects',
+		experience: 'experience'
+	} as const;
 
 	const switchLanguageHandler = (event: Event) => {
 		const target = event.currentTarget as HTMLSelectElement;
 		localStorage.lang = target.value;
 	};
+	const scrollToSection = (sectionId: string) => {
+		document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+	};
 
-	const smoothScrolling = () => {
-		const links = document.querySelectorAll('.navbar ul a');
-
-		for (const link of links) {
-			link.addEventListener('click', clickHandler);
-		}
-
-		function clickHandler(event: Event) {
-			event.preventDefault();
-
-			const element = event.currentTarget as HTMLAnchorElement;
-			const href = element.getAttribute('href');
-
-			if (href) {
-				const targetElement = document.querySelector(href);
-
-				if (targetElement) {
-					targetElement.scrollIntoView({ behavior: 'smooth' });
-				}
-			}
-		}
+	/** Mobile nav buttons need to scroll AND close the menu afterwards. */
+	const handleMobileNavClick = (sectionId: string) => {
+		scrollToSection(sectionId);
+		mobileMenuOpen = false;
 	};
 
 	const switchThemeModeHandler = ({ matches: dark }: MediaQueryListEvent) => {
@@ -65,15 +57,8 @@
 	const toggleMenu = () => {
 		mobileMenuOpen = !mobileMenuOpen;
 	};
-	const closeMenuOnLinkClick = (event: MouseEvent) => {
-		if ((event.target as HTMLElement).closest('button')) {
-			mobileMenuOpen = false;
-		}
-	};
 
 	onMount(() => {
-		smoothScrolling();
-
 		dark = document.documentElement.classList.contains('dark');
 		hidden = false;
 
@@ -167,7 +152,9 @@
 			<ul class="hidden flex-row items-center justify-normal space-x-8 md:flex">
 				<li class="list-none">
 					<button
+						type="button"
 						class="about-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
+						on:click={() => scrollToSection(NAV_SECTIONS.about)}
 					>
 						<span> {$t('navbar.about')} </span>
 						<span
@@ -177,7 +164,9 @@
 				</li>
 				<li class="list-none">
 					<button
+						type="button"
 						class="skill-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
+						on:click={() => scrollToSection(NAV_SECTIONS.skill)}
 					>
 						<span> {$t('navbar.skill')} </span>
 						<span
@@ -187,7 +176,9 @@
 				</li>
 				<li class="list-none">
 					<button
+						type="button"
 						class="project-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
+						on:click={() => scrollToSection(NAV_SECTIONS.projects)}
 					>
 						<span> {$t('navbar.projects')} </span>
 						<span
@@ -197,7 +188,9 @@
 				</li>
 				<li class="list-none">
 					<button
+						type="button"
 						class="experience-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
+						on:click={() => scrollToSection(NAV_SECTIONS.experience)}
 					>
 						<span> {$t('navbar.experience')} </span>
 						<span
@@ -213,6 +206,7 @@
 				aria-label="Toggle navigation menu"
 				aria-expanded={mobileMenuOpen}
 				aria-controls="mobile-menu"
+				type="button"
 				on:click={toggleMenu}
 			>
 				<svg
@@ -246,33 +240,32 @@
 		<div
 			id="mobile-menu"
 			class="menu dark:bg-soft-black absolute top-full left-0 w-full border-b border-gray-900 bg-black md:hidden dark:border-gray-800"
-			on:click={closeMenuOnLinkClick}
 			transition:slide={{ duration: 300 }}
 		>
 			<ul class="flex flex-col items-center justify-center space-y-6 p-4">
 				<li class="list-none">
-					<button class="about-link">
+					<button type="button" on:click={() => handleMobileNavClick(NAV_SECTIONS.about)}>
 						<span class="text-base text-white underline underline-offset-4"
 							>{$t('navbar.about')}</span
 						>
 					</button>
 				</li>
 				<li class="list-none">
-					<button class="skill-link">
+					<button type="button" on:click={() => handleMobileNavClick(NAV_SECTIONS.skill)}>
 						<span class="text-base text-white underline underline-offset-4"
 							>{$t('navbar.skill')}</span
 						>
 					</button>
 				</li>
 				<li class="list-none">
-					<button class="project-link">
+					<button type="button" on:click={() => handleMobileNavClick(NAV_SECTIONS.projects)}>
 						<span class="text-base text-white underline underline-offset-4"
 							>{$t('navbar.projects')}</span
 						>
 					</button>
 				</li>
 				<li class="list-none">
-					<button class="experience-link">
+					<button type="button" on:click={() => handleMobileNavClick(NAV_SECTIONS.experience)}>
 						<span class="text-base text-white underline underline-offset-4"
 							>{$t('navbar.experience')}</span
 						>
