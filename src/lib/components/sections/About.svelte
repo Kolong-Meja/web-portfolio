@@ -46,18 +46,16 @@
 	use:inview={options}
 	on:inview_change={handleChange}
 >
-	<!-- Grid background with gradient mask -->
 	<div
 		class="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] mask-[linear-gradient(to_bottom,#000_20%,transparent_80%)] bg-size-[14px_24px]"
 	></div>
-
-	{#if isInViewed}
-		<div class="relative z-10 container mx-auto" in:fade={{ duration: 1000 }}>
+	<div class="relative z-10 container mx-auto">
+		{#if isInViewed}
 			<div
 				id="about"
 				class="flex min-h-screen flex-col justify-normal space-y-4 lg:flex-row lg:items-center lg:space-x-8 lg:py-24"
+				in:fade={{ duration: 1000 }}
 			>
-				<!-- Left Side: Identity & Links -->
 				<div class="font-hanken-grotesk flex w-full flex-col space-y-4 pt-16 pb-8">
 					<div class="font-inconsolata flex w-full flex-col space-y-2 px-8">
 						<h1 class="text-4xl font-bold text-balance text-white md:text-5xl lg:text-7xl">
@@ -86,8 +84,6 @@
 						</div>
 					</div>
 				</div>
-
-				<!-- Right Side: Long Description -->
 				<div class="font-space-grotesk flex w-full flex-col space-y-4 pt-8 pb-16 lg:pt-0 lg:pb-0">
 					<p class="px-8 text-lg font-bold text-wrap text-white lg:text-xl">
 						{$t('about.long_desc.opening')}
@@ -99,6 +95,6 @@
 					{/each}
 				</div>
 			</div>
-		</div>
-	{/if}
+		{/if}
+	</div>
 </section>

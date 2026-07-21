@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import { inview } from 'svelte-inview';
+	import type { ObserverEventDetails, Options } from 'svelte-inview';
 	import gsap from 'gsap';
 	import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 	import { t } from '$lib/translations';
@@ -7,6 +10,15 @@
 
 	let sectionEl: HTMLElement;
 	let cardsContainer: HTMLDivElement;
+	let isInViewed: boolean;
+
+	const inviewOptions: Options = {
+		rootMargin: '-15%',
+		unobserveOnEnter: true
+	};
+
+	const handleChange = ({ detail }: CustomEvent<ObserverEventDetails>) =>
+		(isInViewed = detail.inView);
 
 	interface ProjectEntry {
 		title: string;
@@ -58,7 +70,6 @@
 
 	onMount(() => {
 		gsap.registerPlugin(ScrollTrigger);
-
 		const cards = cardsContainer.querySelectorAll<HTMLElement>('.project-card-wrapper');
 
 		const ctx = gsap.context(() => {
@@ -84,14 +95,19 @@
 <section
 	bind:this={sectionEl}
 	class="project-section dark:bg-soft-black font-hanken-grotesk relative max-h-full min-h-screen w-full max-w-full bg-black transition-colors duration-300 ease-in-out"
+	use:inview={inviewOptions}
+	on:inview_change={handleChange}
 >
 	<div class="relative z-10 container mx-auto">
 		<div class="px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:px-7 lg:py-20 xl:px-8 xl:py-24">
-			<p
-				class="group font-space-grotesk relative mb-4 w-full text-center text-xl font-bold text-emerald-300 md:text-2xl lg:text-4xl xl:mb-8 dark:text-emerald-400"
-			>
-				{String($t('content.projects.header')).toUpperCase()}
-			</p>
+			{#if isInViewed}
+				<p
+					class="group font-space-grotesk relative mb-4 w-full text-center text-xl font-bold text-emerald-300 md:text-2xl lg:text-4xl xl:mb-8 dark:text-emerald-400"
+					in:fade={{ duration: 1000 }}
+				>
+					{String($t('content.projects.header')).toUpperCase()}
+				</p>
+			{/if}
 			<div
 				bind:this={cardsContainer}
 				class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3"

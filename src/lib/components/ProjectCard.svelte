@@ -20,16 +20,10 @@
 	class="project-card group bg-soft-black dark:bg-soft-dark relative h-full w-full overflow-hidden rounded-2xl border border-white/10 p-6 shadow-xl transition-[border-color,box-shadow] duration-300 ease-out hover:border-emerald-400/40 hover:shadow-[0_0_45px_-12px_rgba(16,185,129,0.35)]"
 	style="--spotlight-x: 50%; --spotlight-y: 50%;"
 >
-	<!-- Cursor-tracked spotlight. Pure CSS radial-gradient; position is
-	     driven by the two custom properties tiltCard writes on pointermove. -->
 	<div
 		class="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 		style="background: radial-gradient(480px circle at var(--spotlight-x) var(--spotlight-y), rgba(16,185,129,0.16), transparent 70%);"
 	></div>
-
-	<!-- translateZ pushes this whole layer "forward" in the preserve-3d
-	     space set up by tiltCard, so content visibly pops off the card
-	     surface as it tilts, instead of tilting as one flat plane. -->
 	<div class="relative z-10 flex h-full flex-col" style="transform: translateZ(40px);">
 		<div class="mb-4 flex items-center justify-between">
 			<div class="flex items-center">

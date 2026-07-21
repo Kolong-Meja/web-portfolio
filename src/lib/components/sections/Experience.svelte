@@ -20,13 +20,13 @@
 	use:inview={options}
 	on:inview_change={handleChange}
 >
-	{#if isInViewed}
-		<div
-			class="max-h-full min-h-screen w-screen max-w-full transition-colors duration-300 ease-in-out"
-			in:fade={{ duration: 1000 }}
-		>
-			<div class="container mx-auto">
-				<div class="px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:px-7 lg:py-20 xl:px-8 xl:py-24">
+	<div class="max-h-full min-h-screen w-screen max-w-full transition-colors duration-300 ease-in-out">
+		<div class="container mx-auto">
+			{#if isInViewed}
+				<div
+					class="px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:px-7 lg:py-20 xl:px-8 xl:py-24"
+					in:fade={{ duration: 1000 }}
+				>
 					<p
 						class="group font-space-grotesk relative mb-4 w-full text-center text-xl font-bold text-emerald-300 md:text-2xl lg:text-4xl xl:mb-8 dark:text-emerald-400"
 					>
@@ -34,7 +34,7 @@
 					</p>
 					<Swiper />
 				</div>
-			</div>
+			{/if}
 		</div>
-	{/if}
+	</div>
 </section>

@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { t, locales, locale } from '$lib/translations';
 	import { onMount } from 'svelte';
+	import { slide } from 'svelte/transition';
 
 	let dark: boolean;
 	let hidden: boolean = true;
+	let mobileMenuOpen = false;
 
 	const switchLanguageHandler = (event: Event) => {
 		const target = event.currentTarget as HTMLSelectElement;
@@ -60,6 +62,15 @@
 		}
 	};
 
+	const toggleMenu = () => {
+		mobileMenuOpen = !mobileMenuOpen;
+	};
+	const closeMenuOnLinkClick = (event: MouseEvent) => {
+		if ((event.target as HTMLElement).closest('button')) {
+			mobileMenuOpen = false;
+		}
+	};
+
 	onMount(() => {
 		smoothScrolling();
 
@@ -112,7 +123,6 @@
 								: 'opacity-0 duration-100 ease-out'} absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
 							aria-hidden="true"
 						>
-							<!-- moon icon -->
 							<svg class="h-3 w-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
 								<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
 							</svg>
@@ -123,7 +133,6 @@
 								: 'opacity-100 duration-200 ease-in'} absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
 							aria-hidden="true"
 						>
-							<!-- sun icon -->
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="currentColor"
@@ -141,7 +150,6 @@
 					</span>
 				</button>
 
-				<!-- Translations -->
 				<select
 					bind:value={$locale}
 					on:change={switchLanguageHandler}
@@ -153,10 +161,9 @@
 						<option value={loc}>{$t(`lang.${loc}`)}</option>
 					{/each}
 				</select>
-				<!-- End of Translations -->
 			</div>
 
-			<!-- Links -->
+			<!-- Links (desktop) -->
 			<ul class="hidden flex-row items-center justify-normal space-x-8 md:flex">
 				<li class="list-none">
 					<button
@@ -200,8 +207,14 @@
 				</li>
 			</ul>
 
-			<!-- Mobile Menu Button -->
-			<!-- <button class="text-white lg:hidden" on:click={toggleMenu}>
+			<!-- Mobile Menu Button: md:hidden matches the desktop `ul`'s md:flex exactly, no overlap gap -->
+			<button
+				class="text-white md:hidden"
+				aria-label="Toggle navigation menu"
+				aria-expanded={mobileMenuOpen}
+				aria-controls="mobile-menu"
+				on:click={toggleMenu}
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-6 w-6"
@@ -209,50 +222,63 @@
 					viewBox="0 0 24 24"
 					stroke="currentColor"
 				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M4 6h16M4 12h16m-7 6h7"
-					/>
+					{#if mobileMenuOpen}
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M6 18L18 6M6 6l12 12"
+						/>
+					{:else}
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M4 6h16M4 12h16m-7 6h7"
+						/>
+					{/if}
 				</svg>
-			</button> -->
-
-			<!-- Menu -->
-			<!-- <div
-				class="menu dark:bg-soft-black absolute top-17 right-0 hidden w-full border-b border-gray-900 bg-black bg-black transition-all duration-300 ease-in-out dark:border-gray-800"
-			>
-				<ul class="flex flex-col items-center justify-center space-y-6 p-4">
-					<li class="list-none">
-						<button class="about-link">
-							<span class="text-base text-white underline underline-offset-4"
-								>{$t('navbar.about')}</span
-							>
-						</button>
-					</li>
-					<li class="list-none">
-						<button class="navbar-link">
-							<span class="text-base text-white underline underline-offset-4"
-								>{$t('navbar.skill')}</span
-							>
-						</button>
-					</li>
-					<li class="list-none">
-						<button class="project-link">
-							<span class="text-base text-white underline underline-offset-4"
-								>{$t('navbar.projects')}</span
-							>
-						</button>
-					</li>
-					<li class="list-none">
-						<button class="experience-link">
-							<span class="text-base text-white underline underline-offset-4"
-								>{$t('navbar.experience')}</span
-							>
-						</button>
-					</li>
-				</ul>
-			</div> -->
+			</button>
 		</div>
 	</div>
+
+	{#if mobileMenuOpen}
+		<div
+			id="mobile-menu"
+			class="menu dark:bg-soft-black absolute top-full left-0 w-full border-b border-gray-900 bg-black md:hidden dark:border-gray-800"
+			on:click={closeMenuOnLinkClick}
+			transition:slide={{ duration: 300 }}
+		>
+			<ul class="flex flex-col items-center justify-center space-y-6 p-4">
+				<li class="list-none">
+					<button class="about-link">
+						<span class="text-base text-white underline underline-offset-4"
+							>{$t('navbar.about')}</span
+						>
+					</button>
+				</li>
+				<li class="list-none">
+					<button class="skill-link">
+						<span class="text-base text-white underline underline-offset-4"
+							>{$t('navbar.skill')}</span
+						>
+					</button>
+				</li>
+				<li class="list-none">
+					<button class="project-link">
+						<span class="text-base text-white underline underline-offset-4"
+							>{$t('navbar.projects')}</span
+						>
+					</button>
+				</li>
+				<li class="list-none">
+					<button class="experience-link">
+						<span class="text-base text-white underline underline-offset-4"
+							>{$t('navbar.experience')}</span
+						>
+					</button>
+				</li>
+			</ul>
+		</div>
+	{/if}
 </nav>
