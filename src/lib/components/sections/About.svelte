@@ -49,10 +49,9 @@
 	<div
 		class="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] mask-[linear-gradient(to_bottom,#000_20%,transparent_80%)] bg-size-[14px_24px]"
 	></div>
-	<div class="relative z-10 container mx-auto">
+	<div id="about" class="relative z-10 container mx-auto">
 		{#if isInViewed}
 			<div
-				id="about"
 				class="flex min-h-screen flex-col justify-normal space-y-4 lg:flex-row lg:items-center lg:space-x-8 lg:py-24"
 				in:fade={{ duration: 1000 }}
 			>

@@ -22,7 +22,7 @@
 	use:inview={options}
 	on:inview_change={handleChange}
 >
-	<div class="container mx-auto">
+	<div id="skill" class="container mx-auto">
 		{#if isInViewed}
 			<div
 				class="px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:px-7 lg:py-20 xl:px-8 xl:py-24"

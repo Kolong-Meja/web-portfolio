@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { t, locales, locale } from '$lib/translations';
 	import { onMount } from 'svelte';
-	import { slide } from 'svelte/transition';
 
 	let dark: boolean;
 	let hidden: boolean = true;
-	let mobileMenuOpen = false;
+
 	const NAV_SECTIONS = {
 		about: 'about',
 		skill: 'skill',
@@ -17,14 +16,9 @@
 		const target = event.currentTarget as HTMLSelectElement;
 		localStorage.lang = target.value;
 	};
+
 	const scrollToSection = (sectionId: string) => {
 		document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-	};
-
-	/** Mobile nav buttons need to scroll AND close the menu afterwards. */
-	const handleMobileNavClick = (sectionId: string) => {
-		scrollToSection(sectionId);
-		mobileMenuOpen = false;
 	};
 
 	const switchThemeModeHandler = ({ matches: dark }: MediaQueryListEvent) => {
@@ -52,10 +46,6 @@
 		if (window.matchMedia(`(prefers-color-scheme: ${localStorage.theme})`).matches) {
 			localStorage.removeItem('theme');
 		}
-	};
-
-	const toggleMenu = () => {
-		mobileMenuOpen = !mobileMenuOpen;
 	};
 
 	onMount(() => {
@@ -199,79 +189,6 @@
 					</button>
 				</li>
 			</ul>
-
-			<!-- Mobile Menu Button: md:hidden matches the desktop `ul`'s md:flex exactly, no overlap gap -->
-			<button
-				class="text-white md:hidden"
-				aria-label="Toggle navigation menu"
-				aria-expanded={mobileMenuOpen}
-				aria-controls="mobile-menu"
-				type="button"
-				on:click={toggleMenu}
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-6 w-6"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-				>
-					{#if mobileMenuOpen}
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"
-						/>
-					{:else}
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M4 6h16M4 12h16m-7 6h7"
-						/>
-					{/if}
-				</svg>
-			</button>
 		</div>
 	</div>
-
-	{#if mobileMenuOpen}
-		<div
-			id="mobile-menu"
-			class="menu dark:bg-soft-black absolute top-full left-0 w-full border-b border-gray-900 bg-black md:hidden dark:border-gray-800"
-			transition:slide={{ duration: 300 }}
-		>
-			<ul class="flex flex-col items-center justify-center space-y-6 p-4">
-				<li class="list-none">
-					<button type="button" on:click={() => handleMobileNavClick(NAV_SECTIONS.about)}>
-						<span class="text-base text-white underline underline-offset-4"
-							>{$t('navbar.about')}</span
-						>
-					</button>
-				</li>
-				<li class="list-none">
-					<button type="button" on:click={() => handleMobileNavClick(NAV_SECTIONS.skill)}>
-						<span class="text-base text-white underline underline-offset-4"
-							>{$t('navbar.skill')}</span
-						>
-					</button>
-				</li>
-				<li class="list-none">
-					<button type="button" on:click={() => handleMobileNavClick(NAV_SECTIONS.projects)}>
-						<span class="text-base text-white underline underline-offset-4"
-							>{$t('navbar.projects')}</span
-						>
-					</button>
-				</li>
-				<li class="list-none">
-					<button type="button" on:click={() => handleMobileNavClick(NAV_SECTIONS.experience)}>
-						<span class="text-base text-white underline underline-offset-4"
-							>{$t('navbar.experience')}</span
-						>
-					</button>
-				</li>
-			</ul>
-		</div>
-	{/if}
 </nav>
