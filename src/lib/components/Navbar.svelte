@@ -1,41 +1,36 @@
 <script lang="ts">
 	import { locale, locales, t } from '$lib/translations';
 	import { onMount } from 'svelte';
+	import ThemeToggle from './ThemeToggle.svelte';
 
-	let dark: boolean;
-	let hidden: boolean = true;
+	type NavKey = 'about' | 'skill' | 'project' | 'experience';
+
+	interface NavItem {
+		key: NavKey;
+		labelKey: string;
+	}
+
+	const NAV_ITEMS: NavItem[] = [
+		{ key: 'about', labelKey: 'navbar.about' },
+		{ key: 'skill', labelKey: 'navbar.skill' },
+		{ key: 'project', labelKey: 'navbar.projects' },
+		{ key: 'experience', labelKey: 'navbar.experience' }
+	];
+
+	let dark = $state(false);
+	let hidden = $state(true);
+	let mobileMenuOpen = $state(false);
+	let scrolled = $state(false);
+	let activeSection = $state<NavKey | null>(null);
 
 	const switchLanguageHandler = (event: Event) => {
 		const target = event.currentTarget as HTMLSelectElement;
 		localStorage.lang = target.value;
 	};
 
-	const smoothScrolling = () => {
-		const links = document.querySelectorAll('.navbar ul a');
-
-		for (const link of links) {
-			link.addEventListener('click', clickHandler);
-		}
-
-		function clickHandler(event: Event) {
-			event.preventDefault();
-
-			const element = event.currentTarget as HTMLAnchorElement;
-			const href = element.getAttribute('href');
-
-			if (href) {
-				const targetElement = document.querySelector(href);
-
-				if (targetElement) {
-					targetElement.scrollIntoView({ behavior: 'smooth' });
-				}
-			}
-		}
-	};
-
-	const switchThemeModeHandler = ({ matches: dark }: MediaQueryListEvent) => {
+	const switchThemeModeHandler = ({ matches: prefersDark }: MediaQueryListEvent) => {
 		if (!localStorage.theme) {
-			setThemeMode(dark);
+			setThemeMode(prefersDark);
 		}
 	};
 
@@ -60,18 +55,80 @@
 		}
 	};
 
-	onMount(() => {
-		smoothScrolling();
+	function closeMobileMenu() {
+		mobileMenuOpen = false;
+	}
 
+	function handleWindowKeydown(e: KeyboardEvent) {
+		if (e.key === 'Escape' && mobileMenuOpen) {
+			closeMobileMenu();
+		}
+	}
+
+	function scrollToTop() {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+		closeMobileMenu();
+	}
+
+	onMount(() => {
 		dark = document.documentElement.classList.contains('dark');
 		hidden = false;
 
 		const matcher = window.matchMedia('(prefers-color-scheme: dark)');
 		matcher.addEventListener('change', switchThemeModeHandler);
 
-		return () => matcher.removeEventListener('change', switchThemeModeHandler);
+		let scrollRaf: number | null = null;
+		const handleScroll = () => {
+			if (scrollRaf !== null) return;
+			scrollRaf = requestAnimationFrame(() => {
+				scrolled = window.scrollY > 40;
+				scrollRaf = null;
+			});
+		};
+		window.addEventListener('scroll', handleScroll, { passive: true });
+		handleScroll();
+
+		const desktopQuery = window.matchMedia('(min-width: 768px)');
+		const handleDesktopChange = (e: MediaQueryListEvent) => {
+			if (e.matches) mobileMenuOpen = false;
+		};
+		desktopQuery.addEventListener('change', handleDesktopChange);
+
+		// Scroll-spy: highlight whichever section currently crosses the
+		// vertical middle of the viewport, watching the same `.{key}-section`
+		// class hooks +page.svelte already scrolls to.
+		const sectionEntries = NAV_ITEMS.map((item) => ({
+			key: item.key,
+			el: document.querySelector<HTMLElement>(`.${item.key}-section`)
+		})).filter((entry): entry is { key: NavKey; el: HTMLElement } => entry.el !== null);
+
+		let observer: IntersectionObserver | undefined;
+		if (sectionEntries.length > 0) {
+			const obs = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						if (!entry.isIntersecting) continue;
+						const match = sectionEntries.find((s) => s.el === entry.target);
+						if (match) activeSection = match.key;
+					}
+				},
+				{ rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+			);
+			sectionEntries.forEach((s) => obs.observe(s.el));
+			observer = obs;
+		}
+
+		return () => {
+			matcher.removeEventListener('change', switchThemeModeHandler);
+			window.removeEventListener('scroll', handleScroll);
+			desktopQuery.removeEventListener('change', handleDesktopChange);
+			observer?.disconnect();
+			if (scrollRaf !== null) cancelAnimationFrame(scrollRaf);
+		};
 	});
 </script>
+
+<svelte:window on:keydown={handleWindowKeydown} />
 
 <svelte:head>
 	<script>
@@ -87,63 +144,55 @@
 </svelte:head>
 
 <nav
-	class="navbar font-hanken-grotesk dark:bg-soft-black/60 fixed inset-s-0 top-0 z-20 w-full border-b border-gray-900 bg-black/75 backdrop-blur-md transition-all duration-300 ease-in-out dark:border-gray-800 dark:backdrop-blur-md"
+	class="navbar font-hanken-grotesk fixed inset-x-0 top-0 z-20 w-full border-b transition-all duration-300 ease-in-out {scrolled
+		? 'border-white/10 bg-black/85 backdrop-blur-md dark:border-white/10 dark:bg-soft-black/80'
+		: 'border-transparent bg-black/40 backdrop-blur-sm dark:border-transparent dark:bg-soft-black/40'}"
 >
 	<div class="container mx-auto">
-		<div class="flex h-full flex-row items-center justify-between px-3 py-2">
-			<div class="flex flex-row items-center justify-normal">
-				<button
-					class="{dark
-						? 'bg-gray-600 ring-offset-gray-700 focus:ring-gray-400'
-						: 'bg-emerald-300 ring-offset-emerald-200 focus:ring-emerald-500'} relative m-4 inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-none"
-					class:hidden
-					type="button"
-					on:click={toggleTheme}
-				>
-					<span class="sr-only">Toggle Dark Mode</span>
-					<span
-						class="{dark
-							? 'translate-x-0 bg-gray-300'
-							: 'translate-x-4 bg-white'} pointer-events-none relative inline-block h-4 w-4 transform rounded-full shadow ring-0 transition duration-200 ease-in-out"
-					>
-						<span
-							class="{dark
-								? 'opacity-100 duration-200 ease-in'
-								: 'opacity-0 duration-100 ease-out'} absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
-							aria-hidden="true"
-						>
-							<svg class="h-3 w-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-								<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-							</svg>
-						</span>
-						<span
-							class="{dark
-								? 'opacity-0 duration-100 ease-out'
-								: 'opacity-100 duration-200 ease-in'} absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
-							aria-hidden="true"
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="currentColor"
-								class="bi bi-moon-stars-fill h-3 w-3 text-emerald-300"
-								viewBox="0 0 16 16"
-							>
-								<path
-									d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"
-								/>
-								<path
-									d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"
-								/>
-							</svg>
-						</span>
-					</span>
-				</button>
+		<div class="flex h-16 flex-row items-center justify-between px-4 sm:px-6">
+			<button
+				type="button"
+				class="brand-mark flex items-center gap-2 font-space-grotesk text-base font-bold text-white transition-opacity hover:opacity-80 sm:text-lg"
+				onclick={scrollToTop}
+				aria-label="Scroll to top"
+			>
+				<span class="text-emerald-400">&lt;</span>FR<span class="text-emerald-400">/&gt;</span>
+				<span class="font-inconsolata hidden text-xs font-normal text-white/30 sm:inline">
+					/{activeSection ?? 'home'}
+				</span>
+			</button>
 
+			<!-- Desktop links -->
+			<ul class="hidden flex-row items-center gap-8 md:flex">
+				{#each NAV_ITEMS as item (item.key)}
+					<li class="list-none">
+						<button
+							class="{item.key}-link group relative text-sm font-medium transition-colors duration-300 ease-in-out {activeSection ===
+							item.key
+								? 'text-emerald-300'
+								: 'text-white/80 hover:text-emerald-300'}"
+						>
+							<span>{$t(item.labelKey)}</span>
+							<span
+								class="absolute -bottom-1 left-0 h-0.5 bg-emerald-300 transition-all duration-300 {activeSection ===
+								item.key
+									? 'w-full'
+									: 'w-0 group-hover:w-full'}"
+							></span>
+						</button>
+					</li>
+				{/each}
+			</ul>
+
+			<!-- Desktop utilities -->
+			<div class="hidden items-center gap-4 md:flex">
+				<span class="h-5 w-px bg-white/10" aria-hidden="true"></span>
+				<ThemeToggle {dark} {hidden} onToggle={toggleTheme} />
 				<select
 					bind:value={$locale}
-					on:change={switchLanguageHandler}
+					onchange={switchLanguageHandler}
 					id="countries"
-					class="bg-soft-black dark:bg-soft-dark rounded-lg border border-gray-800 p-2.5 text-sm text-white focus:border-2 focus:border-emerald-300 focus:ring-emerald-300 focus:outline-none dark:border-gray-700 dark:text-white dark:focus:border-emerald-300 dark:focus:ring-emerald-300"
+					class="font-inconsolata bg-soft-black dark:bg-soft-dark rounded-md border border-white/10 px-2 py-1.5 text-xs text-white focus:border-emerald-300 focus:ring-1 focus:ring-emerald-300 focus:outline-none"
 				>
 					<option disabled value="">Select Language</option>
 					{#each $locales as loc (loc)}
@@ -152,49 +201,132 @@
 				</select>
 			</div>
 
-			<!-- Links (desktop) -->
-			<ul class="hidden flex-row items-center justify-normal space-x-8 md:flex">
-				<li class="list-none">
-					<button
-						class="about-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
-					>
-						<span> {$t('navbar.about')} </span>
-						<span
-							class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-400 group-hover:w-full"
-						></span>
-					</button>
-				</li>
-				<li class="list-none">
-					<button
-						class="skill-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
-					>
-						<span> {$t('navbar.skill')} </span>
-						<span
-							class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-400 group-hover:w-full"
-						></span>
-					</button>
-				</li>
-				<li class="list-none">
-					<button
-						class="project-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
-					>
-						<span> {$t('navbar.projects')} </span>
-						<span
-							class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-400 group-hover:w-full"
-						></span>
-					</button>
-				</li>
-				<li class="list-none">
-					<button
-						class="experience-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
-					>
-						<span> {$t('navbar.experience')} </span>
-						<span
-							class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-emerald-300 transition-all duration-400 group-hover:w-full"
-						></span>
-					</button>
-				</li>
+			<!-- Mobile hamburger -->
+			<button
+				type="button"
+				class="hamburger md:hidden"
+				aria-expanded={mobileMenuOpen}
+				aria-controls="mobile-menu-panel"
+				aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+				onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
+			>
+				<span class="hamburger__bar" class:is-open={mobileMenuOpen}></span>
+				<span class="hamburger__bar" class:is-open={mobileMenuOpen}></span>
+				<span class="hamburger__bar" class:is-open={mobileMenuOpen}></span>
+			</button>
+		</div>
+
+		<!-- Mobile panel — deliberately NOT wrapped in {#if}. It always exists
+		     in the DOM (just visually collapsed via CSS) so the `.{key}-link`
+		     buttons inside it are already present when +page.svelte's onMount
+		     queries for them — an {#if} would create them too late for that
+		     one-time query to ever find. -->
+		<div
+			id="mobile-menu-panel"
+			class="mobile-panel md:hidden"
+			class:mobile-panel--open={mobileMenuOpen}
+			aria-hidden={!mobileMenuOpen}
+		>
+			<ul class="flex flex-col gap-1 px-4 pt-2 pb-4">
+				{#each NAV_ITEMS as item (item.key)}
+					<li class="list-none">
+						<button
+							class="{item.key}-link group flex w-full items-center gap-2 rounded-md px-3 py-3 text-left font-inconsolata text-sm transition-colors duration-200 {activeSection ===
+							item.key
+								? 'bg-emerald-400/10 text-emerald-300'
+								: 'text-white/80 hover:bg-white/5 hover:text-emerald-300'}"
+							onclick={closeMobileMenu}
+							tabindex={mobileMenuOpen ? 0 : -1}
+						>
+							<span class="text-emerald-400/60 opacity-0 transition-opacity duration-200 group-hover:opacity-100">[</span>
+							<span class="flex-1">{$t(item.labelKey)}</span>
+							<span class="text-emerald-400/60 opacity-0 transition-opacity duration-200 group-hover:opacity-100">]</span>
+						</button>
+					</li>
+				{/each}
 			</ul>
+
+			<div class="flex items-center justify-between gap-4 border-t border-white/10 px-4 py-3">
+				<div class="flex items-center gap-2">
+					<span class="font-inconsolata text-xs text-white/40">theme</span>
+					<ThemeToggle {dark} {hidden} onToggle={toggleTheme} />
+				</div>
+
+				<select
+					bind:value={$locale}
+					onchange={switchLanguageHandler}
+					class="font-inconsolata bg-soft-black dark:bg-soft-dark rounded-md border border-white/10 px-2 py-1.5 text-xs text-white focus:border-emerald-300 focus:ring-1 focus:ring-emerald-300 focus:outline-none"
+					tabindex={mobileMenuOpen ? 0 : -1}
+				>
+					<option disabled value="">Select Language</option>
+					{#each $locales as loc (loc)}
+						<option value={loc}>{$t(`lang.${loc}`)}</option>
+					{/each}
+				</select>
+			</div>
 		</div>
 	</div>
 </nav>
+
+<style>
+	.hamburger {
+		position: relative;
+		display: flex;
+		height: 2.5rem;
+		width: 2.5rem;
+		flex-shrink: 0;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+	}
+
+	.hamburger__bar {
+		display: block;
+		height: 2px;
+		width: 20px;
+		background: white;
+		border-radius: 1px;
+		transition:
+			transform 0.3s ease,
+			opacity 0.3s ease;
+	}
+
+	.hamburger__bar.is-open:nth-child(1) {
+		transform: translateY(7px) rotate(45deg);
+	}
+	.hamburger__bar.is-open:nth-child(2) {
+		opacity: 0;
+	}
+	.hamburger__bar.is-open:nth-child(3) {
+		transform: translateY(-7px) rotate(-45deg);
+	}
+
+	.mobile-panel {
+		max-height: 0;
+		overflow: hidden;
+		opacity: 0;
+		visibility: hidden;
+		transition:
+			max-height 0.4s ease,
+			opacity 0.3s ease,
+			visibility 0s linear 0.4s;
+	}
+
+	.mobile-panel--open {
+		max-height: 28rem;
+		opacity: 1;
+		visibility: visible;
+		transition:
+			max-height 0.4s ease,
+			opacity 0.3s ease,
+			visibility 0s linear 0s;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hamburger__bar,
+		.mobile-panel {
+			transition: none;
+		}
+	}
+</style>
