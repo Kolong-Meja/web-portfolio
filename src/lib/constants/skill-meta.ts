@@ -55,7 +55,13 @@ export const SKILL_META: Record<string, SkillMeta> = {
 	'microservices-architecture': { category: 'practice' },
 	'monolithic-architecture': { category: 'practice' },
 	'tailwind-css': { category: 'framework', iconSlug: 'tailwindcss', color: '38bdf8' },
-	'vanilla-javascript': { category: 'language', iconSlug: 'javascript', color: 'f7df1e' }
+	'vanilla-javascript': { category: 'language', iconSlug: 'javascript', color: 'f7df1e' },
+	swagger: { category: 'tool', iconSlug: 'swagger', color: '85ea2d' },
+	ionic: { category: 'framework', iconSlug: 'ionic', color: '3880ff' },
+	'spring-framework': { category: 'framework', iconSlug: 'spring', color: '6db33f' },
+	'oracle-sql-developer': { category: 'database', iconSlug: 'oracle', color: 'f80000' },
+	postman: { category: 'tool', iconSlug: 'postman', color: 'ff6c37' },
+	netbeans: { category: 'tool', iconSlug: 'apachenetbeanside', color: '1b6ac6' }
 };
 
 const DEFAULT_META: SkillMeta = { category: 'practice' };

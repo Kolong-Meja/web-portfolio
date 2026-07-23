@@ -4,69 +4,36 @@
 	import 'swiper/css/bundle';
 	import gsap from 'gsap';
 	import SwiperContent from './SwiperContent.svelte';
-	import { _achievedSkills } from '$lib/constants/constant';
+	import { _experiences, resolveExperienceDuration as resolveDuration } from '$lib/constants/constant';
 	import { t } from '$lib/translations';
 
 	let swiperContainer: HTMLDivElement;
 	let swiperInstance: SwiperInstance;
-	let activeIndex = 0;
-	let totalSlides = 0;
+	let activeIndex = $state(0);
+	let totalSlides = $state(0);
 	let rafId: number | null = null;
 
 	type SwiperInstance = InstanceType<typeof SwiperLib>;
 	type ProgressSlide = HTMLElement & { progress?: number };
 
-	interface ExperienceEntry {
-		name: string;
-		title: string;
-		project: string;
-		duration: string | (() => string);
-		descriptionKey: string;
-		skills: string[];
-	}
+	const experiences = _experiences;
 
-	function computeOngoingDuration(startYear: number, startMonth: number, startLabel: string): string {
-		const now = new Date();
-		const start = new Date(startYear, startMonth);
-		const months =
-			(now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
-		const monthName = now.toLocaleDateString('en-US', { month: 'short' });
+	// Whether each entry is the ongoing role — derived once from the shape of
+	// `duration` (a function means "still counting", a string means "closed").
+	const isOngoingFlags = experiences.map((exp) => typeof exp.duration === 'function');
 
-		return `${startLabel} ─ ${monthName} ${now.getFullYear()} • ${months} ${months === 1 ? 'Month' : 'Months'}`;
-	}
-
-	const experiences: ExperienceEntry[] = [
-		{
-			name: 'PT. Citiasia, Inc.',
-			title: 'Full Stack Developer ─ Internship',
-			project: 'SurveyAsia Website',
-			duration: 'Feb 2023 ─ Jun 2023 • 5 Months',
-			descriptionKey: 'content.experience.body.citiasia.description',
-			skills: _achievedSkills._f
-		},
-		{
-			name: 'PT. Sinergi Global Servis',
-			title: 'IT Developer ─ Internship',
-			project: 'SIDIA (Sales Distribution Application)',
-			duration: 'Feb 2024 ─ Jun 2024 • 5 Months',
-			descriptionKey: 'content.experience.body.sgs.description',
-			skills: _achievedSkills._s
-		},
-		{
-			name: 'PT. Astra Honda Motor',
-			title: 'Junior Developer',
-			project: 'AHMAS (Astra Honda Management Assistant System)',
-			duration: () => computeOngoingDuration(2025, 7, 'Aug 2025'),
-			descriptionKey: 'content.experience.body.ahm.description',
-			skills: _achievedSkills._t
+	/** Deterministic 7-char pseudo commit hash — same company always renders the same "hash". Purely decorative. */
+	function pseudoHash(input: string): string {
+		let hash = 0;
+		for (let i = 0; i < input.length; i++) {
+			hash = (hash << 5) - hash + input.charCodeAt(i);
+			hash |= 0;
 		}
-	];
-
-	function resolveDuration(d: string | (() => string)): string {
-		return typeof d === 'function' ? d() : d;
+		return Math.abs(hash).toString(16).padStart(7, '0').slice(0, 7);
 	}
 
 	const PARALLAX_DEPTH = {
+		header: 8,
 		eyebrow: 6,
 		title: 16,
 		meta: 24,
@@ -96,6 +63,10 @@
 			applyParallax(swiper);
 			rafId = null;
 		});
+	}
+
+	function goToSlide(index: number) {
+		swiperInstance?.slideTo(index);
 	}
 
 	onMount(() => {
@@ -155,12 +126,12 @@
 <div class="flex w-full flex-col items-center gap-5 lg:w-[80vw]">
 	<div
 		bind:this={swiperContainer}
-		class="swiper h-120 w-full max-w-md sm:h-130 sm:max-w-lg lg:h-140 lg:max-w-xl"
+		class="swiper h-124 w-full max-w-md sm:h-134 sm:max-w-lg lg:h-144 lg:max-w-xl"
 	>
 		<div class="swiper-wrapper">
-			{#each experiences as exp (exp.name)}
+			{#each experiences as exp, i (exp.name)}
 				<div
-					class="swiper-slide bg-soft-black dark:bg-soft-dark overflow-hidden rounded-2xl shadow-2xl transition-colors duration-300 ease-in-out"
+					class="swiper-slide bg-soft-black dark:bg-soft-dark overflow-hidden rounded-2xl border border-white/5 shadow-2xl transition-colors duration-300 ease-in-out"
 				>
 					<SwiperContent
 						props={{
@@ -169,7 +140,9 @@
 							contentProject: exp.project,
 							contentDuration: resolveDuration(exp.duration),
 							contentDesc: $t(exp.descriptionKey).split('|'),
-							skills: exp.skills
+							skills: exp.skills,
+							commitHash: pseudoHash(exp.name),
+							isOngoing: isOngoingFlags[i]
 						}}
 					/>
 				</div>
@@ -177,29 +150,84 @@
 		</div>
 	</div>
 
-	<div class="flex items-center gap-6">
+	<div class="flex w-full items-center justify-center gap-3 sm:gap-4">
 		<button
 			type="button"
 			aria-label="Previous experience"
-			class="swiper-prev-custom group flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition-colors duration-300 hover:border-emerald-400"
+			class="swiper-prev-custom group flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md border border-white/15 transition-colors duration-300 hover:border-emerald-400/60 focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:outline-none"
 		>
-			<svg class="h-4 w-4 stroke-white transition-colors duration-300 group-hover:stroke-emerald-400" viewBox="0 0 24 24" fill="none" stroke-width="2">
+			<svg class="h-3.5 w-3.5 stroke-white/60 transition-colors duration-300 group-hover:stroke-emerald-400" viewBox="0 0 24 24" fill="none" stroke-width="2">
 				<path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
 			</svg>
 		</button>
 
-		<span class="font-space-grotesk text-sm tracking-widest text-white/70">
-			{String(activeIndex + 1).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
-		</span>
+		<div class="flex items-center" role="tablist" aria-label="Experience timeline">
+			{#each experiences as exp, i (exp.name)}
+				<div class="flex items-center">
+					<button
+						type="button"
+						role="tab"
+						aria-selected={activeIndex === i}
+						aria-label={`${exp.name} — ${resolveDuration(exp.duration)}`}
+						class="group relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:outline-none"
+						onclick={() => goToSlide(i)}
+					>
+						{#if isOngoingFlags[i]}
+							<span class="timeline-ping absolute h-3 w-3 rounded-full bg-emerald-400/50" aria-hidden="true"></span>
+						{/if}
+						<span
+							class="relative h-2.5 w-2.5 rounded-full border-2 transition-all duration-300 {activeIndex === i
+								? 'scale-125 border-emerald-400 bg-emerald-400'
+								: isOngoingFlags[i]
+									? 'border-emerald-400/70 bg-emerald-400/70'
+									: 'border-white/25 bg-transparent group-hover:border-white/50'}"
+						></span>
+					</button>
+					{#if i < experiences.length - 1}
+						<span class="h-px w-6 bg-white/15 sm:w-10" aria-hidden="true"></span>
+					{/if}
+				</div>
+			{/each}
+		</div>
 
 		<button
 			type="button"
 			aria-label="Next experience"
-			class="swiper-next-custom group flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition-colors duration-300 hover:border-emerald-400"
+			class="swiper-next-custom group flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-white/15 transition-colors duration-300 hover:border-emerald-400/60 focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:outline-none"
 		>
-			<svg class="h-4 w-4 stroke-white transition-colors duration-300 group-hover:stroke-emerald-400" viewBox="0 0 24 24" fill="none" stroke-width="2">
+			<svg class="h-3.5 w-3.5 stroke-white/60 transition-colors duration-300 group-hover:stroke-emerald-400" viewBox="0 0 24 24" fill="none" stroke-width="2">
 				<path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
 			</svg>
 		</button>
 	</div>
+
+	<div class="flex flex-col items-center gap-1 text-center sm:flex-row sm:gap-2">
+		<span class="font-inconsolata text-xs text-emerald-400/70 sm:text-sm">
+			commit {String(activeIndex + 1).padStart(2, '0')}/{String(totalSlides).padStart(2, '0')}
+		</span>
+		<span class="hidden text-white/20 sm:inline" aria-hidden="true">·</span>
+		<span class="font-inconsolata text-xs text-white/40 sm:text-sm">
+			{resolveDuration(experiences[activeIndex].duration)}
+		</span>
+	</div>
 </div>
+
+<style>
+	.timeline-ping {
+		animation: timeline-pulse 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+	}
+
+	@keyframes timeline-pulse {
+		75%,
+		100% {
+			transform: scale(2);
+			opacity: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.timeline-ping {
+			animation: none;
+		}
+	}
+</style>

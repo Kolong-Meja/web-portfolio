@@ -3,35 +3,48 @@
 	import { inview } from 'svelte-inview';
 	import type { ObserverEventDetails, Options } from 'svelte-inview';
 	import { t } from '$lib/translations';
+	import { _experiences } from '$lib/constants/constant';
 	import Swiper from '../Swiper.svelte';
 
-	let isInViewed: boolean;
+	let isInViewed = $state(false);
+
 	const options: Options = {
 		rootMargin: '-30%',
 		unobserveOnEnter: true
 	};
 
-	const handleChange = ({ detail }: CustomEvent<ObserverEventDetails>) =>
-		(isInViewed = detail.inView);
+	function handleChange({ detail }: CustomEvent<ObserverEventDetails>) {
+		isInViewed = detail.inView;
+	}
 </script>
 
 <section
-	class="experience-section dark:bg-soft-black font-hanken-grotesk max-h-full min-h-screen w-full max-w-full bg-black transition-colors duration-300 ease-in-out"
+	class="experience-section dark:bg-soft-black font-hanken-grotesk relative max-h-full min-h-screen w-full max-w-full bg-black transition-colors duration-300 ease-in-out"
 	use:inview={options}
-	on:inview_change={handleChange}
+	oninview_change={handleChange}
 >
-	<div class="max-h-full min-h-screen w-screen max-w-full transition-colors duration-300 ease-in-out">
+	<div
+		class="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#34d3990d_1px,transparent_1px),linear-gradient(to_bottom,#34d3990d_1px,transparent_1px)] mask-[radial-gradient(ellipse_75%_55%_at_50%_25%,#000_35%,transparent_100%)] bg-size-[36px_36px]"
+	></div>
+
+	<div class="relative z-10 max-h-full min-h-screen w-screen max-w-full transition-colors duration-300 ease-in-out">
 		<div id="experience" class="container mx-auto">
 			{#if isInViewed}
 				<div
-					class="px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:px-7 lg:py-20 xl:px-8 xl:py-24"
+					class="flex flex-col items-center px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:px-7 lg:py-20 xl:px-8 xl:py-24"
 					in:fade={{ duration: 1000 }}
 				>
-					<p
-						class="group font-space-grotesk relative mb-4 w-full text-center text-xl font-bold text-emerald-300 md:text-2xl lg:text-4xl xl:mb-8 dark:text-emerald-400"
-					>
-						{String($t('content.experience.header')).toUpperCase()}
-					</p>
+					<div class="mb-6 flex flex-col items-center gap-2 text-center sm:mb-10">
+						<span class="font-inconsolata text-xs tracking-[0.3em] text-emerald-400/70 uppercase sm:text-sm">
+							// experience.log
+						</span>
+						<p class="font-space-grotesk relative text-xl font-bold text-emerald-300 md:text-2xl lg:text-4xl dark:text-emerald-400">
+							{String($t('content.experience.header')).toUpperCase()}
+						</p>
+						<span class="font-inconsolata text-xs text-white/30 sm:text-sm">
+							git log --oneline · {_experiences.length} entries
+						</span>
+					</div>
 					<Swiper />
 				</div>
 			{/if}

@@ -193,3 +193,57 @@ export const _goodbyeTexts = [
 	'またね',
 	'안녕히 계세요'
 ];
+
+export interface ExperienceEntry {
+	name: string;
+	title: string;
+	project: string;
+	duration: string | (() => string);
+	descriptionKey: string;
+	skills: string[];
+}
+
+export function computeOngoingDuration(
+	startYear: number,
+	startMonth: number,
+	startLabel: string
+): string {
+	const now = new Date();
+	const start = new Date(startYear, startMonth);
+	const months =
+		(now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+	const monthName = now.toLocaleDateString('en-US', { month: 'short' });
+
+	return `${startLabel} ─ ${monthName} ${now.getFullYear()} • ${months} ${months === 1 ? 'Month' : 'Months'}`;
+}
+
+export function resolveExperienceDuration(d: string | (() => string)): string {
+	return typeof d === 'function' ? d() : d;
+}
+
+export const _experiences: ExperienceEntry[] = [
+	{
+		name: 'PT. Citiasia, Inc.',
+		title: 'Full Stack Developer ─ Internship',
+		project: 'SurveyAsia Website',
+		duration: 'Feb 2023 ─ Jun 2023 • 5 Months',
+		descriptionKey: 'content.experience.body.citiasia.description',
+		skills: _achievedSkills._f
+	},
+	{
+		name: 'PT. Sinergi Global Servis',
+		title: 'IT Developer ─ Internship',
+		project: 'SIDIA (Sales Distribution Application)',
+		duration: 'Feb 2024 ─ Jun 2024 • 5 Months',
+		descriptionKey: 'content.experience.body.sgs.description',
+		skills: _achievedSkills._s
+	},
+	{
+		name: 'PT. Astra Honda Motor',
+		title: 'Junior Developer',
+		project: 'AHMAS (Astra Honda Management Assistant System)',
+		duration: () => computeOngoingDuration(2025, 7, 'Aug 2025'),
+		descriptionKey: 'content.experience.body.ahm.description',
+		skills: _achievedSkills._t
+	}
+];
