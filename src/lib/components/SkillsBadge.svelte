@@ -11,6 +11,7 @@
 	// svelte-ignore state_referenced_locally
 	const meta = resolveSkillMeta(skill.id);
 	const accent = meta.color ?? CATEGORY_ACCENT[meta.category];
+	// svelte-ignore state_referenced_locally
 	const initials = getSkillInitials(skill.name);
 	let iconFailed = $state(false);
 	const showIcon = $derived(Boolean(meta.iconSlug) && !iconFailed);
