@@ -1,24 +1,36 @@
 <script lang="ts">
-	import { t, locales, locale } from '$lib/translations';
+	import { locale, locales, t } from '$lib/translations';
 	import { onMount } from 'svelte';
 
 	let dark: boolean;
 	let hidden: boolean = true;
-
-	const NAV_SECTIONS = {
-		about: 'about',
-		skill: 'skill',
-		projects: 'projects',
-		experience: 'experience'
-	} as const;
 
 	const switchLanguageHandler = (event: Event) => {
 		const target = event.currentTarget as HTMLSelectElement;
 		localStorage.lang = target.value;
 	};
 
-	const scrollToSection = (sectionId: string) => {
-		document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+	const smoothScrolling = () => {
+		const links = document.querySelectorAll('.navbar ul a');
+
+		for (const link of links) {
+			link.addEventListener('click', clickHandler);
+		}
+
+		function clickHandler(event: Event) {
+			event.preventDefault();
+
+			const element = event.currentTarget as HTMLAnchorElement;
+			const href = element.getAttribute('href');
+
+			if (href) {
+				const targetElement = document.querySelector(href);
+
+				if (targetElement) {
+					targetElement.scrollIntoView({ behavior: 'smooth' });
+				}
+			}
+		}
 	};
 
 	const switchThemeModeHandler = ({ matches: dark }: MediaQueryListEvent) => {
@@ -49,6 +61,8 @@
 	};
 
 	onMount(() => {
+		smoothScrolling();
+
 		dark = document.documentElement.classList.contains('dark');
 		hidden = false;
 
@@ -142,9 +156,7 @@
 			<ul class="hidden flex-row items-center justify-normal space-x-8 md:flex">
 				<li class="list-none">
 					<button
-						type="button"
 						class="about-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
-						on:click={() => scrollToSection(NAV_SECTIONS.about)}
 					>
 						<span> {$t('navbar.about')} </span>
 						<span
@@ -154,9 +166,7 @@
 				</li>
 				<li class="list-none">
 					<button
-						type="button"
 						class="skill-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
-						on:click={() => scrollToSection(NAV_SECTIONS.skill)}
 					>
 						<span> {$t('navbar.skill')} </span>
 						<span
@@ -166,9 +176,7 @@
 				</li>
 				<li class="list-none">
 					<button
-						type="button"
 						class="project-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
-						on:click={() => scrollToSection(NAV_SECTIONS.projects)}
 					>
 						<span> {$t('navbar.projects')} </span>
 						<span
@@ -178,9 +186,7 @@
 				</li>
 				<li class="list-none">
 					<button
-						type="button"
 						class="experience-link group relative text-base text-white transition-all duration-400 ease-in-out hover:font-bold hover:text-emerald-300"
-						on:click={() => scrollToSection(NAV_SECTIONS.experience)}
 					>
 						<span> {$t('navbar.experience')} </span>
 						<span

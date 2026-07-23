@@ -42,7 +42,7 @@
 	>
 		<ul class="list-inside list-disc space-y-1">
 			{#each props.contentDesc as desc, i (`${i}-${desc}`)}
-				<li class="text-justify text-sm font-normal text-wrap text-white/90 sm:text-base">
+				<li class="text-justify text-sm font-normal text-wrap text-white/90 sm:text-lg">
 					{desc}
 				</li>
 			{/each}

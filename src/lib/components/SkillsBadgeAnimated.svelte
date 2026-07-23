@@ -12,7 +12,7 @@
 		class="absolute top-0 left-0 -mt-1 h-48 w-48 -translate-x-56 -translate-y-24 rotate-45 bg-emerald-400 opacity-100 transition-all duration-500 ease-in-out group-hover:-translate-x-8 dark:bg-emerald-300"
 	></span>
 	<span
-		class="relative w-full text-left text-base font-normal text-gray-100 transition-colors duration-200 ease-in-out group-hover:text-black dark:text-gray-300"
+		class="relative w-full text-left text-sm font-normal text-gray-100 transition-colors duration-200 ease-in-out group-hover:text-black dark:text-gray-300 sm:text-base"
 		>{value}</span
 	>
 </div>
