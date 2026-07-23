@@ -104,6 +104,7 @@ export const orbFragmentShader = `
   uniform vec3 uBaseColor;
   uniform vec3 uRimColor;
   uniform vec3 uHighlightColor;
+  uniform vec3 uAccentColor;   /* ← baru */
   uniform vec3 uTouchPoint;
   uniform float uTouchInfluence;
 
@@ -124,17 +125,13 @@ export const orbFragmentShader = `
     float specular = pow(max(dot(n, halfVec), 0.0), 60.0);
     vec3 highlight = uHighlightColor * specular;
 
-    // Soft glow right at the cursor's contact point — makes the touch
-    // interaction readable even in the first frame, before the ripple
-    // it spawns has visibly propagated across the surface.
     float touchDist = length(vPosition - uTouchPoint);
     float touchGlow = exp(-touchDist * 2.5) * uTouchInfluence;
-    vec3 touchColor = uHighlightColor * touchGlow * 1.6;
+    // Blend in a hint of the brand accent — the orb stays a neutral,
+    // minimal gray at rest, and only picks up color exactly where
+    // you're touching it.
+    vec3 touchColor = mix(uHighlightColor, uAccentColor, 0.55) * touchGlow * 1.6; /* ← diubah */
 
-    // Traveling wave band, computed once per-vertex in the vertex shader
-    // and interpolated in here — this is what makes the wave clearly
-    // READ as a wave, layered on top of what the real displacement
-    // already does to the silhouette and the lighting.
     vec3 waveColor = uRimColor * vWaveBand * 0.18;
 
     vec3 color = uBaseColor + rim + highlight + touchColor + waveColor;

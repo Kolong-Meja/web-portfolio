@@ -5,6 +5,7 @@ export interface GlitchOrbOptions {
 	baseColor?: THREE.ColorRepresentation;
 	rimColor?: THREE.ColorRepresentation;
 	highlightColor?: THREE.ColorRepresentation;
+	accentColor?: THREE.ColorRepresentation;
 	radius?: number;
 	verticalOffset?: number;
 	segments?: number;
@@ -14,6 +15,7 @@ const DEFAULTS = {
 	baseColor: '#0a0a0a',
 	rimColor: '#242424',
 	highlightColor: '#4a4a4a',
+	accentColor: '#34d399',
 	radius: 2.6,
 	verticalOffset: 0.35,
 	segments: 96
@@ -73,6 +75,7 @@ export class GlitchOrb {
 				uBaseColor: { value: new THREE.Color(opts.baseColor) },
 				uRimColor: { value: new THREE.Color(opts.rimColor) },
 				uHighlightColor: { value: new THREE.Color(opts.highlightColor) },
+				uAccentColor: { value: new THREE.Color(opts.accentColor) }, // ← baru
 				uTouchPoint: { value: new THREE.Vector3(0, 0, 0) },
 				uTouchInfluence: { value: 0 }
 			}
