@@ -19,7 +19,7 @@
 </script>
 
 <section
-	class="experience-section dark:bg-soft-black font-hanken-grotesk relative max-h-full min-h-screen w-full max-w-full bg-black transition-colors duration-300 ease-in-out"
+	class="experience-section dark:bg-soft-black font-hanken-grotesk relative max-h-full min-h-screen w-full max-w-full overflow-x-hidden overflow-y-visible bg-black transition-colors duration-300 ease-in-out"
 	use:inview={options}
 	oninview_change={handleChange}
 >

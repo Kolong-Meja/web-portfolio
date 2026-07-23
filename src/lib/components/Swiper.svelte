@@ -123,7 +123,7 @@
 	});
 </script>
 
-<div class="flex w-full flex-col items-center gap-5 lg:w-[80vw]">
+<div class="flex w-full flex-col items-center gap-5 overflow-x-hidden overflow-y-visible lg:w-[80vw]">
 	<div
 		bind:this={swiperContainer}
 		class="swiper h-124 w-full max-w-md sm:h-134 sm:max-w-lg lg:h-144 lg:max-w-xl"
