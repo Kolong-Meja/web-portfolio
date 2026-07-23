@@ -30,27 +30,21 @@ export const SKILL_META: Record<string, SkillMeta> = {
 	php: { category: 'language', iconSlug: 'php', color: '8892bf' },
 	java: { category: 'language', iconSlug: 'java', color: 'ed8b00' },
 	go: { category: 'language', iconSlug: 'go', color: '00add8' },
-
 	laravel: { category: 'framework', iconSlug: 'laravel', color: 'ff2d20' },
 	'spring-boot': { category: 'framework', iconSlug: 'springboot', color: '6db33f' },
 	nestjs: { category: 'framework', iconSlug: 'nestjs', color: 'e0234e' },
 	'next-js': { category: 'framework', iconSlug: 'nextdotjs', color: 'ffffff' },
 	'vue-js': { category: 'framework', iconSlug: 'vuejs', color: '4fc08d' },
-	// SvelteKit itself has no separate brand mark in Simple Icons — the
-	// Svelte logo represents the whole ecosystem here.
 	sveltekit: { category: 'framework', iconSlug: 'svelte', color: 'ff3e00' },
 	'node-js': { category: 'framework', iconSlug: 'nodedotjs', color: '339933' },
-
 	mysql: { category: 'database', iconSlug: 'mysql', color: '4479a1' },
 	postgresql: { category: 'database', iconSlug: 'postgresql', color: '4169e1' },
 	mongodb: { category: 'database', iconSlug: 'mongodb', color: '47a248' },
-
 	git: { category: 'tool', iconSlug: 'git', color: 'f05032' },
 	github: { category: 'tool', iconSlug: 'github', color: 'ffffff' },
 	docker: { category: 'tool', iconSlug: 'docker', color: '2496ed' },
 	linux: { category: 'tool', iconSlug: 'linux', color: 'e5e5e5' },
 	'restful-api': { category: 'tool' },
-
 	'agile-scrum-development': { category: 'practice' },
 	'rapid-application-development': { category: 'practice' },
 	'problem-solving': { category: 'practice' },
@@ -59,7 +53,9 @@ export const SKILL_META: Record<string, SkillMeta> = {
 	'time-management': { category: 'practice' },
 	'version-control': { category: 'practice' },
 	'microservices-architecture': { category: 'practice' },
-	'monolithic-architecture': { category: 'practice' }
+	'monolithic-architecture': { category: 'practice' },
+	'tailwind-css': { category: 'framework', iconSlug: 'tailwindcss', color: '38bdf8' },
+	'vanilla-javascript': { category: 'language', iconSlug: 'javascript', color: 'f7df1e' }
 };
 
 const DEFAULT_META: SkillMeta = { category: 'practice' };

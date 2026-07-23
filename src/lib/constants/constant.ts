@@ -3,7 +3,7 @@ export interface Skill {
 	readonly name: string;
 }
 
-function toSlug(name: string): string {
+export function toSlug(name: string): string {
 	return name
 		.toLowerCase()
 		.replace(/[^a-z0-9]+/g, '-')

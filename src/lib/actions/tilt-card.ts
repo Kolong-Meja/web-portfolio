@@ -8,7 +8,8 @@ export interface TiltCardOptions {
 
 export function tiltCard(node: HTMLElement, options: TiltCardOptions = {}) {
 	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-	if (prefersReducedMotion) {
+	const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+	if (prefersReducedMotion || !hasFinePointer) {
 		return { destroy() {} };
 	}
 
