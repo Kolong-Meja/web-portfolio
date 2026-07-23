@@ -169,7 +169,7 @@
 	class="dark:bg-soft-black relative flex min-h-screen w-screen max-w-full items-center justify-center overflow-hidden bg-black transition-colors duration-300 ease-in-out"
 >
 	<div
-		class="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[14px_24px]"
+		class="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#34d3990d_1px,transparent_1px),linear-gradient(to_bottom,#34d3990d_1px,transparent_1px)] mask-[radial-gradient(ellipse_70%_60%_at_50%_30%,#000_30%,transparent_100%)] bg-size-[36px_36px]"
 	></div>
 
 	<div class="orb-glow pointer-events-none absolute inset-0 z-1" aria-hidden="true"></div>
@@ -209,7 +209,13 @@
 	<span class="hud-corner hud-corner--bl" aria-hidden="true"></span>
 	<span class="hud-corner hud-corner--br" aria-hidden="true"></span>
 
-	<div class="pointer-events-none absolute bottom-6 left-1/2 z-5 -translate-x-1/2 sm:bottom-9">
+	<div class="pointer-events-none absolute inset-0 z-6 noise-layer"></div>
+	<div
+		class="pointer-events-none absolute inset-x-0 bottom-0 z-7 h-40 bg-[linear-gradient(to_bottom,transparent,black)] sm:h-56 md:h-64 lg:h-72 dark:bg-[linear-gradient(to_bottom,transparent,var(--color-soft-black))]"
+		aria-hidden="true"
+	></div>
+
+	<div class="pointer-events-none absolute bottom-6 left-1/2 z-8 -translate-x-1/2 sm:bottom-9">
 		<div class="flex flex-col items-center gap-2">
 			<span class="font-inconsolata text-[0.6rem] tracking-[0.3em] text-white/30 uppercase sm:text-xs">
 				scroll
@@ -219,8 +225,6 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="pointer-events-none absolute inset-0 z-6 noise-layer"></div>
 </div>
 
 <style>

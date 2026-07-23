@@ -98,10 +98,6 @@
 	use:inview={inviewOptions}
 	oninview_change={handleChange}
 >
-	<div
-		class="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#34d3990d_1px,transparent_1px),linear-gradient(to_bottom,#34d3990d_1px,transparent_1px)] mask-[radial-gradient(ellipse_75%_55%_at_50%_20%,#000_35%,transparent_100%)] bg-size-[36px_36px]"
-	></div>
-
 	<div class="relative z-10 container mx-auto">
 		<div id="projects" class="px-4 py-8 sm:px-5 sm:py-12 md:px-6 md:py-16 lg:px-7 lg:py-20 xl:px-8 xl:py-24">
 			{#if isInViewed}

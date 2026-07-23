@@ -48,8 +48,6 @@
 	use:inview={inviewOptions}
 	oninview_change={handleChange}
 >
-	<div class="skill-grid-backdrop" aria-hidden="true"></div>
-
 	<div id="skill" class="relative container mx-auto">
 		{#if isInViewed}
 			<div
