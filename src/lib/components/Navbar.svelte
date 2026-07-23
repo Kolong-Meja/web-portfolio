@@ -93,10 +93,6 @@
 			if (e.matches) mobileMenuOpen = false;
 		};
 		desktopQuery.addEventListener('change', handleDesktopChange);
-
-		// Scroll-spy: highlight whichever section currently crosses the
-		// vertical middle of the viewport, watching the same `.{key}-section`
-		// class hooks +page.svelte already scrolls to.
 		const sectionEntries = NAV_ITEMS.map((item) => ({
 			key: item.key,
 			el: document.querySelector<HTMLElement>(`.${item.key}-section`)
@@ -215,12 +211,6 @@
 				<span class="hamburger__bar" class:is-open={mobileMenuOpen}></span>
 			</button>
 		</div>
-
-		<!-- Mobile panel — deliberately NOT wrapped in {#if}. It always exists
-		     in the DOM (just visually collapsed via CSS) so the `.{key}-link`
-		     buttons inside it are already present when +page.svelte's onMount
-		     queries for them — an {#if} would create them too late for that
-		     one-time query to ever find. -->
 		<div
 			id="mobile-menu-panel"
 			class="mobile-panel md:hidden"

@@ -61,7 +61,9 @@ export const SKILL_META: Record<string, SkillMeta> = {
 	'spring-framework': { category: 'framework', iconSlug: 'spring', color: '6db33f' },
 	'oracle-sql-developer': { category: 'database', iconSlug: 'oracle', color: 'f80000' },
 	postman: { category: 'tool', iconSlug: 'postman', color: 'ff6c37' },
-	netbeans: { category: 'tool', iconSlug: 'apachenetbeanside', color: '1b6ac6' }
+	netbeans: { category: 'tool', iconSlug: 'apachenetbeanside', color: '1b6ac6' },
+	'three-js': { category: 'framework', iconSlug: 'threedotjs', color: 'e5e5e5' },
+	gsap: { category: 'tool', iconSlug: 'gsap', color: '88ce02' }
 };
 
 const DEFAULT_META: SkillMeta = { category: 'practice' };
